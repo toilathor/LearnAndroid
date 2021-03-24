@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.lqt.duynguyenhairsalon.Model.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

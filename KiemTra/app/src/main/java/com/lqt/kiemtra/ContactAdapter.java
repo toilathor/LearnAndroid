@@ -34,7 +34,7 @@ public class ContactAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return contactList.get(i);
     }
 
     @Override

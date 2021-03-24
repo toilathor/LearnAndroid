@@ -3,7 +3,10 @@ package com.lqt.kiemtra;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Contact> contactArrayList = new ArrayList<>();
     ContactAdapter contactAdapter;
     DataBase dataBase;
+    Button buttonThem, buttonXoa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,41 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(MainActivity.this, "Nhấn nè", Toast.LENGTH_SHORT).show();
                 return true;
+            }
+        });
+
+        buttonThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                DialogAdd();
+
+                Intent intent = new Intent(MainActivity.this, ThemMoiActivity.class);
+                intent.putExtra("dataBase", (Serializable) dataBase);
+                startActivity(intent);
+            }
+        });
+
+        buttonXoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Thông Báo");
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Bạn có muốn xóa dịch vụ này không?");
+                builder.setPositiveButton(getString(R.string.title_Co), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        xoa();
+
+                    }
+                });
+
+                builder.setNegativeButton(getString(R.string.title_Khong), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
             }
         });
     }
@@ -80,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
     private void AnhXa() {
         listViewContact = (ListView) findViewById(R.id.ListView_Contact);
         filter = (EditText) findViewById(R.id.EditText_Fillter);
+        buttonThem = (Button) findViewById(R.id.buttonThem);
+        buttonXoa = (Button) findViewById(R.id.buttonXoa);
     }
 
     @Override
@@ -113,6 +155,34 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     dataBase.QueryData("Insert into Contact VALUES(null,'"
                             + hoten.getText().toString() + "', '" + sdt.getText().toString() + "', 0)");
+                    Toast.makeText(MainActivity.this, "Đã thêm!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    loadData();
+                }
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void DialogSua(int p){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_add_contact);
+        EditText hoten = (EditText) dialog.findViewById(R.id.EditText_add_contact_name);
+        EditText sdt = (EditText) dialog.findViewById(R.id.EditText_add_contact_sdt);
+        Button add = (Button) dialog.findViewById(R.id.Button_add);
+
+        add.setText("Hoàn Tất");
+        hoten.setText(contactArrayList.get(p).getHoTen());
+        sdt.setText(contactArrayList.get(p).getSdt());
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hoten.getText().toString().equals("") || sdt.getText().toString().equals("")) {
+                    Toast.makeText(MainActivity.this, "Hãy nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                } else {
+                    dataBase.QueryData("Update Contact Set HoTen = '"
+                            + hoten.getText().toString() + "' SDT = '" + sdt.getText().toString() + "', 0)");
                     Toast.makeText(MainActivity.this, "Đã thêm!", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     loadData();
