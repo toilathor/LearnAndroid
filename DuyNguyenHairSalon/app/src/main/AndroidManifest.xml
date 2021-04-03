@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lqt.duynguyenhairsalon">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_app"
@@ -9,14 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DuyNguyenHairSalon">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".IntroActivity">
+        <activity android:name=".Activities.DuyNguyenTVActivity"></activity>
+        <activity android:name=".Activities.LoadWebViewActivity" />
+        <activity android:name=".Activities.PlayVideoYouTubeActivity" />
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

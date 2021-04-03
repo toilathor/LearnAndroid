@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon;
+package com.lqt.duynguyenhairsalon.Fragments;
 
 import android.os.Bundle;
 
@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class StoreFragment extends Fragment {
+import com.lqt.duynguyenhairsalon.R;
 
-    public StoreFragment() {
+public class FavoritesFragment extends Fragment {
+
+    public FavoritesFragment() {
         // Required empty public constructor
     }
 
@@ -19,6 +21,6 @@ public class StoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store, container, false);
+        return inflater.inflate(R.layout.fragment_favorites, container, false);
     }
 }

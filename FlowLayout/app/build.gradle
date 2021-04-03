@@ -38,5 +38,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Import
-    compile "com.wefika:flowlayout:0.4.1"
+    implementation "com.wefika:flowlayout:0.4.1"
 }

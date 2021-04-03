@@ -1,15 +1,17 @@
-package com.lqt.duynguyenhairsalon;
+package com.lqt.duynguyenhairsalon.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lqt.duynguyenhairsalon.Model.ViewPagerAdapter;
+import com.lqt.duynguyenhairsalon.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon;
+package com.lqt.duynguyenhairsalon.Fragments;
 
 import android.os.Bundle;
 
@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.lqt.duynguyenhairsalon.R;
 
-public class AccountFragment extends Fragment {
+public class StoreFragment extends Fragment {
 
-    public AccountFragment() {
+    public StoreFragment() {
         // Required empty public constructor
     }
 
@@ -20,6 +21,6 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        return inflater.inflate(R.layout.fragment_store, container, false);
     }
 }
