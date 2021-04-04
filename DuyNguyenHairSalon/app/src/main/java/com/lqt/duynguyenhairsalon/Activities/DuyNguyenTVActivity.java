@@ -52,6 +52,7 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
      * part=snippet
      * &playlistId={List}
      * &key=AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o
+     * &maxResults=50&pageToken=xxxxxx;
      * */
 
     @Override

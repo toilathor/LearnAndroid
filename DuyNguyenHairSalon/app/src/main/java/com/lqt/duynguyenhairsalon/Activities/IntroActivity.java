@@ -23,7 +23,7 @@ public class IntroActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_intro);
         /**
-         *Handler có nhiệm vụ gửi và thực thi các Message hoặc Runnable tới
+         * Handler có nhiệm vụ gửi và thực thi các Message hoặc Runnable tới
          * Message Queue của Thread sinh ra nó (Handler). ... Các Message và Runnable sẽ được thực thi khi đi ra khỏi
          * Message Queue. Có 2 nhiệm vụ mà Handler thường làm đó là: Lên lịch thực thi các
          * Message và Runnable ở các thời điểm trong tương lai.
@@ -47,6 +47,6 @@ public class IntroActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 3000);
+        }, 2500);
     }
 }
