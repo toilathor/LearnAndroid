@@ -43,7 +43,6 @@ public class HomeFragment extends Fragment {
      * */
     private View view;
     private ViewFlipper viewFlipper_Demo;
-    private Context context;
     private RecyclerView recyclerViewDuyNguyenTV;
     private DuyNguyenTVAdapter duyNguyenTVAdapter;
     private SystemHelper systemHelper;
@@ -58,9 +57,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        context = view.getContext();
-
-        systemHelper = new SystemHelper(context);
+        systemHelper = new SystemHelper(view.getContext());
 
         AnhXa();
 
@@ -109,11 +106,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(context, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
         };
 
-        TedPermission.with(context)
+        TedPermission.with(view.getContext())
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setPermissions(Manifest.permission.CALL_PHONE)
@@ -140,8 +137,8 @@ public class HomeFragment extends Fragment {
 
 
         for (int i = 0; i < 3; i++) {
-            CardView cardView = new CardView(context);
-            ImageView imageView = new ImageView(context);
+            CardView cardView = new CardView(view.getContext());
+            ImageView imageView = new ImageView(view.getContext());
             //set LayoutParams
             cardView.setLayoutParams(linearLayoutParam);
             imageView.setLayoutParams(cardViewLayoutParams);
@@ -198,14 +195,14 @@ public class HomeFragment extends Fragment {
      * Đây là slide ảnh
      * */
     public void flipper(int image) {
-        ImageView imageView = new ImageView(context);
+        ImageView imageView = new ImageView(view.getContext());
         imageView.setBackgroundResource(image);
 
         viewFlipper_Demo.addView(imageView);
         viewFlipper_Demo.setFlipInterval(4000);
         viewFlipper_Demo.setAutoStart(true);
-        viewFlipper_Demo.setInAnimation(context, android.R.anim.slide_out_right);
-        viewFlipper_Demo.setInAnimation(context, android.R.anim.slide_in_left);
+        viewFlipper_Demo.setInAnimation(view.getContext(), android.R.anim.slide_out_right);
+        viewFlipper_Demo.setInAnimation(view.getContext(), android.R.anim.slide_in_left);
     }
 
 

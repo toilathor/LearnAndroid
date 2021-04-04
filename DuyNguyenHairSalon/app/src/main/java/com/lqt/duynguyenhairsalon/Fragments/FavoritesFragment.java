@@ -1,5 +1,6 @@
 package com.lqt.duynguyenhairsalon.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,9 @@ import com.lqt.duynguyenhairsalon.R;
 
 public class FavoritesFragment extends Fragment {
 
+    private Context context;
+    private View view;
+
     public FavoritesFragment() {
         // Required empty public constructor
     }
@@ -20,7 +24,10 @@ public class FavoritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+        view = inflater.inflate(R.layout.fragment_favorites, container, false);
+
+
+
+        return view;
     }
 }

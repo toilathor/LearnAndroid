@@ -38,15 +38,14 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
     private List<VideoYouTube> playListYouTube;
     private DuyNguyenTVAdapter2 duyNguyenTVAdapter2;
     private RecyclerView recyclerView;
-    private List<String> pageTokens;
 
     private int totalResults;
 
     //Tách url thành nhiều thành phần
     private String playlistId = "PLbplMzmYtClB5RqnCS1xcSbkcl_RA9bks";
     private String key = "AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o";
-    private String pageToken = "";
-    private String Url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + key + "&maxResults=49&pageToken=";
+    private static String pageToken = "";
+    private String Url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + key + "&maxResults=50&pageToken=";
 
     /*
      * https://www.googleapis.com/youtube/v3/playlistItems?
@@ -67,6 +66,7 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
 //        checkTotalResults(Url);
 
         getJSonYouTube(Url);
+
         RecyclerView.ItemDecoration itemDecoration =  new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
     }
@@ -77,8 +77,6 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         duyNguyenTVAdapter2.setData(playListYouTube);
         recyclerView.setAdapter(duyNguyenTVAdapter2);
-
-
     }
 
     private void setListen() {
@@ -125,7 +123,13 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
                     String title = "";
                     String urlThumn = "";
                     String idVideo = "";
-                    //pageToken = response.getString("nextPageToken");
+
+                    // Đoạn này lưu ý phải gọi đệ quy
+                    if(totalResults == 0){
+                        totalResults -= response.getJSONObject("pageInfo").getInt("resultsPerPage");
+                        getJSonYouTube(Url+ response.getString("nextPageToken"));
+                    }
+
                     for (int i = 0; i < jsonItems.length(); i++) {
                         //lấy ra Snippet
                         JSONObject jsonItem = jsonItems.getJSONObject(i);
@@ -146,10 +150,12 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
                         playListYouTube.add(new VideoYouTube(idVideo, urlThumn, title));
                         loadList();
                     }
+                    getJSonYouTube(Url+ response.getString("nextPageToken"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -157,6 +163,7 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
                 Toast.makeText(DuyNguyenTVActivity.this, "Lỗi!", Toast.LENGTH_SHORT).show();
             }
         });
+
         requestQueue.add(jsonObjectRequest);
     }
 
