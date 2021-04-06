@@ -18,6 +18,8 @@ public class LoadWebViewActivity extends AppCompatActivity {
 
     ImageView imageView;
 
+    private String link = "https://youtu.be/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +43,14 @@ public class LoadWebViewActivity extends AppCompatActivity {
     }
 
     private void init() {
+        Intent intent = getIntent();
+        link = intent.getStringExtra("LINK");
+
         //để web được load trong app không bị bay ra ngoài
         webView.setWebViewClient(new WebViewClient());
 
         //load nó lên
-        webView.loadUrl("https://youtu.be/");
+        webView.loadUrl(link);
 
         //truyền vào setting của trang web
         WebSettings webSettings = webView.getSettings();
@@ -56,9 +61,11 @@ public class LoadWebViewActivity extends AppCompatActivity {
         //với một số trang web có thanh zoom control nên ta ẩn nó đi
         webSettings.setDisplayZoomControls(false);
 
-
         //cho phép nhận các sự kiện
         webSettings.setJavaScriptEnabled(true);
+
+        //bật API lưu trữ DOM có được
+        webSettings.setDomStorageEnabled(true);
     }
 
     private void AnhXa() {

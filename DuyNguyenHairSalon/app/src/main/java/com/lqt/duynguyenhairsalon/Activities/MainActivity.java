@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.BottomNavView);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView);
         viewPager = (ViewPager) findViewById(R.id.ViewPager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);

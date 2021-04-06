@@ -6,12 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.lqt.duynguyenhairsalon.Activities.LoadWebViewActivity;
+import com.lqt.duynguyenhairsalon.Activities.PlayVideoYouTubeActivity;
 import com.lqt.duynguyenhairsalon.R;
 
 import java.util.List;
@@ -19,15 +24,16 @@ import java.util.List;
 /*
  * Đây là adapter ở trong fragmenthome
  * */
+
 public class DuyNguyenTVAdapter extends RecyclerView.Adapter<DuyNguyenTVAdapter.DuyNguyenTVViewHolder> {
-    private List<DuyNguyenTV> mDuyNguyenTV;
+    private List<VideoYouTube> mDuyNguyenTV;
     private Context context;
 
     public DuyNguyenTVAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<DuyNguyenTV> list) {
+    public void setData(List<VideoYouTube> list) {
         this.mDuyNguyenTV = list;
         notifyDataSetChanged();
     }
@@ -41,11 +47,20 @@ public class DuyNguyenTVAdapter extends RecyclerView.Adapter<DuyNguyenTVAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull DuyNguyenTVViewHolder holder, int position) {
-        DuyNguyenTV duyNguyenTV = mDuyNguyenTV.get(position);
-        if (duyNguyenTV == null) {
+        VideoYouTube videoYouTube = mDuyNguyenTV.get(position);
+        if (videoYouTube == null) {
             return;
         }
-        holder.imageViewDuyNguyenTV.setImageResource(duyNguyenTV.getResourceID());
+        Glide.with(context).load(mDuyNguyenTV.get(position).getThumbnail()).into(holder.imageViewDuyNguyenTV);
+        holder.textView.setText(mDuyNguyenTV.get(position).getTitle());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PlayVideoYouTubeActivity.class);
+                intent.putExtra("ID_VIDEO", mDuyNguyenTV.get(position).getIdVideo());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -57,18 +72,13 @@ public class DuyNguyenTVAdapter extends RecyclerView.Adapter<DuyNguyenTVAdapter.
     public class DuyNguyenTVViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageViewDuyNguyenTV;
-
+        private CardView cardView;
+        private TextView textView;
         public DuyNguyenTVViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewDuyNguyenTV = (ImageView) itemView.findViewById(R.id.imageViewDuyNguyenTV);
-            imageViewDuyNguyenTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, LoadWebViewActivity.class);
-                    context.startActivity(intent);
-                    Toast.makeText(context, "Load Web", Toast.LENGTH_SHORT).show();
-                }
-            });
+            imageViewDuyNguyenTV = (ImageView) itemView.findViewById(R.id.imageView_DuyNguyenTV);
+            cardView = (CardView) itemView.findViewById(R.id.cardView);
+            textView = (TextView) itemView.findViewById(R.id.textView_DuyNguyenTV);
         }
     }
 }
