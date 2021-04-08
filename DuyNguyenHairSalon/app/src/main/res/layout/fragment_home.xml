@@ -15,7 +15,7 @@
             android:layout_height="70dp">
 
             <ImageView
-                android:id="@+id/imageView_Bell"
+                android:id="@+id/imageView_Notification"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"

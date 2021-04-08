@@ -12,7 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DuyNguyenHairSalon">
-        <activity android:name=".Activities.HistoryCutActivity"></activity>
+        <activity android:name=".Activities.LocationActivity"></activity>
+        <activity android:name=".Activities.CustomerDetailActivity" />
+        <activity android:name=".Activities.RewardsActivity" />
+        <activity android:name=".Activities.MemberActivity" />
+        <activity android:name=".Activities.BookingActivity" />
+        <activity android:name=".Activities.NotificationActivity" />
+        <activity android:name=".Activities.HistoryCutActivity" />
         <activity android:name=".Activities.DuyNguyenTVActivity" />
         <activity android:name=".Activities.LoadWebViewActivity" />
         <activity android:name=".Activities.PlayVideoYouTubeActivity" />

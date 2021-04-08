@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         buttonXoa.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Thông Báo");
                 builder.setIcon(R.mipmap.ic_launcher);
                 builder.setMessage("Bạn có muốn xóa dịch vụ này không?");
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void DialogSua(int p){
+    private void DialogSua(int p) {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_add_contact);
         EditText hoten = (EditText) dialog.findViewById(R.id.EditText_add_contact_name);
@@ -216,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
             else checked = false;
             if (checked) {
                 Toast.makeText(this, "Đã Xóa " + id + checked + hoten + sdt, Toast.LENGTH_SHORT).show();
-                dataBase.QueryData("delete from Contact where id = '"+ id +"'");
-            }else{
+                dataBase.QueryData("delete from Contact where id = '" + id + "'");
+            } else {
                 contactArrayList.add(new Contact(id, checked, hoten, sdt));
             }
         }

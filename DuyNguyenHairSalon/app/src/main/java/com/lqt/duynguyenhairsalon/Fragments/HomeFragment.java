@@ -32,9 +32,13 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.lqt.duynguyenhairsalon.Activities.BookingActivity;
 import com.lqt.duynguyenhairsalon.Activities.DuyNguyenTVActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
 import com.lqt.duynguyenhairsalon.Activities.LoadWebViewActivity;
+import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
+import com.lqt.duynguyenhairsalon.Activities.NotificationActivity;
+import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
 import com.lqt.duynguyenhairsalon.Model.DuyNguyenTVAdapter;
 import com.lqt.duynguyenhairsalon.Model.SystemHelper;
 import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
@@ -60,7 +64,7 @@ public class HomeFragment extends Fragment {
     private SystemHelper systemHelper;
     private Button buttonCall;
     private TextView textViewXemThemTV, textViewSignupRank;
-    private ImageView imageViewHistoryCut;
+    private ImageView imageViewHistoryCut, imageViewNotification;
     private BottomNavigationView bottomNavigationView;
 
     private List<VideoYouTube> playListYouTube;
@@ -134,7 +138,7 @@ public class HomeFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_booking:
-                        Intent intent = new Intent(getContext(), HistoryCutActivity.class);
+                        Intent intent = new Intent(getContext(), BookingActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.menu_history:
@@ -142,16 +146,24 @@ public class HomeFragment extends Fragment {
                         startActivity(intent2);
                         break;
                     case R.id.menu_member:
-                        Intent intent3 = new Intent(getContext(), HistoryCutActivity.class);
+                        Intent intent3 = new Intent(getContext(), MemberActivity.class);
                         startActivity(intent3);
                         break;
                     case R.id.menu_rewards:
-                        Intent intent4 = new Intent(getContext(), HistoryCutActivity.class);
+                        Intent intent4 = new Intent(getContext(), RewardsActivity.class);
                         startActivity(intent4);
                         break;
                 }
 
                 return true;
+            }
+        });
+
+        imageViewNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), NotificationActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -321,5 +333,6 @@ public class HomeFragment extends Fragment {
         textViewSignupRank = (TextView) view.findViewById(R.id.textView_Signup_Rank);
         imageViewHistoryCut = (ImageView) view.findViewById(R.id.imageView_Avatar);
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottomNavView);
+        imageViewNotification = (ImageView) view.findViewById(R.id.imageView_Notification);
     }
 }
