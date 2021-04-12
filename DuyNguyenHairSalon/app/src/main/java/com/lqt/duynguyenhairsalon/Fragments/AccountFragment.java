@@ -1,6 +1,8 @@
 package com.lqt.duynguyenhairsalon.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -10,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lqt.duynguyenhairsalon.Activities.CustomerDetailActivity;
@@ -25,6 +30,9 @@ public class AccountFragment extends Fragment {
     View view;
     ConstraintLayout constraintLayoutEditAccount;
     CardView cardViewMember, cardViewRewards, cardViewHistory, cardViewLocation, cardViewLogin_Logout;
+    TextView textViewLogin_Logout;
+    ImageView imageViewLogin_Logout;
+    LinearLayout linearLayoutLogin_Logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +83,17 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 //TODO
                 Toast.makeText(getContext(), "Chưa hoàn thiện", Toast.LENGTH_SHORT).show();
+                if(textViewLogin_Logout.getText() == "Đăng Nhập"){
+                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(225,55,55));
+
+                    textViewLogin_Logout.setText("Đăng Xuất");
+                    imageViewLogin_Logout.setImageResource(R.drawable.logout);
+                }
+                else{
+                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(100,225,55));
+                    textViewLogin_Logout.setText("Đăng Nhập");
+                    imageViewLogin_Logout.setImageResource(R.drawable.enter);
+                }
             }
         });
     }
@@ -85,6 +104,10 @@ public class AccountFragment extends Fragment {
         cardViewRewards = (CardView) view.findViewById(R.id.cardView_Rewards);
         cardViewHistory = (CardView) view.findViewById(R.id.cardView_History);
         cardViewLocation = (CardView) view.findViewById(R.id.cardView_Location);
+
         cardViewLogin_Logout = (CardView) view.findViewById(R.id.cardView_Login_Logout);
+        linearLayoutLogin_Logout = (LinearLayout) view.findViewById(R.id.linearLayout_Login_Logout);
+        textViewLogin_Logout = (TextView) view.findViewById(R.id.textView_Login_Logout);
+        imageViewLogin_Logout = (ImageView) view.findViewById(R.id.imageView_Login_Logout);
     }
 }

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    //lướt để chuyển fragment
+                    //check cho bottom sáng
                     case 0:
                         bottomNavigationView.getMenu().findItem(R.id.menu_tab_home).setChecked(true);
                         break;
