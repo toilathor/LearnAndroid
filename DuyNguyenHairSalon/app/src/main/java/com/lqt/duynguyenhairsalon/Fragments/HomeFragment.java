@@ -198,7 +198,11 @@ public class HomeFragment extends Fragment {
      * */
     private void setDataLookBook() {
 
-        int images[] = {R.drawable.demo1, R.drawable.demo2, R.drawable.demo3, R.drawable.demo4, R.drawable.demo5};
+        int images[] = {R.drawable.demo1
+                , R.drawable.demo2
+                , R.drawable.demo3
+                , R.drawable.demo4
+                , R.drawable.demo5};
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.linearLayoutDuyNguyenLookBook);
 

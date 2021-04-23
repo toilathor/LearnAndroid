@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    //check cho bottom sáng
+                    //check xem đang ở fragment nào thì bottom sáng
                     case 0:
                         bottomNavigationView.getMenu().findItem(R.id.menu_tab_home).setChecked(true);
                         break;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                //Click vào bottomnav để chuyển fragment
+                //bắt sự kiện Click vào bottomnav để chuyển fragment
                 switch (item.getItemId()) {
                     case R.id.menu_tab_home:
                         viewPager.setCurrentItem(0);
