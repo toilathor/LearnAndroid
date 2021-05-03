@@ -47,16 +47,16 @@ public class FavoritesFragment extends Fragment {
 
     private void getDataFavorite() {
         itemFavoritesList = new ArrayList<>();
-        int resource[] = {R.drawable.demotoc1,R.drawable.demotoc2
-                ,R.drawable.demotoc3,R.drawable.demotoc4
-                ,R.drawable.demotoc5,R.drawable.demotoc6
-                ,R.drawable.demotoc7};
+        int resource[] = {R.drawable.demotoc1, R.drawable.demotoc2
+                , R.drawable.demotoc3, R.drawable.demotoc4
+                , R.drawable.demotoc5, R.drawable.demotoc6
+                , R.drawable.demotoc7};
         String name[] = {"Kiểu đẹp rai", "Kiểu íu đúi"
-                , "Tóc đẹp không \n giữ nhé?","Ai là nàng thơ dơ tay!"
-                ,"Em không là nàng thơ..ơ..ơ", "Mèo méo meo mèo meo"
-                ,"gái nhắt đó"};
+                , "Tóc đẹp không \n giữ nhé?", "Ai là nàng thơ dơ tay!"
+                , "Em không là nàng thơ..ơ..ơ", "Mèo méo meo mèo meo"
+                , "gái nhắt đó"};
         Random random = new Random();
-        for (int i = 0; i<7;i++){
+        for (int i = 0; i < 7; i++) {
             int r = random.nextInt(7);
             itemFavoritesList.add(new ItemFavorites(resource[i], name[i]));
         }
@@ -66,11 +66,11 @@ public class FavoritesFragment extends Fragment {
         adapter = new FavoritesAdapter(view.getContext());
 
         /*
-        * do đây là bố cục so le nên ta phải xét layoutmanager cho nó là Stagger
-        * thêm nữa để có thể xử lí được vấn đề ảnh quá to so với
-        * khung thì ta xét thuộc tính android:adjustViewBounds="true" cho ImageView
-        *
-        * */
+         * do đây là bố cục so le nên ta phải xét layoutmanager cho nó là Stagger
+         * thêm nữa để có thể xử lí được vấn đề ảnh quá to so với
+         * khung thì ta xét thuộc tính android:adjustViewBounds="true" cho ImageView
+         *
+         * */
 
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 

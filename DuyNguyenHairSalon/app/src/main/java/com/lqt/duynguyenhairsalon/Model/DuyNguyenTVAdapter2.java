@@ -74,7 +74,7 @@ public class DuyNguyenTVAdapter2 extends RecyclerView.Adapter<DuyNguyenTVAdapter
         return 0;
     }
 
-    public class DuyNguyenTVPlayListViewHolder extends RecyclerView.ViewHolder  {
+    public class DuyNguyenTVPlayListViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewThum;
         TextView textViewTitle;
         ConstraintLayout constraintLayout;

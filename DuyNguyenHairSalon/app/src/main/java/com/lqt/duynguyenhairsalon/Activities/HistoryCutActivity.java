@@ -44,6 +44,6 @@ public class HistoryCutActivity extends AppCompatActivity {
 
     private void AnhXa() {
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        textViewShowDetail =(TextView) findViewById(R.id.textView_ShowDetail);
+        textViewShowDetail = (TextView) findViewById(R.id.textView_ShowDetail);
     }
 }

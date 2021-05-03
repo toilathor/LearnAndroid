@@ -23,7 +23,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         this.context = context;
     }
 
-    public void setData(List<ItemFavorites> itemFavorites){
+    public void setData(List<ItemFavorites> itemFavorites) {
         this.itemFavorites = itemFavorites;
         notifyDataSetChanged();
     }
@@ -39,14 +39,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     @Override
     public void onBindViewHolder(@NonNull FavoritesViewHolder holder, int position) {
-        if (holder == null){
+        if (holder == null) {
             return;
         }
 
         ItemFavorites favorites = itemFavorites.get(position);
 
         holder.imageView.setImageResource(favorites.getImageFavorites());
-        holder.textView.setText(""+favorites.getNameFavorites());
+        holder.textView.setText("" + favorites.getNameFavorites());
     }
 
     @Override

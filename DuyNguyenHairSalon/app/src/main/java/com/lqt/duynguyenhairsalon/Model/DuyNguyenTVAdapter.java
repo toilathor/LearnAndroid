@@ -74,6 +74,7 @@ public class DuyNguyenTVAdapter extends RecyclerView.Adapter<DuyNguyenTVAdapter.
         private ImageView imageViewDuyNguyenTV;
         private CardView cardView;
         private TextView textView;
+
         public DuyNguyenTVViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewDuyNguyenTV = (ImageView) itemView.findViewById(R.id.imageView_DuyNguyenTV);

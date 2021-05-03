@@ -38,6 +38,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.addMarker(new MarkerOptions()
                 .position(sydney)
                 .title("Lấy vị trí tạm chơi vui vui thôi"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,20));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 20));
     }
 }

@@ -28,9 +28,9 @@ public class IntroActivity extends AppCompatActivity {
          * Message Queue. Có 2 nhiệm vụ mà Handler thường làm đó là: Lên lịch thực thi các
          * Message và Runnable ở các thời điểm trong tương lai.
          **/
-        topAnim = AnimationUtils.loadAnimation(this,R.anim.scale_logo_top);
-        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.scale_logo_bottom);
-        alphaAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_logo);
+        topAnim = AnimationUtils.loadAnimation(this, R.anim.scale_logo_top);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.scale_logo_bottom);
+        alphaAnim = AnimationUtils.loadAnimation(this, R.anim.alpha_logo);
 
         logo = (ImageView) findViewById(R.id.imageView_Logo);
         sologan = (ImageView) findViewById(R.id.imageView_sologan);

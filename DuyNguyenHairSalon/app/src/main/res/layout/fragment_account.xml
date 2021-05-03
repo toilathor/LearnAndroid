@@ -122,6 +122,7 @@
                 android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_Location"
         android:layout_width="match_parent"

@@ -83,14 +83,13 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 //TODO
                 Toast.makeText(getContext(), "Chưa hoàn thiện", Toast.LENGTH_SHORT).show();
-                if(textViewLogin_Logout.getText() == "Đăng Nhập"){
-                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(225,55,55));
+                if (textViewLogin_Logout.getText() == "Đăng Nhập") {
+                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(225, 55, 55));
 
                     textViewLogin_Logout.setText("Đăng Xuất");
                     imageViewLogin_Logout.setImageResource(R.drawable.logout);
-                }
-                else{
-                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(100,225,55));
+                } else {
+                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(100, 225, 55));
                     textViewLogin_Logout.setText("Đăng Nhập");
                     imageViewLogin_Logout.setImageResource(R.drawable.enter);
                 }

@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), LoadWebViewActivity.class);
-                intent.putExtra("LINK" , "https://30shine.com/shine-member/");
+                intent.putExtra("LINK", "https://30shine.com/shine-member/");
                 startActivity(intent);
             }
         });
@@ -136,7 +136,7 @@ public class HomeFragment extends Fragment {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.menu_booking:
                         Intent intent = new Intent(getContext(), BookingActivity.class);
                         startActivity(intent);
@@ -283,7 +283,7 @@ public class HomeFragment extends Fragment {
                     String urlThumn = "";
                     String idVideo = "";
 
-                    for (int i = 0; i< jsonItems.length(); i++) {
+                    for (int i = 0; i < jsonItems.length(); i++) {
                         //lấy ra Snippet
                         JSONObject jsonItem = jsonItems.getJSONObject(i);
                         JSONObject jsonSnippet = jsonItem.getJSONObject("snippet");

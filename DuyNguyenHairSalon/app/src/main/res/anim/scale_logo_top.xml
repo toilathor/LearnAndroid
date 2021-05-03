@@ -4,7 +4,8 @@
         android:duration="1500"
         android:fromXDelta="0%"
         android:fromYDelta="-75%" />
-    <alpha android:fromAlpha="0.1"
-        android:toAlpha="1"
-        android:duration="1500"/>
+    <alpha
+        android:duration="1500"
+        android:fromAlpha="0.1"
+        android:toAlpha="1" />
 </set>
