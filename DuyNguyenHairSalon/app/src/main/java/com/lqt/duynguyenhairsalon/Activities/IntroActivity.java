@@ -14,8 +14,8 @@ import com.lqt.duynguyenhairsalon.R;
 
 public class IntroActivity extends AppCompatActivity {
 
-    Animation topAnim, bottomAnim, alphaAnim;
-    ImageView logo, sologan, background;
+    private Animation topAnim, bottomAnim, alphaAnim;
+    private ImageView logo, sologan, background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

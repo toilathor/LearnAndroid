@@ -12,11 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DuyNguyenHairSalon">
+        <activity android:name=".Activities.SelectServiceActivity"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_map_key" />
 
-        <activity android:name=".Activities.LocationActivity"></activity>
+        <activity android:name=".Activities.LocationActivity" />
         <activity android:name=".Activities.CustomerDetailActivity" />
         <activity android:name=".Activities.RewardsActivity" />
         <activity android:name=".Activities.MemberActivity" />

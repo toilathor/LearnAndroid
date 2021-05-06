@@ -13,9 +13,9 @@ import com.lqt.duynguyenhairsalon.R;
 public class PlayVideoYouTubeActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
     private String ID_VIDEO;
-    String API_KEY = "AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o";
-    int REQUEST_VIDEO = 1412;
-    YouTubePlayerView youTubePlayerView;
+    private String API_KEY = "AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o";
+    private int REQUEST_VIDEO = 1412;
+    private YouTubePlayerView youTubePlayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

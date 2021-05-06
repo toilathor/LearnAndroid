@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 public class SystemHelper {
-    Context context;
+    private Context context;
 
     public SystemHelper(Context context) {
         this.context = context;

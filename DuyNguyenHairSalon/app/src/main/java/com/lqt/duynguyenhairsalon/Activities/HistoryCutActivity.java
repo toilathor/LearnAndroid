@@ -12,8 +12,8 @@ import com.lqt.duynguyenhairsalon.R;
 
 public class HistoryCutActivity extends AppCompatActivity {
 
-    ImageView imageViewBack;
-    TextView textViewShowDetail;
+    private ImageView imageViewBack;
+    private TextView textViewShowDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

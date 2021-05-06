@@ -14,9 +14,9 @@ import com.lqt.duynguyenhairsalon.R;
 
 public class LoadWebViewActivity extends AppCompatActivity {
 
-    WebView webView;
+    private WebView webView;
 
-    ImageView imageView;
+    private ImageView imageView;
 
     private String link = "https://youtu.be/";
 

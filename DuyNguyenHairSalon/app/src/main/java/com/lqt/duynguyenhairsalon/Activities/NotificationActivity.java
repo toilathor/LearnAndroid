@@ -10,7 +10,7 @@ import com.lqt.duynguyenhairsalon.R;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    ImageView imageViewBack;
+    private ImageView imageViewBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setData() {
         keywords.add(new Keyword(1, "Lê Quang Thọ"));
         keywords.add(new Keyword(2, "Android"));
-        keywords.add(new Keyword(3, "Linh"));
-        keywords.add(new Keyword(4, "Linh Linh"));
         keywords.add(new Keyword(5, "Thọ"));
     }
 

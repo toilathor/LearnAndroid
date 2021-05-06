@@ -6,13 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,7 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Model.DuyNguyenTVAdapter2;
+import com.lqt.duynguyenhairsalon.Model.Adapters.DuyNguyenTVAdapter2;
 import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
 import com.lqt.duynguyenhairsalon.R;
 

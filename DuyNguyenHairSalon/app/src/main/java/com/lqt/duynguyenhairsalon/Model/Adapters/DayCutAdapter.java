@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Model;
+package com.lqt.duynguyenhairsalon.Model.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.R;
 
 import java.util.List;

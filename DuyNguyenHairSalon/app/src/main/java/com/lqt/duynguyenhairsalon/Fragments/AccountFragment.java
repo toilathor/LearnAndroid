@@ -27,12 +27,12 @@ import com.lqt.duynguyenhairsalon.R;
 
 public class AccountFragment extends Fragment {
 
-    View view;
-    ConstraintLayout constraintLayoutEditAccount;
-    CardView cardViewMember, cardViewRewards, cardViewHistory, cardViewLocation, cardViewLogin_Logout;
-    TextView textViewLogin_Logout;
-    ImageView imageViewLogin_Logout;
-    LinearLayout linearLayoutLogin_Logout;
+    private View view;
+    private ConstraintLayout constraintLayoutEditAccount;
+    private CardView cardViewMember, cardViewRewards, cardViewHistory, cardViewLocation, cardViewLogin_Logout;
+    private TextView textViewLogin_Logout;
+    private ImageView imageViewLogin_Logout;
+    private LinearLayout linearLayoutLogin_Logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -39,7 +39,7 @@ import com.lqt.duynguyenhairsalon.Activities.LoadWebViewActivity;
 import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
 import com.lqt.duynguyenhairsalon.Activities.NotificationActivity;
 import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
-import com.lqt.duynguyenhairsalon.Model.DuyNguyenTVAdapter;
+import com.lqt.duynguyenhairsalon.Model.Adapters.DuyNguyenTVAdapter;
 import com.lqt.duynguyenhairsalon.Model.SystemHelper;
 import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
 import com.lqt.duynguyenhairsalon.R;

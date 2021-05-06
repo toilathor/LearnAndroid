@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Model;
+package com.lqt.duynguyenhairsalon.Model.Adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

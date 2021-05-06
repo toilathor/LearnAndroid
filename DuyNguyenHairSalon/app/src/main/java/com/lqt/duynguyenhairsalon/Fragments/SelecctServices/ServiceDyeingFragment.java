@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments;
+package com.lqt.duynguyenhairsalon.Fragments.SelecctServices;
 
 import android.os.Bundle;
 
@@ -10,16 +10,17 @@ import android.view.ViewGroup;
 
 import com.lqt.duynguyenhairsalon.R;
 
-public class ListImageFavoriteFragment extends Fragment {
+public class ServiceDyeingFragment extends Fragment {
 
-    private View view;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_list_image_favorite, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_service_dyeing, container, false);
     }
 }
