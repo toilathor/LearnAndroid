@@ -1,6 +1,8 @@
 package com.lqt.duynguyenhairsalon.Model;
 
-public class ServicesDuyNguyenHairSalon {
+import java.io.Serializable;
+
+public class ServicesDuyNguyenHairSalon implements Serializable {
     private String nameService;
     private String descriptionService;
     private boolean isSelected;

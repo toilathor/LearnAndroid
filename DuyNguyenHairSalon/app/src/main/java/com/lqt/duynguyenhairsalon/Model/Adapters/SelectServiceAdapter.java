@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
@@ -33,7 +35,6 @@ public class SelectServiceAdapter extends ArrayAdapter {
         TextView textViewNameService = (TextView) convertView.findViewById(R.id.textView_NameService);
         TextView textViewDescriptionService = (TextView) convertView.findViewById(R.id.textView_DescriptionService);
         TextView textViewPriceService = (TextView) convertView.findViewById(R.id.textView_PriceService);
-
         ServicesDuyNguyenHairSalon service = (ServicesDuyNguyenHairSalon) this.getItem(position);
         if (service != null) {
             if (service.isSelected()) {

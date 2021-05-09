@@ -5,12 +5,20 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.ServiceCutFragment;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectServiceFragmentAdapter;
+import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectServiceActivity extends AppCompatActivity {
 
@@ -18,6 +26,8 @@ public class SelectServiceActivity extends AppCompatActivity {
     private ViewPager2 viewPager2SelectService;
     private SelectServiceFragmentAdapter fragmentAdapter;
     private ImageView imageViewHome;
+    private Button buttonSuccess;
+    private List<ServicesDuyNguyenHairSalon> servicesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +84,41 @@ public class SelectServiceActivity extends AppCompatActivity {
                 startActivity(new Intent(SelectServiceActivity.this, MainActivity.class));
             }
         });
+
+        buttonSuccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String data = gson.toJson(servicesList);
+                Log.d("check_list_service", "" + data);
+                Intent intent = new Intent();
+                intent.putExtra("data", data);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
     private void AnhXa() {
         tabLayoutSelectSevice = (TabLayout) findViewById(R.id.tabLayout_SelectService);
         viewPager2SelectService = (ViewPager2) findViewById(R.id.viewPager2_SelectService);
         imageViewHome = (ImageView) findViewById(R.id.imageView_Home);
+        buttonSuccess = (Button) findViewById(R.id.button_SuccessSelect);
+    }
+
+    public List<ServicesDuyNguyenHairSalon> getServicesList() {
+        return servicesList;
+    }
+
+    public void setServicesList(List<ServicesDuyNguyenHairSalon> servicesList) {
+        this.servicesList = servicesList;
+    }
+
+    public void addServicesList(ServicesDuyNguyenHairSalon servicesList) {
+        this.servicesList.add(servicesList);
+    }
+
+    public void removeServicesList(ServicesDuyNguyenHairSalon servicesList) {
+        this.servicesList.remove(servicesList);
     }
 }

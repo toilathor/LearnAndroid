@@ -95,44 +95,7 @@
                     <com.wefika.flowlayout.FlowLayout
                         android:id="@+id/flowLayout_SelectedService"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/background_textview_to_edittext"
-                            android:padding="10dp"
-                            android:text="abc" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/background_textview_to_edittext"
-                            android:padding="10dp"
-                            android:text="ok! cảm ơn" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/background_textview_to_edittext"
-                            android:padding="10dp"
-                            android:text="đoạn text này rất dài" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/background_textview_to_edittext"
-                            android:padding="10dp"
-                            android:text="chạy ngay đi" />
-                    </com.wefika.flowlayout.FlowLayout>
+                        android:layout_height="wrap_content"/>
 
                     <Spinner
                         android:id="@+id/spinner_SelectDay"
