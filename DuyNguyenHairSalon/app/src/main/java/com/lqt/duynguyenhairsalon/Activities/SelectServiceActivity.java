@@ -106,14 +106,6 @@ public class SelectServiceActivity extends AppCompatActivity {
         buttonSuccess = (Button) findViewById(R.id.button_SuccessSelect);
     }
 
-    public List<ServicesDuyNguyenHairSalon> getServicesList() {
-        return servicesList;
-    }
-
-    public void setServicesList(List<ServicesDuyNguyenHairSalon> servicesList) {
-        this.servicesList = servicesList;
-    }
-
     public void addServicesList(ServicesDuyNguyenHairSalon servicesList) {
         this.servicesList.add(servicesList);
     }

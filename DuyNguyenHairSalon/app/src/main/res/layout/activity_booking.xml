@@ -85,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/background_textview_to_edittext"
+                        android:background="@drawable/background_border_black"
                         android:drawableStart="@drawable/ic_cut"
                         android:drawableEnd="@drawable/ic_baseline_play_arrow_24"
                         android:paddingStart="10dp"
@@ -95,7 +95,7 @@
                     <com.wefika.flowlayout.FlowLayout
                         android:id="@+id/flowLayout_SelectedService"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <Spinner
                         android:id="@+id/spinner_SelectDay"
@@ -103,6 +103,17 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:background="@android:color/transparent" />
+
+                    <HorizontalScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView_SelectTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </HorizontalScrollView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -190,7 +201,7 @@
                             android:layout_height="wrap_content"
                             android:checked="true"
                             android:text="@string/swich_yeu_cau_tu_van"
-                            android:textSize="18dp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"

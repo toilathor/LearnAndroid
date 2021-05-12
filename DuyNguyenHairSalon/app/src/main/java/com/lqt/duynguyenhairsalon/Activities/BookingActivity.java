@@ -1,8 +1,9 @@
 package com.lqt.duynguyenhairsalon.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,27 +17,43 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lqt.duynguyenhairsalon.Model.Adapters.SelectTimeAdapter;
+import com.lqt.duynguyenhairsalon.Model.BookingTime;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 import com.wefika.flowlayout.FlowLayout;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class BookingActivity extends AppCompatActivity {
 
+    //Params
     private final int REQUEST_CODE = 123;
+    private boolean isEmptyService = false;
+    private Calendar calendar = Calendar.getInstance();
+
+    //Views
     private Spinner spinnerDay;
     private List<DayCut> dayCutList;
     private DayCutAdapter dayCutAdapter;
     private ImageView imageViewHome;
     private Button button_SelectService, button_Success;
-
-    private List<ServicesDuyNguyenHairSalon> servicesList = new ArrayList<>();
     private FlowLayout flowLayoutServices;
+    private RecyclerView recyclerViewSelectTime;
+
+    //Lists
+    private List<ServicesDuyNguyenHairSalon> servicesList = new ArrayList<>();
+    private List<BookingTime> bookingTimeList = new ArrayList<>();
+
+    //Adapter
+    private SelectTimeAdapter timeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +64,44 @@ public class BookingActivity extends AppCompatActivity {
 
         ListDay();
 
+        ListTime();
+
         BookingListen();
+    }
+
+    private void ListTime() {
+        bookingTimeList.add(new BookingTime("18h30", false));
+        bookingTimeList.add(new BookingTime("18h30", false));
+        bookingTimeList.add(new BookingTime("18h30", false));
+        bookingTimeList.add(new BookingTime("18h30", false));
+        bookingTimeList.add(new BookingTime("18h00", true));
+        bookingTimeList.add(new BookingTime("18h30", false));
+        bookingTimeList.add(new BookingTime("18h30", false));
+        bookingTimeList.add(new BookingTime("18h30", false));
+
+        timeAdapter = new SelectTimeAdapter(this);
+        timeAdapter.setData(bookingTimeList);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 7);
+        recyclerViewSelectTime.setLayoutManager(gridLayoutManager);
+        recyclerViewSelectTime.setAdapter(timeAdapter);
+    }
+
+
+    /*
+     * Do nếu chuyển sang SelectServiceActivity mà người dùng ko
+     * chọn bất cứ một dịch vụ nào thì phải kiểm tra lại. (Ẩn list time đi)
+     * Đây là kiến thức thuộc Life Activity
+     *
+     * */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (servicesList.size() == 0 || servicesList == null) {
+            recyclerViewSelectTime.setVisibility(View.GONE);
+        } else {
+            recyclerViewSelectTime.setVisibility(View.VISIBLE);
+        }
     }
 
     /*
@@ -58,7 +112,6 @@ public class BookingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                //startActivity(new Intent(BookingActivity.this, MainActivity.class));
             }
         });
 
@@ -67,14 +120,14 @@ public class BookingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(BookingActivity.this, SelectServiceActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
-//                startActivity();
             }
         });
+
         button_Success.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO
-                startActivity(new Intent(BookingActivity.this, MainActivity.class));
+                //startActivity(new Intent(BookingActivity.this, MainActivity.class));
             }
         });
     }
@@ -84,13 +137,27 @@ public class BookingActivity extends AppCompatActivity {
      * */
     private void ListDay() {
         dayCutList = new ArrayList<>();
-        dayCutList.add(new DayCut("Thứ 2 3/5"));
-        dayCutList.add(new DayCut("Thứ 3 4/5"));
-        dayCutList.add(new DayCut("Thứ 4 5/5"));
-
+        for (int i = 0; i < 3; i++) {
+            upToDate(i);
+            String dayOfWeek = "";
+            if (i == 0) dayOfWeek += "Hôm nay, ";
+            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+                dayOfWeek += "Chủ Nhật";
+            } else {
+                dayOfWeek += "Thứ " + calendar.get(Calendar.DAY_OF_WEEK);
+            }
+            dayCutList.add(new DayCut(dayOfWeek + " (" + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1) + ")"));
+        }
         dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
 
         spinnerDay.setAdapter(dayCutAdapter);
+    }
+
+    private void upToDate(int numDay) {
+        if (numDay == 0) {
+            return;
+        }
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
     }
 
     private void setFlowLayoutService() {
@@ -109,7 +176,7 @@ public class BookingActivity extends AppCompatActivity {
                 textViewService.setLayoutParams(param);
                 textViewService.setText("" + service.getNameService());
                 textViewService.setPadding(30, 10, 30, 10);
-                textViewService.setBackgroundResource(R.drawable.background_textview_to_edittext);
+                textViewService.setBackgroundResource(R.drawable.background_border_black);
                 textViewService.setTextColor(getResources().getColor(R.color.black));
 
                 flowLayoutServices.addView(textViewService);
@@ -123,13 +190,14 @@ public class BookingActivity extends AppCompatActivity {
             String dataStringExtra = data.getStringExtra("data");
             Gson gson = new Gson();
             /*
-            * phải tạo mộ kiểu danh sách như thế này để truyền vào
-            * thì Gson mới đọc được list
-            *
-            *https://www.youtube.com/watch?v=xbo1G02c2VM&list=RDCMUC_Fh8kvtkVPkeihBs42jGcA&start_radio=1&t=443
-            *
-            * */
-            Type type = new TypeToken<List<ServicesDuyNguyenHairSalon>>(){}.getType();
+             * phải tạo mộ kiểu danh sách như thế này để truyền vào
+             * thì Gson mới đọc được list
+             *
+             *https://www.youtube.com/watch?v=xbo1G02c2VM&list=RDCMUC_Fh8kvtkVPkeihBs42jGcA&start_radio=1&t=443
+             *
+             * */
+            Type type = new TypeToken<List<ServicesDuyNguyenHairSalon>>() {
+            }.getType();
             servicesList = gson.fromJson(dataStringExtra, type);
             setFlowLayoutService();
             Log.d("check_send_data", "" + servicesList.size());
@@ -147,5 +215,6 @@ public class BookingActivity extends AppCompatActivity {
         button_SelectService = (Button) findViewById(R.id.button_SelectService);
         button_Success = (Button) findViewById(R.id.button_SuccessBook);
         flowLayoutServices = (FlowLayout) findViewById(R.id.flowLayout_SelectedService);
+        recyclerViewSelectTime = (RecyclerView) findViewById(R.id.recyclerView_SelectTime);
     }
 }
