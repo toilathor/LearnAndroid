@@ -1,8 +1,7 @@
-package com.lqt.duynguyenhairsalon.Fragments;
+package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -87,11 +86,11 @@ public class AccountFragment extends Fragment {
                     linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(225, 55, 55));
 
                     textViewLogin_Logout.setText("Đăng Xuất");
-                    imageViewLogin_Logout.setImageResource(R.drawable.logout);
+                    imageViewLogin_Logout.setImageResource(R.drawable.ic_logout);
                 } else {
                     linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(100, 225, 55));
                     textViewLogin_Logout.setText("Đăng Nhập");
-                    imageViewLogin_Logout.setImageResource(R.drawable.enter);
+                    imageViewLogin_Logout.setImageResource(R.drawable.ic_enter);
                 }
             }
         });

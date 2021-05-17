@@ -33,6 +33,7 @@ public class DayCutAdapter extends ArrayAdapter {
         return convertView;
     }
 
+
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_day_cut, parent, false);

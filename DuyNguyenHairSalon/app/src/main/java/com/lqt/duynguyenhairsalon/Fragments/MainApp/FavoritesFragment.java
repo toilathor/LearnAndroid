@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments;
+package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -22,11 +22,16 @@ import java.util.List;
 
 public class SelectServiceActivity extends AppCompatActivity {
 
+    //Layout
     private TabLayout tabLayoutSelectSevice;
     private ViewPager2 viewPager2SelectService;
-    private SelectServiceFragmentAdapter fragmentAdapter;
     private ImageView imageViewHome;
     private Button buttonSuccess;
+
+    //Adapter
+    private SelectServiceFragmentAdapter fragmentAdapter;
+
+    //List
     private List<ServicesDuyNguyenHairSalon> servicesList = new ArrayList<>();
 
     @Override

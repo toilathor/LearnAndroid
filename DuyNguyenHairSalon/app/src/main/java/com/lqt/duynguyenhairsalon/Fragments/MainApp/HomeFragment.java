@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments;
+package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
 import android.Manifest;
 import android.content.Intent;
@@ -32,7 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.lqt.duynguyenhairsalon.Activities.BookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
 import com.lqt.duynguyenhairsalon.Activities.DuyNguyenTVActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
 import com.lqt.duynguyenhairsalon.Activities.LoadWebViewActivity;
@@ -138,7 +138,8 @@ public class HomeFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_booking:
-                        Intent intent = new Intent(getContext(), BookingActivity.class);
+                        //TODO
+                        Intent intent = new Intent(getContext(), AdminBookingActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.menu_history:

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activities.BookingActivity">
+    tools:context=".Activities.CustomerBookingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout1"
@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:contentDescription="@string/back"
             android:padding="15dp"
-            android:src="@drawable/home_while"
+            android:src="@drawable/ic_home_while"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

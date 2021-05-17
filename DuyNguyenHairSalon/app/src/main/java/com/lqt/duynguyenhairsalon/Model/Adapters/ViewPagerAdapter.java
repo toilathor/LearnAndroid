@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.lqt.duynguyenhairsalon.Fragments.AccountFragment;
-import com.lqt.duynguyenhairsalon.Fragments.FavoritesFragment;
-import com.lqt.duynguyenhairsalon.Fragments.HomeFragment;
-import com.lqt.duynguyenhairsalon.Fragments.StoreFragment;
+import com.lqt.duynguyenhairsalon.Fragments.MainApp.AccountFragment;
+import com.lqt.duynguyenhairsalon.Fragments.MainApp.FavoritesFragment;
+import com.lqt.duynguyenhairsalon.Fragments.MainApp.HomeFragment;
+import com.lqt.duynguyenhairsalon.Fragments.MainApp.StoreFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {

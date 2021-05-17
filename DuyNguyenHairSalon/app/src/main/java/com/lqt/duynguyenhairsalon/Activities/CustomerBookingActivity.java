@@ -25,19 +25,17 @@ import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 import com.wefika.flowlayout.FlowLayout;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class BookingActivity extends AppCompatActivity {
+public class CustomerBookingActivity extends AppCompatActivity {
 
     //Params
     private final int REQUEST_CODE = 123;
     private boolean isEmptyService = false;
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar;
 
     //Views
     private Spinner spinnerDay;
@@ -58,7 +56,7 @@ public class BookingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking);
+        setContentView(R.layout.activity_customer_booking);
 
         AnhXa();
 
@@ -118,7 +116,7 @@ public class BookingActivity extends AppCompatActivity {
         button_SelectService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BookingActivity.this, SelectServiceActivity.class);
+                Intent intent = new Intent(CustomerBookingActivity.this, SelectServiceActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -127,7 +125,15 @@ public class BookingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO
-                //startActivity(new Intent(BookingActivity.this, MainActivity.class));
+                //startActivity(new Intent(CustomerBookingActivity.this, MainActivity.class));
+                Gson gson = new Gson();
+                String dataService = gson.toJson(servicesList);
+
+                Log.d("Result Booking", dataService
+                        + "\n"
+                        + dayCutList.get(spinnerDay.getSelectedItemPosition()).getStringDayCut()
+                        + "\n"
+                        + bookingTimeList.get(timeAdapter.getPositionSelceted()).getmTime());
             }
         });
     }
@@ -136,6 +142,8 @@ public class BookingActivity extends AppCompatActivity {
      * Xử lí spinner Day
      * */
     private void ListDay() {
+        calendar = Calendar.getInstance();
+
         dayCutList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             upToDate(i);

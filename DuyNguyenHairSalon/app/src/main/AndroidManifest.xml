@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DuyNguyenHairSalon">
-        <activity android:name=".Activities.SelectServiceActivity"></activity>
+        <activity android:name=".Activities.DescriptionTaskActivity"></activity>
+        <activity android:name=".Activities.AdminBookingActivity" />
+        <activity android:name=".Activities.SelectServiceActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -22,7 +24,7 @@
         <activity android:name=".Activities.CustomerDetailActivity" />
         <activity android:name=".Activities.RewardsActivity" />
         <activity android:name=".Activities.MemberActivity" />
-        <activity android:name=".Activities.BookingActivity" />
+        <activity android:name=".Activities.CustomerBookingActivity" />
         <activity android:name=".Activities.NotificationActivity" />
         <activity android:name=".Activities.HistoryCutActivity" />
         <activity android:name=".Activities.DuyNguyenTVActivity" />
