@@ -43,18 +43,18 @@ public class SuccessfulFragment extends Fragment {
     }
 
     private void SetRecyclerView() {
-        mTaskList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mTaskList.add(new mTask("Lê Quang Thọ", "0973***208"));
-        }
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
-                , LinearLayoutManager.VERTICAL
-                , false);
-        recyclerViewUnsuccessful.setLayoutManager(linearLayoutManager);
-        taskAdapter = new TaskAdapter(getActivity());
-        taskAdapter.setData(mTaskList);
-        recyclerViewUnsuccessful.setAdapter(taskAdapter);
+//        mTaskList = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            mTaskList.add(new mTask("Lê Quang Thọ", "0973***208"));
+//        }
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
+//                , LinearLayoutManager.VERTICAL
+//                , false);
+//        recyclerViewUnsuccessful.setLayoutManager(linearLayoutManager);
+//        taskAdapter = new TaskAdapter(getActivity(), true);
+//        taskAdapter.setData(mTaskList);
+//        recyclerViewUnsuccessful.setAdapter(taskAdapter);
     }
 
     private void AnhXa() {

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.lqt.duynguyenhairsalon.Activities.DescriptionTaskActivity;
 import com.lqt.duynguyenhairsalon.Model.mTask;
 import com.lqt.duynguyenhairsalon.R;
@@ -21,16 +22,23 @@ import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
+    /*
+     * @param KEY_FRAGEMENT
+     * nếu true là Successful
+     * nếu false là Unsuccessful
+     * */
     private Activity activity;
     private List<mTask> mTaskList;
+    private boolean isSuccessful;
 
     public void setData(List<mTask> data) {
         this.mTaskList = data;
         notifyDataSetChanged();
     }
 
-    public TaskAdapter(Activity activity) {
+    public TaskAdapter(Activity activity, boolean isSuccessful) {
         this.activity = activity;
+        this.isSuccessful = isSuccessful;
     }
 
     @NonNull
@@ -43,16 +51,24 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         mTask task = mTaskList.get(position);
-        if(task == null){
+        if (task == null) {
             return;
         }
 
-        holder.textViewName.setText(""+ task.getNameCustomer());
-        holder.textViewPhone.setText(""+ task.getPhoneNumberCustomer());
+        holder.textViewName.setText("" + task.getUser().getName_User());
+        holder.textViewPhone.setText("" + task.getUser().getPhone_Number_User());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(new Intent(activity, DescriptionTaskActivity.class));
+                Intent intent = new Intent(activity, DescriptionTaskActivity.class);
+
+                intent.putExtra("isSuccsessful", isSuccessful);
+
+                Gson gson = new Gson();
+                String data = gson.toJson(task);
+                intent.putExtra("data", data);
+                activity.startActivity(intent);
+
             }
         });
     }

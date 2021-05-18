@@ -39,12 +39,18 @@ public class ServiceCutFragment extends Fragment {
      *https://stackoverflow.com/questions/5551042/onitemclicklistener-not-working-in-listview
      *
      * */
-
+    //View
     private ListView listViewServiceCut;
-    private SelectServiceAdapter adapter;
-    private List<ServicesDuyNguyenHairSalon> servicesList;
     private View view;
-    SelectServiceActivity activity;
+
+    //Adapter
+    private SelectServiceAdapter adapter;
+
+    //List
+    private List<ServicesDuyNguyenHairSalon> servicesList;
+
+    //param
+    private SelectServiceActivity activity;
 
 
     @Override

@@ -33,6 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.CustomerBookingActivity;
 import com.lqt.duynguyenhairsalon.Activities.DuyNguyenTVActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
 import com.lqt.duynguyenhairsalon.Activities.LoadWebViewActivity;
@@ -57,20 +58,28 @@ public class HomeFragment extends Fragment {
      * thì mình chọn cách gán thẳng 1 tk context
      * sau đó sử dụng cho nhanh
      * */
+
+    //View
     private View view;
     private ViewFlipper viewFlipper_Demo;
     private RecyclerView recyclerViewDuyNguyenTV;
-    private DuyNguyenTVAdapter duyNguyenTVAdapter;
-    private SystemHelper systemHelper;
     private Button buttonCall;
     private TextView textViewXemThemTV, textViewSignupRank;
     private ImageView imageViewHistoryCut, imageViewNotification;
     private BottomNavigationView bottomNavigationView;
 
-    private List<VideoYouTube> playListYouTube;
+    //Adapter
+    private DuyNguyenTVAdapter duyNguyenTVAdapter;
+
+    //Param
+    private SystemHelper systemHelper;
     private String playlistId = "PLbplMzmYtClB5RqnCS1xcSbkcl_RA9bks";
     private String key = "AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o";
     private String Url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + key + "&maxResults=5";
+    private boolean isAdmin;
+
+    //List
+    private List<VideoYouTube> playListYouTube;
 
     @Nullable
     @Override
@@ -81,6 +90,10 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         systemHelper = new SystemHelper(view.getContext());
+
+        //TODO
+        //Sau này đăng nhập được thì sẽ xét isAdmin
+        isAdmin = true;
 
         AnhXa();
 
@@ -138,9 +151,13 @@ public class HomeFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_booking:
-                        //TODO
-                        Intent intent = new Intent(getContext(), AdminBookingActivity.class);
-                        startActivity(intent);
+                        if (isAdmin) {
+                            Intent intent = new Intent(getContext(), AdminBookingActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getContext(), CustomerBookingActivity.class);
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.menu_history:
                         Intent intent2 = new Intent(getContext(), HistoryCutActivity.class);
