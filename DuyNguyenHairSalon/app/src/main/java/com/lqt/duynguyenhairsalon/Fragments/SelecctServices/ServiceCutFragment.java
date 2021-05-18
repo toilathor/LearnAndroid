@@ -17,10 +17,20 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectServiceAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +61,7 @@ public class ServiceCutFragment extends Fragment {
 
     //param
     private SelectServiceActivity activity;
-
+    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetServiceDuyNguyen.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,39 +70,45 @@ public class ServiceCutFragment extends Fragment {
 
         AnhXa();
 
-        AddData();
-
-        ServiceCutLister();
+        SetViewService();
+        SetDataService(Url);
 
         return view;
     }
 
-    private void ServiceCutLister() {
+    private void SetDataService(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject service = response.getJSONObject(i);
+                        servicesList.add(new ServicesDuyNguyenHairSalon(Integer.parseInt(service.getString("ID_Service"))
+                                , service.getString("Name_Service")
+                                , service.getString("Description_Service")
+                                , false
+                                , Integer.parseInt(service.getString("Price_Service"))));
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error", error.toString());
+            }
+        });
+
+        requestQueue.add(arrayRequest);
 
     }
 
-    private void AddData() {
+    private void SetViewService() {
         servicesList = new ArrayList<>();
-        servicesList.add(new ServicesDuyNguyenHairSalon("Combo cắt gội 10 bước"
-                , "Combo Cắt - Gội - Thư giãn 10 bước cơ bản"
-                , false
-                , 80000));
-        servicesList.add(new ServicesDuyNguyenHairSalon("Cắt xả"
-                , "Cắt xả nhanh không gội, massage. Tiết kiệm thời gian"
-                , false
-                , 70000));
-        servicesList.add(new ServicesDuyNguyenHairSalon("Vip combo cắt gội"
-                , "Combo 10 bước kèm các dịch vụ chăm sóc grooming cao cấp"
-                , false
-                , 199000));
-        servicesList.add(new ServicesDuyNguyenHairSalon("Kid combo"
-                , "Combo cắt gội riêng cho bé (mỹ phẩm riêng cho trẻ em)"
-                , false
-                , 70000));
-        servicesList.add(new ServicesDuyNguyenHairSalon("Gội massage dưỡng sinh vuốt tạo kiểu"
-                , "Áp dụng Y học cổ truyền, bấm huyệt chữa mỏi vai gáy"
-                , false
-                , 40000));
         adapter = new SelectServiceAdapter(getContext()
                 , R.layout.item_service_duynguyen_hair_salon
                 , servicesList);

@@ -112,7 +112,12 @@ public class AdminBookingActivity extends AppCompatActivity {
             } else {
                 dayOfWeek += "Thứ " + calendar.get(Calendar.DAY_OF_WEEK);
             }
-            dayCutList.add(new DayCut(dayOfWeek + " (" + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1) + ")"));
+            dayCutList.add(new DayCut(dayOfWeek + " ("
+                    + calendar.get(Calendar.DATE)
+                    + "/" + (calendar.get(Calendar.MONTH) + 1) + ")"
+                    , "" + calendar.get(Calendar.YEAR)
+                    + "-" + (calendar.get(Calendar.MONTH) + 1)
+                    + "-" + calendar.get(Calendar.DATE)));
         }
         dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
 

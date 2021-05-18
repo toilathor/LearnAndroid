@@ -2,13 +2,24 @@ package com.lqt.duynguyenhairsalon.Model;
 
 public class BookingTime {
     private String mTime;
+    private String timeCut;
     private boolean isSelected;
     private boolean isSelecting;
 
-    public BookingTime(String mTime, boolean isSelected) {
+
+    public BookingTime(String mTime, boolean isSelected, String TimeCut) {
         this.mTime = mTime;
         this.isSelected = isSelected;
+        this.timeCut = TimeCut;
         this.isSelecting = false;
+    }
+
+    public String getTimeCut() {
+        return timeCut;
+    }
+
+    public void setTimeCut(String timeCut) {
+        this.timeCut = timeCut;
     }
 
     public boolean isSelecting() {

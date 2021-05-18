@@ -19,6 +19,7 @@ public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.Se
     private List<BookingTime> bookingTimes;
     private Context context;
     private int mPosition = 0;
+    private String mTime = "";
 
     public void setData(List<BookingTime> bookingTimes) {
         this.bookingTimes = bookingTimes;
@@ -68,6 +69,7 @@ public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.Se
                 }else {
                     bookingTimes.get(mPosition).setSelecting(false);
                     mPosition = position;
+                    mTime = bookingTime.getTimeCut();
                     bookingTimes.get(position).setSelecting(true);
                 }
                 notifyDataSetChanged();
@@ -81,6 +83,10 @@ public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.Se
     * */
     public int getPositionSelceted(){
         return mPosition;
+    }
+
+    public String getmTime() {
+        return mTime;
     }
 
     @Override

@@ -47,7 +47,9 @@ public class CustomerBookingActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 123;
     private boolean isEmptyService = false;
     private Calendar calendar;
-    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertTaskDuyNguyen.php";
+    private String ID_Task;
+    private String urlTask = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertTaskDuyNguyen.php";
+    private String urlDescription = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertDescriptionTaskDuyNguyen.php";
 
     //Views
     private Spinner spinnerDay;
@@ -72,6 +74,16 @@ public class CustomerBookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_booking);
 
+        //Tạo ID trong mỗi lần chuẩn bị đặt lịch
+        calendar = Calendar.getInstance();
+        ID_Task = "" + calendar.get(Calendar.YEAR) % 2000
+                + (calendar.get(Calendar.MONTH) + 1)
+                + calendar.get(Calendar.DATE)
+                + calendar.get(Calendar.HOUR)
+                + calendar.get(Calendar.MINUTE)
+                + calendar.get(Calendar.SECOND)
+                + calendar.get(Calendar.AM_PM);
+
         AnhXa();
 
         ListDay();
@@ -82,18 +94,14 @@ public class CustomerBookingActivity extends AppCompatActivity {
     }
 
     private void ListTime() {
-        bookingTimeList.add(new BookingTime("08h30", false));
-        bookingTimeList.add(new BookingTime("9h00", false));
-        bookingTimeList.add(new BookingTime("9h30", false));
-        bookingTimeList.add(new BookingTime("10h00", false));
-        bookingTimeList.add(new BookingTime("10h30", true));
-        bookingTimeList.add(new BookingTime("11h00", false));
-        bookingTimeList.add(new BookingTime("11h30", false));
-        bookingTimeList.add(new BookingTime("12h00", false));
-        bookingTimeList.add(new BookingTime("12h30", false));
-        bookingTimeList.add(new BookingTime("13h00", false));
-        bookingTimeList.add(new BookingTime("13h30", false));
-        bookingTimeList.add(new BookingTime("14h00", false));
+        for (int i = 8; i < 18; i++) {
+            for (int j = 0; j < 2; j++) {
+                String mTime = "" + i + "h" + (j == 0 ? "00" : "30");
+                String TimeCut = "" + i + ":" + (j == 0 ? "00" : "30");
+                ;
+                bookingTimeList.add(new BookingTime(mTime, false, TimeCut));
+            }
+        }
 
         timeAdapter = new SelectTimeAdapter(this);
         timeAdapter.setData(bookingTimeList);
@@ -143,30 +151,26 @@ public class CustomerBookingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO
-//                Gson gson = new Gson();
-//                String dataService = gson.toJson(servicesList);
-//
-//                Log.d("Result Booking", dataService
-//                        + "\n"
-//                        + dayCutList.get(spinnerDay.getSelectedItemPosition()).getStringDayCut()
-//                        + "\n"
-//                        + bookingTimeList.get(timeAdapter.getPositionSelceted()).getmTime());
-                if(servicesList.size() > 0 && timeAdapter.getPositionSelceted() != 0){
-                    InsertData(Url);
+                if (servicesList.size() > 0 && timeAdapter.getPositionSelceted() != 0) {
+                    InsertTask(urlTask);
+                    for (int i = 0; i<servicesList.size();i++) {
+                        InsertDescription(urlDescription, ""+ servicesList.get(i).getIdService());
+                    }
                 }
+
             }
         });
     }
 
-    private void InsertData(String url) {
+    private void InsertDescription(String url, String id_service) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response.toString().equals("successful")){
+                if (response.toString().equals("successful")) {
                     Toast.makeText(CustomerBookingActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
                     finish();
-                }else{
+                } else {
                     Toast.makeText(CustomerBookingActivity.this, "Lỗi! Vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -176,24 +180,62 @@ public class CustomerBookingActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.e("error insert", error.toString());
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> param = new HashMap<>();
 
-                param.put("Date_Task","2021-05-18 09:30:00");
+                param.put("ID_Task", ID_Task);
+
+                param.put("ID_Service", id_service);
+
+                return param;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void InsertTask(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.toString().equals("successful")) {
+                    Toast.makeText(CustomerBookingActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(CustomerBookingActivity.this, "Lỗi! Vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error insert", error.toString());
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> param = new HashMap<>();
+
+                param.put("ID_Task", ID_Task);
+
+                param.put("Date_Task", dayCutAdapter.getDateSelected() + " " + timeAdapter.getmTime());
 
                 int sum = 0;
-                for (int i = 0; i<servicesList.size();i++) {
+                for (int i = 0; i < servicesList.size(); i++) {
                     sum += servicesList.get(i).getPriceService();
                 }
-                param.put("Sum_Money_Task",""+sum);
+                param.put("Sum_Money_Task", "" + sum);
 
 
-                param.put("Is_Save_Photo",""+ (switchChupAnhSauKhiCat.isChecked()?1:0));
-                param.put("Is_Consulting",""+ (switchYeuCauTuVan.isChecked()?1:0));
+                param.put("Is_Save_Photo", "" + (switchChupAnhSauKhiCat.isChecked() ? 1 : 0));
+                param.put("Is_Consulting", "" + (switchYeuCauTuVan.isChecked() ? 1 : 0));
 
                 return param;
             }
@@ -218,7 +260,12 @@ public class CustomerBookingActivity extends AppCompatActivity {
             } else {
                 dayOfWeek += "Thứ " + calendar.get(Calendar.DAY_OF_WEEK);
             }
-            dayCutList.add(new DayCut(dayOfWeek + " (" + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1) + ")"));
+            dayCutList.add(new DayCut(dayOfWeek + " ("
+                    + calendar.get(Calendar.DATE)
+                    + "/" + (calendar.get(Calendar.MONTH) + 1) + ")"
+                    , "" + calendar.get(Calendar.YEAR)
+                    + "-" + (calendar.get(Calendar.MONTH) + 1)
+                    + "-" + calendar.get(Calendar.DATE)));
         }
         dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
 
@@ -272,7 +319,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
             }.getType();
             servicesList = gson.fromJson(dataStringExtra, type);
             setFlowLayoutService();
-            Log.d("check_send_data", "" + servicesList.size());
+            Log.d("check send data", "" + servicesList.size());
 
         }
         super.onActivityResult(requestCode, resultCode, data);

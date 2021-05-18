@@ -3,16 +3,26 @@ package com.lqt.duynguyenhairsalon.Model;
 import java.io.Serializable;
 
 public class ServicesDuyNguyenHairSalon implements Serializable {
+    private int idService;
     private String nameService;
     private String descriptionService;
     private boolean isSelected;
     private int priceService;
 
-    public ServicesDuyNguyenHairSalon(String nameService, String descriptionService, boolean isSelected, int priceService) {
+    public ServicesDuyNguyenHairSalon(int idService, String nameService, String descriptionService, boolean isSelected, int priceService) {
+        this.idService = idService;
         this.nameService = nameService;
         this.descriptionService = descriptionService;
         this.isSelected = isSelected;
         this.priceService = priceService;
+    }
+
+    public int getIdService() {
+        return idService;
+    }
+
+    public void setIdService(int idService) {
+        this.idService = idService;
     }
 
     public String getNameService() {

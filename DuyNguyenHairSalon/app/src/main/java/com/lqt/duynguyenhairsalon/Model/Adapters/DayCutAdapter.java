@@ -16,6 +16,9 @@ import com.lqt.duynguyenhairsalon.R;
 import java.util.List;
 
 public class DayCutAdapter extends ArrayAdapter {
+
+    private String dateSelected = "";
+
     public DayCutAdapter(@NonNull Context context, int resource, @NonNull List objects) {
         super(context, resource, objects);
     }
@@ -29,7 +32,9 @@ public class DayCutAdapter extends ArrayAdapter {
         DayCut dayCut = (DayCut) this.getItem(position);
         if (dayCut != null){
             textViewSelected.setText("" + dayCut.getStringDayCut());
+            dateSelected = dayCut.getDateCut();
         }
+
         return convertView;
     }
 
@@ -44,5 +49,13 @@ public class DayCutAdapter extends ArrayAdapter {
             textViewDay.setText("" + dayCut.getStringDayCut());
         }
         return convertView;
+    }
+
+    public void setDateSelected(String dateSelected) {
+        this.dateSelected = dateSelected;
+    }
+
+    public String getDateSelected() {
+        return dateSelected;
     }
 }

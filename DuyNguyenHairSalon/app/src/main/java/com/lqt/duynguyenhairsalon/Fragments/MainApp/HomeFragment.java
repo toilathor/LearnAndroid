@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.youtube.player.internal.f;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
@@ -93,7 +94,7 @@ public class HomeFragment extends Fragment {
 
         //TODO
         //Sau này đăng nhập được thì sẽ xét isAdmin
-        isAdmin = true;
+        isAdmin = false;
 
         AnhXa();
 

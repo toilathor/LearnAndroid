@@ -81,7 +81,6 @@ public class UnsuccessfulFragment extends Fragment {
                 , new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("success", response.toString());
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject task = response.getJSONObject(i);
@@ -112,7 +111,7 @@ public class UnsuccessfulFragment extends Fragment {
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error", error.toString());
+                Log.e("error", error.toString());
             }
         });
 
