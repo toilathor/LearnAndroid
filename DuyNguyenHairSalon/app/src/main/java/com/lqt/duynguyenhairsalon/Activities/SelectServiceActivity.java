@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
-import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.ServiceCutFragment;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectServiceFragmentAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
@@ -111,11 +110,25 @@ public class SelectServiceActivity extends AppCompatActivity {
         buttonSuccess = (Button) findViewById(R.id.button_SuccessSelect);
     }
 
-    public void addServicesList(ServicesDuyNguyenHairSalon servicesList) {
-        this.servicesList.add(servicesList);
+    public void addServicesList(ServicesDuyNguyenHairSalon service) {
+
+        if (servicesList.size() != 0) {
+            this.servicesList.add(service);
+            buttonSuccess.setText("Chọn " + servicesList.size() + " dịch vụ");
+        } else {
+            this.servicesList.add(service);
+            buttonSuccess.setText("Chọn " + servicesList.size() + " dịch vụ");
+            buttonSuccess.setBackgroundResource(R.drawable.background_topup);
+        }
     }
 
-    public void removeServicesList(ServicesDuyNguyenHairSalon servicesList) {
-        this.servicesList.remove(servicesList);
+    public void removeServicesList(ServicesDuyNguyenHairSalon service) {
+        this.servicesList.remove(service);
+        if (servicesList.size() == 0) {
+            buttonSuccess.setText("Chọn dịch vụ");
+            buttonSuccess.setBackgroundResource(R.color.common_google_signin_btn_text_dark_disabled);
+        } else {
+            buttonSuccess.setText("Chọn " + servicesList.size() + " dịch vụ");
+        }
     }
 }

@@ -1,18 +1,16 @@
 package com.lqt.duynguyenhairsalon.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutAdapter;
-import com.lqt.duynguyenhairsalon.Model.Adapters.SelectServiceAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectSuccessAdapter;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.R;
@@ -25,6 +23,7 @@ public class AdminBookingActivity extends AppCompatActivity {
 
     //Param
     private Calendar calendar;
+    private String dayCut;
 
     //List
     private List<DayCut> dayCutList;
@@ -38,7 +37,7 @@ public class AdminBookingActivity extends AppCompatActivity {
     private Spinner spinnerDay;
     private TabLayout tabLayoutSelectSuccess;
     private ViewPager2 viewPager2SelectSuccess;
-
+    private Button buttonShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +45,12 @@ public class AdminBookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_booking);
 
         AnhXa();
+
+        buttonShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
         SetTabLayout();
 
@@ -120,7 +125,6 @@ public class AdminBookingActivity extends AppCompatActivity {
                     + "-" + calendar.get(Calendar.DATE)));
         }
         dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
-
         spinnerDay.setAdapter(dayCutAdapter);
     }
 
@@ -131,10 +135,20 @@ public class AdminBookingActivity extends AppCompatActivity {
         calendar.add(Calendar.DAY_OF_WEEK, 1);
     }
 
+    //Set DayCut để lấy ra từ fragment TODO
+    public String getDayCut() {
+        return dayCut;
+    }
+
+    public void setDayCut(String dayCut) {
+        this.dayCut = dayCut;
+    }
+
     private void AnhXa() {
         spinnerDay = (Spinner) findViewById(R.id.spinner_SelectDay);
         tabLayoutSelectSuccess = (TabLayout) findViewById(R.id.tabLayout_SelectSuccess);
         viewPager2SelectSuccess = (ViewPager2) findViewById(R.id.viewPager2_SelectSuccess);
         imageViewHome = (ImageView) findViewById(R.id.imageView_Home);
+        buttonShow = (Button) findViewById(R.id.button_Show);
     }
 }

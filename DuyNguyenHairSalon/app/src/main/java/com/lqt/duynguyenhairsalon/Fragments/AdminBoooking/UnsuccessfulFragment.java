@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.TaskAdapter;
 import com.lqt.duynguyenhairsalon.Model.User;
 import com.lqt.duynguyenhairsalon.Model.mTask;
@@ -58,13 +59,13 @@ public class UnsuccessfulFragment extends Fragment {
 
         AnhXa();
 
-
-
         /*
          * https://viblo.asia/p/giai-quyet-rac-roi-khi-su-sung-cleartext-tren-android-pie-maGK7DLeZj2
          * phải thay đổi trong manifest giá trị usesCleartextTraffic = true; để truy cập địa chỉ http//
          *
          * */
+        AdminBookingActivity activity = (AdminBookingActivity) getActivity();
+
         LoadListTask("http://192.168.1.101/DuyNguyenHairSalonWebService/GetDataDuyNguyen.php");
 
         SetRecyclerView();

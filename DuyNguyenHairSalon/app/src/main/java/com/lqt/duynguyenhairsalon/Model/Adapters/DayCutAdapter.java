@@ -1,6 +1,8 @@
 package com.lqt.duynguyenhairsalon.Model.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.MainActivity;
+import com.lqt.duynguyenhairsalon.Fragments.AdminBoooking.UnsuccessfulFragment;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -47,6 +53,7 @@ public class DayCutAdapter extends ArrayAdapter {
         DayCut dayCut = (DayCut) this.getItem(position);
         if (dayCut != null){
             textViewDay.setText("" + dayCut.getStringDayCut());
+
         }
         return convertView;
     }

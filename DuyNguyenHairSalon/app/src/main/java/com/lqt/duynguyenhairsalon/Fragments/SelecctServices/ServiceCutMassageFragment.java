@@ -2,20 +2,17 @@ package com.lqt.duynguyenhairsalon.Fragments.SelecctServices;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,7 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.SelectServiceActivity;
-import com.lqt.duynguyenhairsalon.Model.Adapters.SelectServiceAdapter;
+import com.lqt.duynguyenhairsalon.Model.Adapters.ServiceAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -35,7 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceCutFragment extends Fragment {
+public class ServiceCutMassageFragment extends Fragment {
 
     /*
      * android:descendantFocusability="blocksDescendants"
@@ -50,27 +47,29 @@ public class ServiceCutFragment extends Fragment {
      *
      * */
     //View
-    private ListView listViewServiceCut;
+    private RecyclerView recyclerViewServiceCut;
     private View view;
 
     //Adapter
-    private SelectServiceAdapter adapter;
+    private ServiceAdapter adapter;
 
     //List
     private List<ServicesDuyNguyenHairSalon> servicesList;
 
     //param
     private SelectServiceActivity activity;
+    private final String ID_Species = "1";
     private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetServiceDuyNguyen.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_service_cut, container, false);
+        view = inflater.inflate(R.layout.fragment_service_cut_masage, container, false);
 
         AnhXa();
 
         SetViewService();
+
         SetDataService(Url);
 
         return view;
@@ -78,18 +77,22 @@ public class ServiceCutFragment extends Fragment {
 
     private void SetDataService(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject service = response.getJSONObject(i);
-                        servicesList.add(new ServicesDuyNguyenHairSalon(Integer.parseInt(service.getString("ID_Service"))
-                                , service.getString("Name_Service")
-                                , service.getString("Description_Service")
-                                , false
-                                , Integer.parseInt(service.getString("Price_Service"))));
-                        adapter.notifyDataSetChanged();
+                        if (service.getString("ID_Species").equals(ID_Species)) {
+                            servicesList.add(new ServicesDuyNguyenHairSalon(Integer.parseInt(service.getString("ID_Service"))
+                                    , service.getString("Name_Service")
+                                    , service.getString("Description_Service")
+                                    , false
+                                    , Integer.parseInt(service.getString("Price_Service"))));
+                            adapter.notifyDataSetChanged();
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -109,30 +112,18 @@ public class ServiceCutFragment extends Fragment {
 
     private void SetViewService() {
         servicesList = new ArrayList<>();
-        adapter = new SelectServiceAdapter(getContext()
-                , R.layout.item_service_duynguyen_hair_salon
-                , servicesList);
-        listViewServiceCut.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (servicesList.get(position).isSelected()) {
-                    servicesList.get(position).setSelected(!servicesList.get(position).isSelected());
-                    activity.removeServicesList(servicesList.get(position));
-                } else {
-                    servicesList.get(position).setSelected(!servicesList.get(position).isSelected());
-                    activity.addServicesList(servicesList.get(position));
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-        listViewServiceCut.setAdapter(adapter);
+        adapter = new ServiceAdapter(activity);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
+                , LinearLayoutManager.VERTICAL
+                , false);
+        recyclerViewServiceCut.setLayoutManager(linearLayoutManager);
+        adapter.setData(servicesList);
+        recyclerViewServiceCut.setAdapter(adapter);
     }
 
     private void AnhXa() {
         activity = (SelectServiceActivity) getActivity();
 
-        listViewServiceCut = (ListView) view.findViewById(R.id.listView_Service);
+        recyclerViewServiceCut = (RecyclerView) view.findViewById(R.id.recyclerView_Service);
     }
 }

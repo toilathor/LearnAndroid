@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.OtherServicesFragment;
 import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.ServiceCurlingFragment;
-import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.ServiceCutFragment;
+import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.ServiceCutMassageFragment;
 import com.lqt.duynguyenhairsalon.Fragments.SelecctServices.ServiceDyeingFragment;
 
 public class SelectServiceFragmentAdapter extends FragmentStateAdapter {
@@ -22,7 +22,7 @@ public class SelectServiceFragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new ServiceCutFragment();
+                return new ServiceCutMassageFragment();
             case 1:
                 return new ServiceCurlingFragment();
             case 2:
@@ -30,7 +30,7 @@ public class SelectServiceFragmentAdapter extends FragmentStateAdapter {
             case 3:
                 return new OtherServicesFragment();
             default:
-                return new ServiceCutFragment();
+                return new ServiceCutMassageFragment();
         }
     }
 
