@@ -111,7 +111,7 @@ public class OtherServicesFragment extends Fragment {
 
     private void SetViewService() {
         servicesList = new ArrayList<>();
-        adapter = new ServiceAdapter(activity);
+        adapter = new ServiceAdapter(activity, 4);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
                 , LinearLayoutManager.VERTICAL
                 , false);

@@ -57,6 +57,15 @@ public class AdminBookingActivity extends AppCompatActivity {
         AdminBookingListen();
 
         ListDay();
+
+        /*
+        * cái này để load Service free
+        * List<String> list = new ArrayList<>();
+        *
+        * Type type = new TypeToken<List<String>>(){}.getType();
+        * list = gson.fromJson(iServiceFree, type);
+        *
+        * */
     }
 
     private void AdminBookingListen() {

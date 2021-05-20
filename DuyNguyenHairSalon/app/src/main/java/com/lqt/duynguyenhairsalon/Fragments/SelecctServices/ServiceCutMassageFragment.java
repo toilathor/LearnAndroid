@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -60,6 +61,7 @@ public class ServiceCutMassageFragment extends Fragment {
     private SelectServiceActivity activity;
     private final String ID_Species = "1";
     private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetServiceDuyNguyen.php";
+    //private String Url = "https://lequangtho.000webhostapp.com/GetServiceDuyNguyen.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,7 +114,7 @@ public class ServiceCutMassageFragment extends Fragment {
 
     private void SetViewService() {
         servicesList = new ArrayList<>();
-        adapter = new ServiceAdapter(activity);
+        adapter = new ServiceAdapter(activity,1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()
                 , LinearLayoutManager.VERTICAL
                 , false);
@@ -125,5 +127,6 @@ public class ServiceCutMassageFragment extends Fragment {
         activity = (SelectServiceActivity) getActivity();
 
         recyclerViewServiceCut = (RecyclerView) view.findViewById(R.id.recyclerView_Service);
+
     }
 }

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -22,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -33,6 +36,10 @@ import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 import com.wefika.flowlayout.FlowLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -48,8 +55,12 @@ public class CustomerBookingActivity extends AppCompatActivity {
     private boolean isEmptyService = false;
     private Calendar calendar;
     private String ID_Task;
+    private int isSuccess = 0;
     private String urlTask = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertTaskDuyNguyen.php";
     private String urlDescription = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertDescriptionTaskDuyNguyen.php";
+    private String urlDay0 = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetTimeForDayDuyNguyen0.php";
+    private String urlDay1 = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetTimeForDayDuyNguyen1.php";
+    private String urlDay2 = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetTimeForDayDuyNguyen2.php";
 
     //Views
     private Spinner spinnerDay;
@@ -61,10 +72,12 @@ public class CustomerBookingActivity extends AppCompatActivity {
     private RecyclerView recyclerViewSelectTime;
     private Switch switchChupAnhSauKhiCat;
     private Switch switchYeuCauTuVan;
+    private CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6;
 
     //Lists
     private List<ServicesDuyNguyenHairSalon> servicesList = new ArrayList<>();
     private List<BookingTime> bookingTimeList = new ArrayList<>();
+    private List<String> serviceFree = new ArrayList<>();
 
     //Adapter
     private SelectTimeAdapter timeAdapter;
@@ -74,15 +87,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_booking);
 
-        //Tạo ID trong mỗi lần chuẩn bị đặt lịch
-        calendar = Calendar.getInstance();
-        ID_Task = "" + calendar.get(Calendar.YEAR) % 2000
-                + (calendar.get(Calendar.MONTH) + 1)
-                + calendar.get(Calendar.DATE)
-                + calendar.get(Calendar.HOUR)
-                + calendar.get(Calendar.MINUTE)
-                + calendar.get(Calendar.SECOND)
-                + calendar.get(Calendar.AM_PM);
+        CreateIDTask();
 
         AnhXa();
 
@@ -93,7 +98,21 @@ public class CustomerBookingActivity extends AppCompatActivity {
         BookingListen();
     }
 
-    private void ListTime() {
+    private void CreateIDTask() {
+        //Tạo ID trong mỗi lần chuẩn bị đặt lịch
+        calendar = Calendar.getInstance();
+        ID_Task = "" + calendar.get(Calendar.YEAR) % 2000
+                + (calendar.get(Calendar.MONTH) + 1)
+                + calendar.get(Calendar.DATE)
+                + calendar.get(Calendar.HOUR)
+                + calendar.get(Calendar.MINUTE)
+                + calendar.get(Calendar.SECOND)
+                + calendar.get(Calendar.AM_PM);
+    }
+
+    public void ListTime() {
+        bookingTimeList.clear();
+
         for (int i = 8; i < 18; i++) {
             for (int j = 0; j < 2; j++) {
                 String mTime = "" + i + "h" + (j == 0 ? "00" : "30");
@@ -109,6 +128,97 @@ public class CustomerBookingActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 7);
         recyclerViewSelectTime.setLayoutManager(gridLayoutManager);
         recyclerViewSelectTime.setAdapter(timeAdapter);
+
+        switch (dayCutAdapter.getmPosition()) {
+            case 0:
+                GetTime(urlDay0);
+                SetDay0();
+                break;
+            case 1:
+                GetTime(urlDay1);
+                break;
+            case 2:
+                GetTime(urlDay2);
+                break;
+            default:
+                GetTime(urlDay0);
+                break;
+        }
+
+    }
+
+    private void SetDay0() {
+
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        int am_pm = calendar.get(Calendar.AM_PM);
+
+        int mPosition;
+
+        if (am_pm == 0) {
+            if (minute == 0) {
+                mPosition = (hour - 8) * 2;
+            } else {
+                mPosition = (hour - 8) * 2 + 1;
+            }
+        } else {
+            if (minute == 0) {
+                mPosition = (hour + 4) * 2;
+            } else {
+                mPosition = (hour + 4) * 2 + 1;
+            }
+        }
+
+        if (mPosition + 2 > bookingTimeList.size()) {
+            for (int i = 0; i < bookingTimeList.size(); i++) {
+                bookingTimeList.get(i).setSelected(true);
+                timeAdapter.notifyDataSetChanged();
+            }
+        } else {
+            for (int i = 0; i < mPosition + 2; i++) {
+                bookingTimeList.get(i).setSelected(true);
+                timeAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    private void GetTime(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int hour = jsonObject.getInt("HOUR");
+                        int minute = jsonObject.getInt("MINUTE");
+
+                        int mPosition;
+
+                        if (minute == 0) {
+                            mPosition = (hour - 8) * 2;
+                        } else {
+                            mPosition = (hour - 8) * 2 + 1;
+                        }
+
+                        bookingTimeList.get(mPosition).setSelected(true);
+
+                        timeAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error", error.toString());
+            }
+        });
+
+        requestQueue.add(arrayRequest);
     }
 
 
@@ -151,27 +261,94 @@ public class CustomerBookingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO
-                if (servicesList.size() > 0 && timeAdapter.getPositionSelceted() != 0) {
+                if (servicesList.size() > 0 && timeAdapter.getPositionSelceted() >= 0) {
                     InsertTask(urlTask);
-                    for (int i = 0; i<servicesList.size();i++) {
-                        InsertDescription(urlDescription, ""+ servicesList.get(i).getIdService());
-                    }
+                } else {
+                    Toast.makeText(CustomerBookingActivity.this, "Bạn phải chọn dịch vụ và thời gian chứ!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
 
+        //check box
+        checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceFree.add("" + buttonView.getText());
+                } else {
+                    serviceFree.remove(buttonView.getText());
+                }
+            }
+        });
+
+        checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceFree.add("" + buttonView.getText());
+                } else {
+                    serviceFree.remove(buttonView.getText());
+                }
+            }
+        });
+
+        checkBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceFree.add("" + buttonView.getText());
+                } else {
+                    serviceFree.remove(buttonView.getText());
+                }
+            }
+        });
+
+        checkBox4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceFree.add("" + buttonView.getText());
+                } else {
+                    serviceFree.remove(buttonView.toString());
+                }
+            }
+        });
+
+        checkBox5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceFree.add("" + buttonView.getText());
+                } else {
+                    serviceFree.remove(buttonView.getText());
+                }
+            }
+        });
+
+        checkBox6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    serviceFree.add("" + buttonView.getText());
+                } else {
+                    serviceFree.remove(buttonView.getText());
+                }
             }
         });
     }
 
-    private void InsertDescription(String url, String id_service) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+    private StringRequest InsertDescription(String url, String id_service) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.toString().equals("successful")) {
-                    Toast.makeText(CustomerBookingActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                    finish();
+                if (response.equals("successful")) {
+                    isSuccess++;
+                    if (isSuccess == servicesList.size() + 1) {
+                        Toast.makeText(CustomerBookingActivity.this, "Thành công!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 } else {
-                    Toast.makeText(CustomerBookingActivity.this, "Lỗi! Vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
+                    Log.e("error", "Lỗi! Vui lòng thử lại sau");
                     finish();
                 }
             }
@@ -195,7 +372,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
             }
         };
 
-        requestQueue.add(stringRequest);
+        return stringRequest;
     }
 
     private void InsertTask(String url) {
@@ -203,11 +380,10 @@ public class CustomerBookingActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.toString().equals("successful")) {
-                    Toast.makeText(CustomerBookingActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                    finish();
+                if (response.equals("successful")) {
+                    isSuccess++;
                 } else {
-                    Toast.makeText(CustomerBookingActivity.this, "Lỗi! Vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
+                    Log.e("error", "Lỗi! Vui lòng thử lại sau");
                     finish();
                 }
             }
@@ -235,13 +411,26 @@ public class CustomerBookingActivity extends AppCompatActivity {
 
 
                 param.put("Is_Save_Photo", "" + (switchChupAnhSauKhiCat.isChecked() ? 1 : 0));
+
+                Gson gson = new Gson();
+                String iServiceFree = gson.toJson(serviceFree);
+                param.put("Service_Free", iServiceFree);
+
                 param.put("Is_Consulting", "" + (switchYeuCauTuVan.isChecked() ? 1 : 0));
 
                 return param;
             }
+
+            @Override
+            public Priority getPriority() {
+                return Priority.HIGH;
+            }
         };
 
         requestQueue.add(stringRequest);
+        for (int i = 0; i < servicesList.size(); i++) {
+            requestQueue.add(InsertDescription(urlDescription, "" + servicesList.get(i).getIdService()));
+        }
     }
 
     /*
@@ -267,7 +456,10 @@ public class CustomerBookingActivity extends AppCompatActivity {
                     + "-" + (calendar.get(Calendar.MONTH) + 1)
                     + "-" + calendar.get(Calendar.DATE)));
         }
+
         dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
+
+        dayCutAdapter.setActivity(CustomerBookingActivity.this);
 
         spinnerDay.setAdapter(dayCutAdapter);
     }
@@ -319,7 +511,6 @@ public class CustomerBookingActivity extends AppCompatActivity {
             }.getType();
             servicesList = gson.fromJson(dataStringExtra, type);
             setFlowLayoutService();
-            Log.d("check send data", "" + servicesList.size());
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -337,5 +528,12 @@ public class CustomerBookingActivity extends AppCompatActivity {
         recyclerViewSelectTime = (RecyclerView) findViewById(R.id.recyclerView_SelectTime);
         switchChupAnhSauKhiCat = (Switch) findViewById(R.id.swich_ChupAnhSauKhiCat);
         switchYeuCauTuVan = (Switch) findViewById(R.id.swich_YeuCauTuVan);
+
+        checkBox1 = (CheckBox) findViewById(R.id.checkBox_1);
+        checkBox2 = (CheckBox) findViewById(R.id.checkBox_2);
+        checkBox3 = (CheckBox) findViewById(R.id.checkBox_3);
+        checkBox4 = (CheckBox) findViewById(R.id.checkBox_4);
+        checkBox5 = (CheckBox) findViewById(R.id.checkBox_5);
+        checkBox6 = (CheckBox) findViewById(R.id.checkBox_6);
     }
 }

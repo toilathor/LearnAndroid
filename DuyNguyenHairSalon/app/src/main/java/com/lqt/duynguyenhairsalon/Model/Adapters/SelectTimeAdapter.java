@@ -18,7 +18,7 @@ import java.util.List;
 public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.SelectTimeViewHolde> {
     private List<BookingTime> bookingTimes;
     private Context context;
-    private int mPosition = 0;
+    private int mPosition = -1;
     private String mTime = "";
 
     public void setData(List<BookingTime> bookingTimes) {

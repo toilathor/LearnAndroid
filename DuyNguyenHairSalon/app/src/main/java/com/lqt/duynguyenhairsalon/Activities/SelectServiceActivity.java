@@ -111,7 +111,6 @@ public class SelectServiceActivity extends AppCompatActivity {
     }
 
     public void addServicesList(ServicesDuyNguyenHairSalon service) {
-
         if (servicesList.size() != 0) {
             this.servicesList.add(service);
             buttonSuccess.setText("Chọn " + servicesList.size() + " dịch vụ");
@@ -120,6 +119,7 @@ public class SelectServiceActivity extends AppCompatActivity {
             buttonSuccess.setText("Chọn " + servicesList.size() + " dịch vụ");
             buttonSuccess.setBackgroundResource(R.drawable.background_topup);
         }
+
     }
 
     public void removeServicesList(ServicesDuyNguyenHairSalon service) {

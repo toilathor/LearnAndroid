@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.CustomerBookingActivity;
 import com.lqt.duynguyenhairsalon.Activities.MainActivity;
 import com.lqt.duynguyenhairsalon.Fragments.AdminBoooking.UnsuccessfulFragment;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
@@ -24,9 +25,15 @@ import java.util.List;
 public class DayCutAdapter extends ArrayAdapter {
 
     private String dateSelected = "";
+    private int mPosition = 0;
+    private CustomerBookingActivity activity;
 
     public DayCutAdapter(@NonNull Context context, int resource, @NonNull List objects) {
         super(context, resource, objects);
+    }
+
+    public void setActivity(CustomerBookingActivity activity) {
+        this.activity = activity;
     }
 
     @NonNull
@@ -39,6 +46,8 @@ public class DayCutAdapter extends ArrayAdapter {
         if (dayCut != null){
             textViewSelected.setText("" + dayCut.getStringDayCut());
             dateSelected = dayCut.getDateCut();
+            mPosition = position;
+            activity.ListTime();
         }
 
         return convertView;
@@ -53,7 +62,6 @@ public class DayCutAdapter extends ArrayAdapter {
         DayCut dayCut = (DayCut) this.getItem(position);
         if (dayCut != null){
             textViewDay.setText("" + dayCut.getStringDayCut());
-
         }
         return convertView;
     }
@@ -64,5 +72,9 @@ public class DayCutAdapter extends ArrayAdapter {
 
     public String getDateSelected() {
         return dateSelected;
+    }
+
+    public int getmPosition() {
+        return mPosition;
     }
 }
