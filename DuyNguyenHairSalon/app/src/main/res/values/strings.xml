@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Duy Nguyễn Hair Salon</string>
+    <string name="facebook_app_id">139075711548110</string>
+    <string name="fb_login_protocol_scheme">fb139075711548110</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="api_map_key">AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o</string>
     <string name="dat_lich_cat_toc">Đặt lịch cắt tóc</string>
@@ -22,4 +25,6 @@
     <string name="tab_layout_nhuom">Nhuộm</string>
     <string name="tab_layout_dich_vu_khac">Dịch vụ khác</string>
     <string name="chi_tiet">Chi tiết</string>
+    <string name="nhap_so_dien_thoai_cua_ban">Nhập số điện thoại của bạn</string>
+    <string name="xac_thuc_tai_khoan">Xác thực tài khoản</string>
 </resources>

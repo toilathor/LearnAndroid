@@ -47,27 +47,29 @@ public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.Se
 
         holder.buttonTime.setText(bookingTime.getmTime());
 
-        if(!bookingTime.isSelected()){
+        if (!bookingTime.isSelected()) {
             holder.buttonTime.setEnabled(true);
             holder.buttonTime.setBackgroundResource(R.drawable.background_border_black);
-        }else {
+        } else {
             holder.buttonTime.setBackgroundResource(R.drawable.background_view_disible);
             holder.buttonTime.setEnabled(false);
         }
 
-        if(!bookingTime.isSelecting() && !bookingTime.isSelected()){
+        if (!bookingTime.isSelecting() && !bookingTime.isSelected()) {
             holder.buttonTime.setBackgroundResource(R.drawable.background_border_black);
-        }else if(bookingTime.isSelecting() && !bookingTime.isSelected()){
+        } else if (bookingTime.isSelecting() && !bookingTime.isSelected()) {
             holder.buttonTime.setBackgroundResource(R.drawable.background_topup);
         }
 
         holder.buttonTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bookingTime.isSelected()){
+                if (bookingTime.isSelected()) {
                     return;
-                }else {
-                    bookingTimes.get(mPosition).setSelecting(false);
+                } else {
+                    if (mPosition != -1) {
+                        bookingTimes.get(mPosition).setSelecting(false);
+                    }
                     mPosition = position;
                     mTime = bookingTime.getTimeCut();
                     bookingTimes.get(position).setSelecting(true);
@@ -78,10 +80,10 @@ public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.Se
     }
 
     /*
-    * Đây là hàm sẽ trả về vị trí khách hàng hiện tại đang đăt
-    *
-    * */
-    public int getPositionSelceted(){
+     * Đây là hàm sẽ trả về vị trí khách hàng hiện tại đang đăt
+     *
+     * */
+    public int getPositionSelceted() {
         return mPosition;
     }
 
