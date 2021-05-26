@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,10 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.TaskAdapter;
 import com.lqt.duynguyenhairsalon.Model.User;
 import com.lqt.duynguyenhairsalon.Model.mTask;
@@ -31,10 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class UnsuccessfulFragment extends Fragment {
@@ -51,6 +44,7 @@ public class UnsuccessfulFragment extends Fragment {
 
     //Param
     String data = null;
+    private static final String TAG = "error";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +60,7 @@ public class UnsuccessfulFragment extends Fragment {
          * */
         AdminBookingActivity activity = (AdminBookingActivity) getActivity();
 
-        LoadListTask("http://192.168.1.101/DuyNguyenHairSalonWebService/GetDataDuyNguyen.php");
+        LoadListTask("http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetTaskAdmin.php");
 
         SetRecyclerView();
 
@@ -112,7 +106,7 @@ public class UnsuccessfulFragment extends Fragment {
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("error", error.toString());
+                Log.e(TAG, error.toString());
             }
         });
 

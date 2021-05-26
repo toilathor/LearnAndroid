@@ -24,7 +24,7 @@ public class MySharedPreferences {
         editor.apply();
     }
 
-    public boolean getBoleanValue(String key) {
+    public boolean getBooleanValue(String key) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(MY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         return sharedPreferences.getBoolean(key, false);

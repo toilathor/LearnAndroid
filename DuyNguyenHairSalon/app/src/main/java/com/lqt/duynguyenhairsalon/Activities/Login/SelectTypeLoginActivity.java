@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class SelectTypeLoginActivity extends AppCompatActivity {
 
     //Param
     private CallbackManager callbackManager;
@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_select_type_login);
 
         AnhXa();
 
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onCompleted(JSONObject object, GraphResponse response) {
                 if (object != null)
                     Log.d("datauser", "" + object.toString());
-                //                    Glide.with(LoginActivity.this)
+                //                    Glide.with(SelectTypeLoginActivity.this)
 //                            .load("https://graph.facebook.com/" + object.getString("id") + "/picture?type=large")
 //                            .into(imageViewAvatar);
             }
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonLoginWithPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, LoginWithPhoneNumberActivity.class));
+                startActivity(new Intent(SelectTypeLoginActivity.this, EnterPhoneNumberLoginActivity.class));
             }
         });
     }

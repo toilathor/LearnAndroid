@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities;
+package com.lqt.duynguyenhairsalon.Activities.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 

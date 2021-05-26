@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities;
+package com.lqt.duynguyenhairsalon.Activities.Booking;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,9 +32,10 @@ import com.google.gson.reflect.TypeToken;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectTimeAdapter;
 import com.lqt.duynguyenhairsalon.Model.BookingTime;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
-import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutAdapter;
+import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutCustomerAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 import com.wefika.flowlayout.FlowLayout;
 
 import org.json.JSONArray;
@@ -51,21 +52,20 @@ import java.util.Map;
 public class CustomerBookingActivity extends AppCompatActivity {
 
     //Params
+    private static final String TAG = "error";
     private final int REQUEST_CODE = 123;
     private boolean isEmptyService = false;
     private Calendar calendar;
     private String ID_Task;
     private int isSuccess = 0;
-    private String urlTask = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertTaskDuyNguyen.php";
-    private String urlDescription = "http://192.168.1.101/DuyNguyenHairSalonWebService/InsertDescriptionTaskDuyNguyen.php";
-    private String urlDay0 = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetTimeForDayDuyNguyen0.php";
-    private String urlDay1 = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetTimeForDayDuyNguyen1.php";
-    private String urlDay2 = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetTimeForDayDuyNguyen2.php";
+    private String urlTask = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/InsertTask.php";
+    private String urlDescription = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/InsertDescriptionTask.php";
+    private String urlDay = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetTimeForDay.php?Day=";
 
     //Views
     private Spinner spinnerDay;
     private List<DayCut> dayCutList;
-    private DayCutAdapter dayCutAdapter;
+    private DayCutCustomerAdapter dayCutCustomerAdapter;
     private ImageView imageViewHome;
     private Button button_SelectService, button_Success;
     private FlowLayout flowLayoutServices;
@@ -129,19 +129,19 @@ public class CustomerBookingActivity extends AppCompatActivity {
         recyclerViewSelectTime.setLayoutManager(gridLayoutManager);
         recyclerViewSelectTime.setAdapter(timeAdapter);
 
-        switch (dayCutAdapter.getmPosition()) {
+        switch (dayCutCustomerAdapter.getmPosition()) {
             case 0:
-                GetTime(urlDay0);
+                GetTime(urlDay, dayCutCustomerAdapter.getmPosition());
                 SetDay0();
                 break;
             case 1:
-                GetTime(urlDay1);
+                GetTime(urlDay, dayCutCustomerAdapter.getmPosition());
                 break;
             case 2:
-                GetTime(urlDay2);
+                GetTime(urlDay, dayCutCustomerAdapter.getmPosition());
                 break;
             default:
-                GetTime(urlDay0);
+                GetTime(urlDay, dayCutCustomerAdapter.getmPosition());
                 break;
         }
 
@@ -183,9 +183,9 @@ public class CustomerBookingActivity extends AppCompatActivity {
         }
     }
 
-    private void GetTime(String url) {
+    private void GetTime(String url, int pos) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url + pos, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
@@ -214,7 +214,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("error", error.toString());
+                Log.e(TAG, error.toString());
             }
         });
 
@@ -260,7 +260,6 @@ public class CustomerBookingActivity extends AppCompatActivity {
         button_Success.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 if (servicesList.size() > 0 && timeAdapter.getPositionSelceted() >= 0) {
                     InsertTask(urlTask);
                 } else {
@@ -348,14 +347,14 @@ public class CustomerBookingActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    Log.e("error", "Lỗi! Vui lòng thử lại sau");
+                    Log.e(TAG, "Lỗi! Vui lòng thử lại sau");
                     finish();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("error insert", error.toString());
+                Log.e(TAG, error.toString());
             }
         }) {
             @Nullable
@@ -383,14 +382,14 @@ public class CustomerBookingActivity extends AppCompatActivity {
                 if (response.equals("successful")) {
                     isSuccess++;
                 } else {
-                    Log.e("error", "Lỗi! Vui lòng thử lại sau");
+                    Log.e(TAG, "Lỗi! Vui lòng thử lại sau");
                     finish();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("error insert", error.toString());
+                Log.e(TAG, error.toString());
             }
         }) {
             @Nullable
@@ -401,7 +400,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
 
                 param.put("ID_Task", ID_Task);
 
-                param.put("Date_Task", dayCutAdapter.getDateSelected() + " " + timeAdapter.getmTime());
+                param.put("Date_Task", dayCutCustomerAdapter.getDateSelected() + " " + timeAdapter.getmTime());
 
                 int sum = 0;
                 for (int i = 0; i < servicesList.size(); i++) {
@@ -417,6 +416,8 @@ public class CustomerBookingActivity extends AppCompatActivity {
                 param.put("Service_Free", iServiceFree);
 
                 param.put("Is_Consulting", "" + (switchYeuCauTuVan.isChecked() ? 1 : 0));
+
+                param.put("UserName", DataLocalManager.getPrefUserName());
 
                 return param;
             }
@@ -457,11 +458,11 @@ public class CustomerBookingActivity extends AppCompatActivity {
                     + "-" + calendar.get(Calendar.DATE)));
         }
 
-        dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
+        dayCutCustomerAdapter = new DayCutCustomerAdapter(this, R.layout.item_day_cut, dayCutList);
 
-        dayCutAdapter.setActivity(CustomerBookingActivity.this);
+        dayCutCustomerAdapter.setActivity(CustomerBookingActivity.this);
 
-        spinnerDay.setAdapter(dayCutAdapter);
+        spinnerDay.setAdapter(dayCutCustomerAdapter);
     }
 
     private void upToDate(int numDay) {

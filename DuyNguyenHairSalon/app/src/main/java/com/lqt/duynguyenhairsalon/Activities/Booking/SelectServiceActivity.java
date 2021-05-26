@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities;
+package com.lqt.duynguyenhairsalon.Activities.Booking;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectServiceFragmentAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;

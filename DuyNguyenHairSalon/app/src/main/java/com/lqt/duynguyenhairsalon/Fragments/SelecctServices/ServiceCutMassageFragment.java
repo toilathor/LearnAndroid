@@ -10,10 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.SelectServiceActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ServiceAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
@@ -58,10 +54,11 @@ public class ServiceCutMassageFragment extends Fragment {
     private List<ServicesDuyNguyenHairSalon> servicesList;
 
     //param
+    private static final String TAG = "error";
     private SelectServiceActivity activity;
     private final String ID_Species = "1";
-    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/GetServiceDuyNguyen.php";
-    //private String Url = "https://lequangtho.000webhostapp.com/GetServiceDuyNguyen.php";
+    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetService.php";
+    //private String Url = "https://lequangtho.000webhostapp.com/API/GetService.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,7 +101,7 @@ public class ServiceCutMassageFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("error", error.toString());
+                Log.e(TAG, error.toString());
             }
         });
 

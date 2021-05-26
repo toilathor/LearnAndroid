@@ -1,8 +1,6 @@
 package com.lqt.duynguyenhairsalon.Model.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +9,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.CustomerBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.MainActivity;
-import com.lqt.duynguyenhairsalon.Fragments.AdminBoooking.UnsuccessfulFragment;
+import com.lqt.duynguyenhairsalon.Activities.Booking.CustomerBookingActivity;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.R;
 
 import java.util.List;
 
-public class DayCutAdapter extends ArrayAdapter {
+public class DayCutCustomerAdapter extends ArrayAdapter {
 
     private String dateSelected = "";
     private int mPosition = 0;
     private CustomerBookingActivity activity;
 
-    public DayCutAdapter(@NonNull Context context, int resource, @NonNull List objects) {
+    public DayCutCustomerAdapter(@NonNull Context context, int resource, @NonNull List objects) {
         super(context, resource, objects);
     }
 

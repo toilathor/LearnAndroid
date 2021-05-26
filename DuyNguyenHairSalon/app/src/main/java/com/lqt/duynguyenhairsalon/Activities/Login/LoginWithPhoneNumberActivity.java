@@ -10,19 +10,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.hbb20.CountryCodePicker;
+import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
 public class LoginWithPhoneNumberActivity extends AppCompatActivity {
 
     //View
-    private CountryCodePicker countryCodePicker;
-    private ImageView imageViewCheck;
-    private EditText editTextPhone;
-    private Button buttonNext;
+    private EditText editTextPhoneNumber, editTextPassword;
+    private TextView textViewForgetPassword;
+    private Button buttonLogin;
+    private ImageView imageViewBack;
+
+    //Param
+    private String phoneNumber = "";
+    private String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,40 +36,28 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
 
         AnhXa();
 
-        SetCountryCodePicker();
-
-        SetListenerActivity();
+        SetLogin();
     }
 
-    private void SetListenerActivity() {
-        buttonNext.setOnClickListener(new View.OnClickListener() {
+    private void SetLogin() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginWithPhoneNumberActivity.this, EnterOTPActivity.class));
-            }
-        });
-    }
-
-    private void SetCountryCodePicker() {
-        //Nối CountCode với EditText để nó check
-        countryCodePicker.registerCarrierNumberEditText(editTextPhone);
-
-        countryCodePicker.setPhoneNumberValidityChangeListener(new CountryCodePicker.PhoneNumberValidityChangeListener() {
-            @Override
-            public void onValidityChanged(boolean isValidNumber) {
-                if(isValidNumber == false){
-                    imageViewCheck.setImageResource(R.drawable.remove);
-                    buttonNext.setEnabled(false);
-                    buttonNext.setBackgroundResource(R.drawable.background_view_disible);
-                }else{
-                    imageViewCheck.setImageResource(R.drawable.check);
-                    buttonNext.setEnabled(true);
-                    buttonNext.setBackgroundResource(R.drawable.background_topup);
+                if (password.equals(editTextPassword.getText().toString())) {
+                    DataLocalManager.setPrefUserName(""+ phoneNumber);
+                    DataLocalManager.setPrefIsLogged(true);
+                    if (phoneNumber.equals("+84973271208")){
+                        DataLocalManager.setPrefIsAdmin(true);
+                    }
+                    startActivity(new Intent(LoginWithPhoneNumberActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(LoginWithPhoneNumberActivity.this, "Mã PIN không chính xác", Toast.LENGTH_SHORT).show();
+                    editTextPassword.setText("");
                 }
             }
         });
-
-        editTextPhone.addTextChangedListener(new TextWatcher() {
+        editTextPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -72,8 +65,15 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count != 0) imageViewCheck.setVisibility(View.VISIBLE);
-                else imageViewCheck.setVisibility(View.GONE);
+                if (editTextPassword.getText().toString().length() < 6) {
+                    buttonLogin.setEnabled(false);
+                    buttonLogin.setBackgroundResource(R.drawable.background_view_disible);
+                    editTextPassword.setError("Mã PIN 6 số");
+                } else {
+                    buttonLogin.setEnabled(true);
+                    buttonLogin.setBackgroundResource(R.drawable.background_topup);
+                    editTextPassword.setError(null);
+                }
             }
 
             @Override
@@ -81,12 +81,27 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
 
             }
         });
+
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void AnhXa() {
-        countryCodePicker = (CountryCodePicker) findViewById(R.id.countryCodePicker);
-        imageViewCheck = (ImageView) findViewById(R.id.imageView_Check) ;
-        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        buttonNext = (Button) findViewById(R.id.button_Next);
+        editTextPhoneNumber = (EditText) findViewById(R.id.editText_Phone);
+        editTextPassword = (EditText) findViewById(R.id.editText_Password);
+        buttonLogin = (Button) findViewById(R.id.button_Login);
+        textViewForgetPassword = (TextView) findViewById(R.id.textView_ForgetPassword);
+        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
+
+
+        phoneNumber = getIntent().getStringExtra("PhoneNumber");
+        password = getIntent().getStringExtra("Password");
+
+        editTextPhoneNumber.setText(phoneNumber);
+        editTextPassword.requestFocus();
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lqt.duynguyenhairsalon.Activities.Login.CustomerDetailActivity;
 import com.lqt.duynguyenhairsalon.R;
 
 public class HistoryCutActivity extends AppCompatActivity {

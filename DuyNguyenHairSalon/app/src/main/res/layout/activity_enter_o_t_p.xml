@@ -74,6 +74,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
+            android:importantForAutofill="yes"
             android:background="@drawable/background_while_no_solid_boder"
             android:gravity="center"
             android:inputType="number"
@@ -150,6 +151,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <Button
+        android:id="@+id/button_Confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -160,4 +162,30 @@
         android:textColor="@color/black"
         android:text="Xác thực"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_Confirm">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Không nhận được mã OTP?"
+            android:textColor="@color/gray" />
+
+        <TextView
+            android:id="@+id/textView_ReSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gui_lai"
+            android:textAllCaps="false"
+            android:enabled="false"
+            android:textColor="@color/gray"
+            android:textStyle="bold" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

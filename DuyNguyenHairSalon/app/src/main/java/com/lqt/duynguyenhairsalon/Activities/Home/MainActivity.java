@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities;
+package com.lqt.duynguyenhairsalon.Activities.Home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

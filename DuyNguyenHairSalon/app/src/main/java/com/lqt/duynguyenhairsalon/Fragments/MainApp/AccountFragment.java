@@ -16,9 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lqt.duynguyenhairsalon.Activities.CustomerDetailActivity;
+import com.lqt.duynguyenhairsalon.Activities.Login.CustomerDetailActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
-import com.lqt.duynguyenhairsalon.Activities.LocationActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.LocationActivity;
 import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
 import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
 import com.lqt.duynguyenhairsalon.R;
@@ -80,7 +80,7 @@ public class AccountFragment extends Fragment {
         cardViewLogin_Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                //TODO đăng xuất ra
                 Toast.makeText(getContext(), "Chưa hoàn thiện", Toast.LENGTH_SHORT).show();
                 if (textViewLogin_Logout.getText() == "Đăng Nhập") {
                     linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(225, 55, 55));

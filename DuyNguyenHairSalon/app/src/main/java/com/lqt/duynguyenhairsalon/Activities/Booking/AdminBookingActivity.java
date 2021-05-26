@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities;
+package com.lqt.duynguyenhairsalon.Activities.Booking;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.material.tabs.TabLayout;
-import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutAdapter;
+import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutCustomerAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectSuccessAdapter;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.R;
@@ -29,7 +29,7 @@ public class AdminBookingActivity extends AppCompatActivity {
     private List<DayCut> dayCutList;
 
     //Adapter
-    private DayCutAdapter dayCutAdapter;
+    private DayCutCustomerAdapter dayCutCustomerAdapter;
     private SelectSuccessAdapter successAdapter;
 
     //View
@@ -56,7 +56,7 @@ public class AdminBookingActivity extends AppCompatActivity {
 
         AdminBookingListen();
 
-        ListDay();
+        //ListDay();
 
         /*
         * cái này để load Service free
@@ -133,8 +133,8 @@ public class AdminBookingActivity extends AppCompatActivity {
                     + "-" + (calendar.get(Calendar.MONTH) + 1)
                     + "-" + calendar.get(Calendar.DATE)));
         }
-        dayCutAdapter = new DayCutAdapter(this, R.layout.item_day_cut, dayCutList);
-        spinnerDay.setAdapter(dayCutAdapter);
+        dayCutCustomerAdapter = new DayCutCustomerAdapter(this, R.layout.item_day_cut, dayCutList);
+        spinnerDay.setAdapter(dayCutCustomerAdapter);
     }
 
     private void upToDate(int numDay) {

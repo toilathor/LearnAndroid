@@ -1,28 +1,20 @@
 package com.lqt.duynguyenhairsalon.Model.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lqt.duynguyenhairsalon.Activities.SelectServiceActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
-import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
 import com.lqt.duynguyenhairsalon.R;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceHolder> {
     private List<ServicesDuyNguyenHairSalon> listService;

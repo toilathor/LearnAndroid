@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities;
+package com.lqt.duynguyenhairsalon.Activities.Other;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +10,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.lqt.duynguyenhairsalon.Activities.Login.LoginActivity;
+import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
+import com.lqt.duynguyenhairsalon.Activities.Login.SelectTypeLoginActivity;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -44,9 +46,15 @@ public class IntroActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                if(DataLocalManager.getPrefIsLogged()){
+                    Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(IntroActivity.this, SelectTypeLoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, 2500);
     }

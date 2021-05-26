@@ -30,21 +30,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.youtube.player.internal.f;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.lqt.duynguyenhairsalon.Activities.AdminBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.CustomerBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.DuyNguyenTVActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.CustomerBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.DuyNguyenTVActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
-import com.lqt.duynguyenhairsalon.Activities.LoadWebViewActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.LoadWebViewActivity;
 import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
-import com.lqt.duynguyenhairsalon.Activities.NotificationActivity;
+import com.lqt.duynguyenhairsalon.Activities.Home.NotificationActivity;
 import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.DuyNguyenTVAdapter;
 import com.lqt.duynguyenhairsalon.Model.SystemHelper;
 import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,10 +91,6 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         systemHelper = new SystemHelper(view.getContext());
-
-        //TODO
-        //Sau này đăng nhập được thì sẽ xét isAdmin
-        isAdmin = false;
 
         AnhXa();
 
@@ -357,5 +353,7 @@ public class HomeFragment extends Fragment {
         imageViewHistoryCut = (ImageView) view.findViewById(R.id.imageView_Avatar);
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottomNavView);
         imageViewNotification = (ImageView) view.findViewById(R.id.imageView_Notification);
+
+        isAdmin = DataLocalManager.getPrefIsAdmin();
     }
 }

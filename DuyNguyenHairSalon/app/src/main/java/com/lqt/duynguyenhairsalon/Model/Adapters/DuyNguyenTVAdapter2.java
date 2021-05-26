@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.lqt.duynguyenhairsalon.Activities.PlayVideoYouTubeActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.PlayVideoYouTubeActivity;
 import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
 import com.lqt.duynguyenhairsalon.R;
 
