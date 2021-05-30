@@ -30,4 +30,7 @@
     <string name="gui_lai"><u>Gửi lại</u></string>
     <string name="dang_nhap_voi_ma_pin">Đăng nhập với mã PIN</string>
     <string name="quen_mat_khau">Quên mã PIN</string>
+    <string name="thiet_lap_ma_pin">Thiết lập mã PIN</string>
+    <string name="xac_nhan">Xác nhận</string>
+    <string name="huy">Hủy</string>
 </resources>

@@ -5,17 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.lqt.duynguyenhairsalon.CheckInternet.NetworkChangeListener;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ViewPagerAdapter;
 import com.lqt.duynguyenhairsalon.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    //View
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
+
+    //Param
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,4 +95,6 @@ public class MainActivity extends AppCompatActivity {
         //Số fragment load trước
         viewPager.setOffscreenPageLimit(3);
     }
+
+
 }

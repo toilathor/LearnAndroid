@@ -2,6 +2,8 @@ package com.lqt.duynguyenhairsalon.Model.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,14 @@ import com.google.gson.Gson;
 import com.lqt.duynguyenhairsalon.Activities.Booking.DescriptionTaskActivity;
 import com.lqt.duynguyenhairsalon.Model.mTask;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.R.color;
 
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
+
+    private static final int REQUEST_CODE = 123;
     /*
      * @param KEY_FRAGEMENT
      * nếu true là Successful
@@ -53,6 +58,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             return;
         }
 
+        if (isSuccessful == true){
+            holder.constraintLayout.setBackgroundResource(color.hoan_thanh);
+        }else {
+            holder.constraintLayout.setBackgroundResource(color.chua_hoan_thanh);
+        }
         holder.textViewName.setText("" + task.getUser().getName_User());
         holder.textViewPhone.setText("" + task.getUser().getPhone_Number_User());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 Gson gson = new Gson();
                 String data = gson.toJson(task);
                 intent.putExtra("data", data);
-                activity.startActivity(intent);
-
+                activity.startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }

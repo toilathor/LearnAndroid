@@ -18,10 +18,12 @@ import android.widget.Toast;
 
 import com.lqt.duynguyenhairsalon.Activities.Login.CustomerDetailActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.IntroActivity;
 import com.lqt.duynguyenhairsalon.Activities.Other.LocationActivity;
 import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
 import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
 
 public class AccountFragment extends Fragment {
@@ -80,21 +82,21 @@ public class AccountFragment extends Fragment {
         cardViewLogin_Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO đăng xuất ra
-                Toast.makeText(getContext(), "Chưa hoàn thiện", Toast.LENGTH_SHORT).show();
-                if (textViewLogin_Logout.getText() == "Đăng Nhập") {
-                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(225, 55, 55));
 
-                    textViewLogin_Logout.setText("Đăng Xuất");
-                    imageViewLogin_Logout.setImageResource(R.drawable.ic_logout);
-                } else {
-                    linearLayoutLogin_Logout.setBackgroundColor(Color.rgb(100, 225, 55));
-                    textViewLogin_Logout.setText("Đăng Nhập");
-                    imageViewLogin_Logout.setImageResource(R.drawable.ic_enter);
-                }
-            }
-        });
-    }
+                Toast.makeText(getContext(), "Đăng xuất", Toast.LENGTH_SHORT).show();
+
+                //Reset Shared Preferences
+                DataLocalManager.setPrefIsAdmin(false);
+                DataLocalManager.setPrefIsLogged(false);
+                DataLocalManager.setPrefUserName("");
+                DataLocalManager.setFisrtInstall(false);
+
+                getActivity().finish();
+                getActivity().startActivity(new Intent(getContext(), IntroActivity.class));
+                getActivity().finishAffinity();
+        }
+    });
+}
 
     private void AnhXa() {
         constraintLayoutEditAccount = (ConstraintLayout) view.findViewById(R.id.constraintLayout_EditAccount);

@@ -1,19 +1,15 @@
-package com.lqt.duynguyenhairsalon.Activities.Login;
+package com.lqt.duynguyenhairsalon.Activities.Login.ResetPass;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +29,7 @@ import com.lqt.duynguyenhairsalon.R;
 
 import java.util.concurrent.TimeUnit;
 
-public class EnterOTPActivity extends AppCompatActivity {
+public class ResetEnterOTPActivity extends AppCompatActivity {
 
     //View
     private EditText editTextCode1, editTextCode2, editTextCode3, editTextCode4, editTextCode5, editTextCode6;
@@ -59,7 +55,6 @@ public class EnterOTPActivity extends AppCompatActivity {
 
         SetListenerActivity();
     }
-
     private void SetListenerActivity() {
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +70,7 @@ public class EnterOTPActivity extends AppCompatActivity {
                         .verifyPhoneNumber(phoneNumber
                                 , 60
                                 , TimeUnit.SECONDS
-                                ,EnterOTPActivity.this
+                                , ResetEnterOTPActivity.this
                                 ,new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
 
                                     @Override
@@ -91,7 +86,7 @@ public class EnterOTPActivity extends AppCompatActivity {
                                     @Override
                                     public void onCodeSent(@NonNull String newVerificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                         verificationId = newVerificationId;
-                                        Toast.makeText(EnterOTPActivity.this, "Gửi mã OTP", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ResetEnterOTPActivity.this, "Gửi mã OTP", Toast.LENGTH_SHORT).show();
                                     }
                                 });
             }
@@ -257,12 +252,12 @@ public class EnterOTPActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    Intent intent = new Intent(EnterOTPActivity.this, SetPasswordActivity.class);
+                                    Intent intent = new Intent(ResetEnterOTPActivity.this, ResetPasswordActivity.class);
                                     intent.putExtra("PhoneNumber", phoneNumber);
                                     startActivity(intent);
                                     finish();
                                 }else{
-                                    Toast.makeText(EnterOTPActivity.this, "Mã xác thực không đúng", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ResetEnterOTPActivity.this, "Mã xác thực không đúng", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

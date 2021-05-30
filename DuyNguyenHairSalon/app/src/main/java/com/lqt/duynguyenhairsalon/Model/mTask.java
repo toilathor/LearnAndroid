@@ -4,31 +4,33 @@ package com.lqt.duynguyenhairsalon.Model;
 import java.util.List;
 
 public class mTask {
-    private int ID_Task;
+    private String ID_Task;
     private String Date_Task;
     private int Sum_Money_Task;
     private int Is_Save_Photo;
     private int Is_Consulting;
     private int Is_Successful_Task;
+    private String Service_Free;
     private User User;
-    private List<String> List_Service;
+    private List<ServicesDuyNguyenHairSalon> List_Service;
 
-    public mTask(int ID_Task, String date_Task, int sum_Money_Task, int is_Save_Photo, int is_Consulting, int is_Successful_Task, com.lqt.duynguyenhairsalon.Model.User user, List<String> list_Service) {
+    public mTask(String ID_Task, String date_Task, int sum_Money_Task, int is_Save_Photo, int is_Consulting, int is_Successful_Task, String service_Free, com.lqt.duynguyenhairsalon.Model.User user, List<ServicesDuyNguyenHairSalon> list_Service) {
         this.ID_Task = ID_Task;
         Date_Task = date_Task;
         Sum_Money_Task = sum_Money_Task;
         Is_Save_Photo = is_Save_Photo;
         Is_Consulting = is_Consulting;
         Is_Successful_Task = is_Successful_Task;
+        Service_Free = service_Free;
         User = user;
         List_Service = list_Service;
     }
 
-    public int getID_Task() {
+    public String getID_Task() {
         return ID_Task;
     }
 
-    public void setID_Task(int ID_Task) {
+    public void setID_Task(String ID_Task) {
         this.ID_Task = ID_Task;
     }
 
@@ -72,6 +74,14 @@ public class mTask {
         Is_Successful_Task = is_Successful_Task;
     }
 
+    public String getService_Free() {
+        return Service_Free;
+    }
+
+    public void setService_Free(String service_Free) {
+        Service_Free = service_Free;
+    }
+
     public com.lqt.duynguyenhairsalon.Model.User getUser() {
         return User;
     }
@@ -80,11 +90,11 @@ public class mTask {
         User = user;
     }
 
-    public List<String> getList_Service() {
+    public List<ServicesDuyNguyenHairSalon> getList_Service() {
         return List_Service;
     }
 
-    public void setList_Service(List<String> list_Service) {
+    public void setList_Service(List<ServicesDuyNguyenHairSalon> list_Service) {
         List_Service = list_Service;
     }
 }

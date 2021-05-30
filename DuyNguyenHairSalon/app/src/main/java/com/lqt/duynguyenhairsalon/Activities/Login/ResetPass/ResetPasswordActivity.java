@@ -1,10 +1,6 @@
-package com.lqt.duynguyenhairsalon.Activities.Login;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+package com.lqt.duynguyenhairsalon.Activities.Login.ResetPass;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,13 +23,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
+import com.lqt.duynguyenhairsalon.Activities.Login.SetPasswordActivity;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SetPasswordActivity extends AppCompatActivity {
+public class ResetPasswordActivity extends AppCompatActivity {
 
     //Vỉew
     private ImageView imageViewBack;
@@ -39,10 +39,9 @@ public class SetPasswordActivity extends AppCompatActivity {
 
     //Param
     private static final String TAG = "error";
-    private String url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/CreateAccount.php";
-
+    private String url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/UpdatePassAccount.php";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
 
@@ -150,13 +149,13 @@ public class SetPasswordActivity extends AppCompatActivity {
                     if (editTextPhone.getText().toString().equals("+84973271208")){
                         DataLocalManager.setPrefIsAdmin(true);
                     }
-                    Toast.makeText(SetPasswordActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, "Đổi mã PIN thành công!", Toast.LENGTH_SHORT).show();
 
                     finish();
-                    startActivity(new Intent(SetPasswordActivity.this, MainActivity.class));
+                    startActivity(new Intent(ResetPasswordActivity.this, MainActivity.class));
                     finishAffinity();
                 } else {
-                    Toast.makeText(SetPasswordActivity.this, "Lỗi! Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, "Lỗi! Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -186,5 +185,8 @@ public class SetPasswordActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editText_Password);
         editTextConfirmPassword = (EditText) findViewById(R.id.editText_ConfirmPassword);
         buttonConfirmPassword = (Button) findViewById(R.id.button_ConfirmPassword);
+
+        editTextPassword.setHint("Nhập mã PIN mới...");
+        editTextConfirmPassword.setHint("Nhập lại mã PIN mới...");
     }
 }

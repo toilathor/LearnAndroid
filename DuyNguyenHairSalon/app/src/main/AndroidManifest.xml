@@ -3,6 +3,7 @@
     package="com.lqt.duynguyenhairsalon">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -14,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuyNguyenHairSalon"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.Login.LoginWithPhoneNumberActivity"></activity>
+        <activity android:name=".Activities.Login.ResetPass.ResetEnterOTPActivity"></activity>
+        <activity android:name=".Activities.Login.ResetPass.ResetPasswordActivity"/>
+        <activity android:name=".Activities.Login.LoginWithPhoneNumberActivity" />
         <activity android:name=".Activities.Login.SetPasswordActivity" />
         <activity android:name=".Activities.Login.EnterOTPActivity" />
         <activity android:name=".Activities.Login.EnterPhoneNumberLoginActivity" />

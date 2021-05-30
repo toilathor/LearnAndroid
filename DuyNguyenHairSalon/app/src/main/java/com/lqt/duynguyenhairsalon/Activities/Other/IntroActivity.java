@@ -3,6 +3,8 @@ package com.lqt.duynguyenhairsalon.Activities.Other;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -12,13 +14,19 @@ import android.widget.ImageView;
 
 import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
 import com.lqt.duynguyenhairsalon.Activities.Login.SelectTypeLoginActivity;
+import com.lqt.duynguyenhairsalon.CheckInternet.NetworkChangeListener;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
 public class IntroActivity extends AppCompatActivity {
 
+    //Param
     private Animation topAnim, bottomAnim, alphaAnim;
+    private NetworkChangeListener networkChangeListener = new NetworkChangeListener();
+
+    //View
     private ImageView logo, sologan, background;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +54,30 @@ public class IntroActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(DataLocalManager.getPrefIsLogged()){
+                if (DataLocalManager.getPrefIsLogged()) {
                     Intent intent = new Intent(IntroActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     Intent intent = new Intent(IntroActivity.this, SelectTypeLoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
         }, 2500);
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener, filter);
+
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

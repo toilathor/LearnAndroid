@@ -1,13 +1,14 @@
 package com.lqt.duynguyenhairsalon.Activities.Booking;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutCustomerAdapter;
@@ -24,6 +25,8 @@ public class AdminBookingActivity extends AppCompatActivity {
     //Param
     private Calendar calendar;
     private String dayCut;
+    private static final int REQUEST_CODE = 123;
+    private static final int RESULT_CODE = 1412;
 
     //List
     private List<DayCut> dayCutList;
@@ -37,7 +40,6 @@ public class AdminBookingActivity extends AppCompatActivity {
     private Spinner spinnerDay;
     private TabLayout tabLayoutSelectSuccess;
     private ViewPager2 viewPager2SelectSuccess;
-    private Button buttonShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,26 +48,11 @@ public class AdminBookingActivity extends AppCompatActivity {
 
         AnhXa();
 
-        buttonShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
         SetTabLayout();
 
         AdminBookingListen();
 
-        //ListDay();
-
-        /*
-        * cái này để load Service free
-        * List<String> list = new ArrayList<>();
-        *
-        * Type type = new TypeToken<List<String>>(){}.getType();
-        * list = gson.fromJson(iServiceFree, type);
-        *
-        * */
+        ListDay();
     }
 
     private void AdminBookingListen() {
@@ -77,7 +64,9 @@ public class AdminBookingActivity extends AppCompatActivity {
         });
     }
 
-    private void SetTabLayout() {
+    public void SetTabLayout() {
+        tabLayoutSelectSuccess.removeAllTabs();
+
         tabLayoutSelectSuccess.addTab(tabLayoutSelectSuccess.newTab().setText("Chưa hoàn thành"));
         tabLayoutSelectSuccess.addTab(tabLayoutSelectSuccess.newTab().setText("Đã hoàn thành"));
 
@@ -134,6 +123,7 @@ public class AdminBookingActivity extends AppCompatActivity {
                     + "-" + calendar.get(Calendar.DATE)));
         }
         dayCutCustomerAdapter = new DayCutCustomerAdapter(this, R.layout.item_day_cut, dayCutList);
+        dayCutCustomerAdapter.setActivity(AdminBookingActivity.this);
         spinnerDay.setAdapter(dayCutCustomerAdapter);
     }
 
@@ -146,11 +136,16 @@ public class AdminBookingActivity extends AppCompatActivity {
 
     //Set DayCut để lấy ra từ fragment TODO
     public String getDayCut() {
+        dayCut = "" + dayCutCustomerAdapter.getmPosition();
         return dayCut;
     }
 
-    public void setDayCut(String dayCut) {
-        this.dayCut = dayCut;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_CODE){
+            SetTabLayout();
+        }
     }
 
     private void AnhXa() {
@@ -158,6 +153,5 @@ public class AdminBookingActivity extends AppCompatActivity {
         tabLayoutSelectSuccess = (TabLayout) findViewById(R.id.tabLayout_SelectSuccess);
         viewPager2SelectSuccess = (ViewPager2) findViewById(R.id.viewPager2_SelectSuccess);
         imageViewHome = (ImageView) findViewById(R.id.imageView_Home);
-        buttonShow = (Button) findViewById(R.id.button_Show);
     }
 }
