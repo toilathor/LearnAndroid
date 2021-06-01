@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lqt.duynguyenhairsalon.Model.Adapters.AdminServiceAdapter;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.mTask;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -66,7 +67,7 @@ public class DescriptionTaskActivity extends AppCompatActivity {
     private boolean isSuccessful;
     private String data;
     private static final String TAG = "error";
-    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/UpdateConfirmTask.php?ID_Task=";
+    private String Url = Config.LOCALHOST + "UpdateConfirmTask.php?ID_Task=";
     private String idTask;
     private Dialog dialog;
     private static final int RESULT_CODE = 1412;

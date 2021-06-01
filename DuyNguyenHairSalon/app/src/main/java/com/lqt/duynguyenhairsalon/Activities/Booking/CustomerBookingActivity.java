@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectTimeAdapter;
 import com.lqt.duynguyenhairsalon.Model.BookingTime;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutCustomerAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
@@ -58,9 +59,9 @@ public class CustomerBookingActivity extends AppCompatActivity {
     private Calendar calendar;
     private String ID_Task;
     private int isSuccess = 0;
-    private String urlTask = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/InsertTask.php";
-    private String urlDescription = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/InsertDescriptionTask.php";
-    private String urlDay = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetTimeForDay.php?Day=";
+    private String urlTask = Config.LOCALHOST + "InsertTask.php";
+    private String urlDescription = Config.LOCALHOST + "InsertDescriptionTask.php";
+    private String urlDay = Config.LOCALHOST + "GetTimeForDay.php?Day=";
 
     //Views
     private Spinner spinnerDay;
@@ -347,7 +348,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    Log.e(TAG, "Lỗi! Vui lòng thử lại sau");
+                    Log.e(TAG, "Lỗi! Vui lòng thử lại sau1");
                     finish();
                 }
             }
@@ -382,7 +383,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
                 if (response.equals("successful")) {
                     isSuccess++;
                 } else {
-                    Log.e(TAG, "Lỗi! Vui lòng thử lại sau");
+                    Log.e(TAG, "Lỗi! Vui lòng thử lại sau2");
                     finish();
                 }
             }

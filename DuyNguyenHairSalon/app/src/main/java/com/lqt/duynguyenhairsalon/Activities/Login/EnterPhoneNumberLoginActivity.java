@@ -24,6 +24,7 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.hbb20.CountryCodePicker;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
 
 import org.json.JSONArray;
@@ -75,7 +76,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
     }
 
     private void SetNext() {
-        String url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetCheckUser.php?UserName=" + countryCodePicker.getFullNumber();
+        String url = Config.LOCALHOST + "GetCheckUser.php?UserName=" + countryCodePicker.getFullNumber();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null

@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.Booking.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ServiceAdapter;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -56,7 +57,7 @@ public class OtherServicesFragment extends Fragment {
     private SelectServiceActivity activity;
     private static final String TAG = "error";
     private final String ID_Species = "4";
-    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetService.php";
+    private String Url = Config.LOCALHOST + "GetService.php";
 
 
     @Override

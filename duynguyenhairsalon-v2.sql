@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 01, 2021 lúc 06:10 AM
+-- Thời gian đã tạo: Th6 01, 2021 lúc 12:18 PM
 -- Phiên bản máy phục vụ: 10.4.19-MariaDB
 -- Phiên bản PHP: 8.0.6
 
@@ -44,6 +44,35 @@ INSERT INTO `account` (`UserName`, `Password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `bill`
+--
+
+CREATE TABLE `bill` (
+  `ID_Bill` varchar(15) NOT NULL,
+  `Date_Bill` datetime NOT NULL,
+  `Sum_Money_Bill` int(11) NOT NULL,
+  `Shipping_Fee` int(11) NOT NULL,
+  `Delivery_Address` varchar(250) NOT NULL,
+  `Specific_Delivery_Address` int(250) NOT NULL,
+  `Fast_Delivery` tinyint(1) NOT NULL,
+  `Is_Succsessful` tinyint(1) NOT NULL,
+  `ID_User` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `descriptionbill`
+--
+
+CREATE TABLE `descriptionbill` (
+  `ID_Bill` varchar(15) NOT NULL,
+  `ID_Product` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `descriptiontask`
 --
 
@@ -63,7 +92,50 @@ INSERT INTO `descriptiontask` (`ID_Task`, `ID_Service`) VALUES
 ('2161112560', 3),
 ('2161112560', 8),
 ('2161112560', 3),
-('2161112560', 8);
+('2161112560', 8),
+('21611111550', 13),
+('21611111550', 17),
+('21611111550', 16),
+('21611111550', 15),
+('21611111550', 18),
+('21611111550', 12),
+('21611111550', 6),
+('21611111550', 3),
+('2161111730', 2),
+('21611117410', 3),
+('21611117410', 6),
+('21611117410', 12),
+('21611117410', 13),
+('21611117410', 14),
+('21611117410', 15),
+('21611117410', 16),
+('21611117410', 17),
+('21611117410', 18),
+('21611119230', 3),
+('21611119230', 6),
+('21611119230', 12),
+('21611119230', 13),
+('21611119230', 14),
+('21611119230', 15),
+('21611119230', 16),
+('21611119230', 17),
+('21611119230', 18);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `product`
+--
+
+CREATE TABLE `product` (
+  `ID_Product` int(11) NOT NULL,
+  `Name_Product` varchar(50) NOT NULL,
+  `Price_Product` int(11) NOT NULL,
+  `Amount_Product` int(11) NOT NULL,
+  `Description_Product` text NOT NULL,
+  `Image_Product` text NOT NULL,
+  `ID_SpeciesProduct` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -102,6 +174,17 @@ INSERT INTO `service` (`ID_Service`, `Name_Service`, `Description_Service`, `Pri
 (16, 'Lấy mụ bằng que gạt', 'Sử dụng mĩ phẩm đẩy mụn kết hợp que gạt(sử dụng 1 lần) lấy nhấn mụn.', 30000, 4),
 (17, 'Lột mụn than tre', 'Thành phần chính là than tre hoạt tính, lột sạch mụn đầu đen.', 30000, 4),
 (18, 'Giường massage Nhật Bản', 'Công nghệ S trank Nhật Bản với 4 trục đấm, bóp, di huyệt thiết kế riêng cho người Châu Á', 20000, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `speciesproduct`
+--
+
+CREATE TABLE `speciesproduct` (
+  `ID_SpeciesProduct` int(11) NOT NULL,
+  `Name_SpeciesProduct` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -147,6 +230,10 @@ CREATE TABLE `task` (
 
 INSERT INTO `task` (`ID_Task`, `Date_Task`, `Sum_Money_Task`, `Is_Save_Photo`, `Is_Consulting`, `Is_Successful_Task`, `Service_Free`, `ID_User`) VALUES
 ('21611058100', '2021-06-02 13:30:00', 672000, 1, 1, 1, '[\"Hỏi kĩ trong khi cắt\",\"Tư vấn cắt tóc mới\",\"Cắt - giũa móng tay\",\"Hướng dẫn vuôt sáp tại nhà\",\"Da dễ kích ứng\",\"Bỏ bớt thời gian gội, cắt sớm\"]', 5),
+('21611111550', '2021-06-01 17:30:00', 992000, 1, 1, 1, '[\"Bỏ bớt thời gian gội, cắt sớm\",\"Da dễ kích ứng\",\"Hỏi kĩ trong khi cắt\",\"Hướng dẫn vuôt sáp tại nhà\",\"Tư vấn cắt tóc mới\",\"Cắt - giũa móng tay\"]', 6),
+('2161111730', '2021-06-01 15:30:00', 70000, 1, 1, 0, '[\"Hướng dẫn vuôt sáp tại nhà\"]', 6),
+('21611117410', '2021-06-01 15:00:00', 992000, 0, 0, 0, '[\"Bỏ bớt thời gian gội, cắt sớm\",\"Da dễ kích ứng\",\"Hỏi kĩ trong khi cắt\",\"Hướng dẫn vuôt sáp tại nhà\",\"Tư vấn cắt tóc mới\",\"Cắt - giũa móng tay\"]', 6),
+('21611119230', '2021-06-03 15:30:00', 992000, 1, 1, 0, '[\"Bỏ bớt thời gian gội, cắt sớm\",\"Da dễ kích ứng\",\"Hỏi kĩ trong khi cắt\",\"Hướng dẫn vuôt sáp tại nhà\",\"Tư vấn cắt tóc mới\",\"Cắt - giũa móng tay\"]', 5),
 ('2161112560', '2021-06-03 12:00:00', 318000, 0, 1, 1, '[\"Bỏ bớt thời gian gội, cắt sớm\",\"Hướng dẫn vuôt sáp tại nhà\",\"Tư vấn cắt tóc mới\",\"Da dễ kích ứng\",\"Cắt - giũa móng tay\"]', 5),
 ('2161118250', '2021-06-01 12:30:00', 80000, 1, 1, 1, '[\"Bỏ bớt thời gian gội, cắt sớm\",\"Da dễ kích ứng\",\"Hỏi kĩ trong khi cắt\",\"Hướng dẫn vuôt sáp tại nhà\",\"Tư vấn cắt tóc mới\",\"Cắt - giũa móng tay\"]', 6);
 
@@ -184,6 +271,20 @@ ALTER TABLE `account`
   ADD PRIMARY KEY (`UserName`);
 
 --
+-- Chỉ mục cho bảng `bill`
+--
+ALTER TABLE `bill`
+  ADD PRIMARY KEY (`ID_Bill`),
+  ADD KEY `fk_user_bill` (`ID_User`);
+
+--
+-- Chỉ mục cho bảng `descriptionbill`
+--
+ALTER TABLE `descriptionbill`
+  ADD KEY `fk_bill_descriptionbill` (`ID_Bill`),
+  ADD KEY `fk_product_descriptionbill` (`ID_Product`);
+
+--
 -- Chỉ mục cho bảng `descriptiontask`
 --
 ALTER TABLE `descriptiontask`
@@ -191,11 +292,24 @@ ALTER TABLE `descriptiontask`
   ADD KEY `fk_service_descriptionservice` (`ID_Service`);
 
 --
+-- Chỉ mục cho bảng `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`ID_Product`),
+  ADD KEY `fk_species_product` (`ID_SpeciesProduct`);
+
+--
 -- Chỉ mục cho bảng `service`
 --
 ALTER TABLE `service`
   ADD PRIMARY KEY (`ID_Service`),
   ADD KEY `fk_species_service` (`ID_Species`);
+
+--
+-- Chỉ mục cho bảng `speciesproduct`
+--
+ALTER TABLE `speciesproduct`
+  ADD PRIMARY KEY (`ID_SpeciesProduct`);
 
 --
 -- Chỉ mục cho bảng `speciesservice`
@@ -222,10 +336,22 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `product`
+--
+ALTER TABLE `product`
+  MODIFY `ID_Product` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `service`
 --
 ALTER TABLE `service`
   MODIFY `ID_Service` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT cho bảng `speciesproduct`
+--
+ALTER TABLE `speciesproduct`
+  MODIFY `ID_SpeciesProduct` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `speciesservice`
@@ -244,11 +370,30 @@ ALTER TABLE `user`
 --
 
 --
+-- Các ràng buộc cho bảng `bill`
+--
+ALTER TABLE `bill`
+  ADD CONSTRAINT `fk_user_bill` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID_User`);
+
+--
+-- Các ràng buộc cho bảng `descriptionbill`
+--
+ALTER TABLE `descriptionbill`
+  ADD CONSTRAINT `fk_bill_descriptionbill` FOREIGN KEY (`ID_Bill`) REFERENCES `bill` (`ID_Bill`),
+  ADD CONSTRAINT `fk_product_descriptionbill` FOREIGN KEY (`ID_Product`) REFERENCES `product` (`ID_Product`);
+
+--
 -- Các ràng buộc cho bảng `descriptiontask`
 --
 ALTER TABLE `descriptiontask`
   ADD CONSTRAINT `fk_service_descriptionservice` FOREIGN KEY (`ID_Service`) REFERENCES `service` (`ID_Service`),
   ADD CONSTRAINT `fk_task_descriptionservice` FOREIGN KEY (`ID_Task`) REFERENCES `task` (`ID_Task`);
+
+--
+-- Các ràng buộc cho bảng `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `fk_species_product` FOREIGN KEY (`ID_SpeciesProduct`) REFERENCES `speciesproduct` (`ID_SpeciesProduct`);
 
 --
 -- Các ràng buộc cho bảng `service`

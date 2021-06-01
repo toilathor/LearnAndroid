@@ -95,7 +95,6 @@ public class SelectServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Gson gson = new Gson();
                 String data = gson.toJson(servicesList);
-                Log.d("check_list_service", "" + data);
                 Intent intent = new Intent();
                 intent.putExtra("data", data);
                 setResult(RESULT_OK, intent);

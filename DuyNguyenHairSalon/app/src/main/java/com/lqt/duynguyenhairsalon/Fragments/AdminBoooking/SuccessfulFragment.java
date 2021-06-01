@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.TaskAdapter;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.Model.User;
 import com.lqt.duynguyenhairsalon.Model.mTask;
@@ -48,7 +49,7 @@ public class SuccessfulFragment extends Fragment {
     private String day;
 
     private static final String TAG = "error";
-    private String Url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/GetTaskAdmin.php?DayTask=";
+    private String Url = Config.LOCALHOST + "GetTaskAdmin.php?DayTask=";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

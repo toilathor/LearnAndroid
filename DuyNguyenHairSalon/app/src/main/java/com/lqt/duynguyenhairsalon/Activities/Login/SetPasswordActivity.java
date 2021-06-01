@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
@@ -39,7 +40,7 @@ public class SetPasswordActivity extends AppCompatActivity {
 
     //Param
     private static final String TAG = "error";
-    private String url = "http://192.168.1.101/DuyNguyenHairSalonWebService/API/CreateAccount.php";
+    private String url = Config.LOCALHOST + "CreateAccount.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
