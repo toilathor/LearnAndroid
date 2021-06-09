@@ -46,7 +46,7 @@ public class AdminBookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_booking);
 
-        AnhXa();
+        initView();
 
         SetTabLayout();
 
@@ -148,7 +148,7 @@ public class AdminBookingActivity extends AppCompatActivity {
         }
     }
 
-    private void AnhXa() {
+    private void initView() {
         spinnerDay = (Spinner) findViewById(R.id.spinner_SelectDay);
         tabLayoutSelectSuccess = (TabLayout) findViewById(R.id.tabLayout_SelectSuccess);
         viewPager2SelectSuccess = (ViewPager2) findViewById(R.id.viewPager2_SelectSuccess);

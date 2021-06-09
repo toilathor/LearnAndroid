@@ -47,7 +47,7 @@ public class SetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
 
-        AnhXa();
+        initView();
 
         SetDataPhone();
 
@@ -181,7 +181,7 @@ public class SetPasswordActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void AnhXa() {
+    private void initView() {
         imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
         editTextPhone = (EditText) findViewById(R.id.editText_Phone);
         editTextPassword = (EditText) findViewById(R.id.editText_Password);

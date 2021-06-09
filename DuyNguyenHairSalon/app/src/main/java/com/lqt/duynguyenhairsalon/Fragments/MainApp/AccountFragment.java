@@ -41,7 +41,7 @@ public class AccountFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        AnhXa();
+        initView();
 
         listFragment();
         return view;
@@ -98,7 +98,7 @@ public class AccountFragment extends Fragment {
     });
 }
 
-    private void AnhXa() {
+    private void initView() {
         constraintLayoutEditAccount = (ConstraintLayout) view.findViewById(R.id.constraintLayout_EditAccount);
         cardViewMember = (CardView) view.findViewById(R.id.cardView_Member);
         cardViewRewards = (CardView) view.findViewById(R.id.cardView_Rewards);

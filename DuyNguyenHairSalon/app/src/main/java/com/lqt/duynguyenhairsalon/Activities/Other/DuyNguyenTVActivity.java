@@ -55,7 +55,7 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duy_nguyen_t_v);
 
-        AnhXa();
+        initView();
 
         setListen();
 
@@ -163,7 +163,7 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void AnhXa() {
+    private void initView() {
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_PlayList);
     }

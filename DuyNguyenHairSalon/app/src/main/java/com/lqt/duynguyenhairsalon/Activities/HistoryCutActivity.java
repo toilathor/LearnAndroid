@@ -21,7 +21,7 @@ public class HistoryCutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_cut);
 
-        AnhXa();
+        initView();
 
         ListenActivity();
     }
@@ -43,7 +43,7 @@ public class HistoryCutActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         textViewShowDetail = (TextView) findViewById(R.id.textView_ShowDetail);
     }

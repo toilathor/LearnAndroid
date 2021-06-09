@@ -65,7 +65,7 @@ public class ServiceCutMassageFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_service_cut_masage, container, false);
 
-        AnhXa();
+        initView();
 
         SetViewService();
 
@@ -120,7 +120,7 @@ public class ServiceCutMassageFragment extends Fragment {
         recyclerViewServiceCut.setAdapter(adapter);
     }
 
-    private void AnhXa() {
+    private void initView() {
         activity = (SelectServiceActivity) getActivity();
 
         recyclerViewServiceCut = (RecyclerView) view.findViewById(R.id.recyclerView_Service);

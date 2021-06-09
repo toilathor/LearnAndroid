@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AnhXa();
+        initView();
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView);
         viewPager = (ViewPager) findViewById(R.id.ViewPager);
 

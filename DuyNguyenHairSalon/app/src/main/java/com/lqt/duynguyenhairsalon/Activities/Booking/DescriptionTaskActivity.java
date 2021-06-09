@@ -86,7 +86,7 @@ public class DescriptionTaskActivity extends AppCompatActivity {
         data = intent.getStringExtra("data");
 
 
-        AnhXa();
+        initView();
 
         SetData();
 
@@ -245,7 +245,7 @@ public class DescriptionTaskActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void AnhXa() {
+    private void initView() {
         imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
         buttonSuccess = (Button) findViewById(R.id.button_Success);
         textViewName = (TextView) findViewById(R.id.textView_Name);

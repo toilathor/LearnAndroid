@@ -65,7 +65,7 @@ public class OtherServicesFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_other_services, container, false);
 
-        AnhXa();
+        initView();
 
         SetViewService();
 
@@ -120,7 +120,7 @@ public class OtherServicesFragment extends Fragment {
         recyclerViewServiceCut.setAdapter(adapter);
     }
 
-    private void AnhXa() {
+    private void initView() {
         activity = (SelectServiceActivity) getActivity();
 
         recyclerViewServiceCut = (RecyclerView) view.findViewById(R.id.recyclerView_Service);

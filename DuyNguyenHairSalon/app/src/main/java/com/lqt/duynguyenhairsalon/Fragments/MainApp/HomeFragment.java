@@ -4,14 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,13 +36,15 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
 import com.lqt.duynguyenhairsalon.Activities.Booking.CustomerBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.Other.DuyNguyenTVActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
-import com.lqt.duynguyenhairsalon.Activities.Other.LoadWebViewActivity;
-import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
 import com.lqt.duynguyenhairsalon.Activities.Home.NotificationActivity;
+import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.DuyNguyenTVActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.LoadWebViewActivity;
 import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.DuyNguyenTVAdapter;
+import com.lqt.duynguyenhairsalon.Model.Adapters.PhotoAdapter;
+import com.lqt.duynguyenhairsalon.Model.Photo;
 import com.lqt.duynguyenhairsalon.Model.SystemHelper;
 import com.lqt.duynguyenhairsalon.Model.VideoYouTube;
 import com.lqt.duynguyenhairsalon.R;
@@ -52,6 +56,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class HomeFragment extends Fragment {
     /*
@@ -62,7 +70,8 @@ public class HomeFragment extends Fragment {
 
     //View
     private View view;
-    private ViewFlipper viewFlipper_Demo;
+    private ViewPager viewPagerSlider;
+    private CircleIndicator circleIndicator;
     private RecyclerView recyclerViewDuyNguyenTV;
     private Button buttonCall;
     private TextView textViewXemThemTV, textViewSignupRank;
@@ -71,6 +80,7 @@ public class HomeFragment extends Fragment {
 
     //Adapter
     private DuyNguyenTVAdapter duyNguyenTVAdapter;
+    private PhotoAdapter photoAdapter;
 
     //Param
     private SystemHelper systemHelper;
@@ -78,6 +88,8 @@ public class HomeFragment extends Fragment {
     private String key = "AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o";
     private String Url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + key + "&maxResults=5";
     private boolean isAdmin;
+    private List<Photo> photoList;
+    private Timer timer;
 
     //List
     private List<VideoYouTube> playListYouTube;
@@ -92,9 +104,11 @@ public class HomeFragment extends Fragment {
 
         systemHelper = new SystemHelper(view.getContext());
 
-        AnhXa();
+        initView();
 
         setSlider();
+
+        autoSlideImage();
 
         getJSonYouTube(Url);
 
@@ -103,6 +117,34 @@ public class HomeFragment extends Fragment {
         setListenFragment();
 
         return view;
+    }
+
+    private void autoSlideImage() {
+        if(photoList == null || photoList.isEmpty() || viewPagerSlider == null){
+            return;
+        }
+
+        if(timer == null){
+            timer = new Timer();
+        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = viewPagerSlider.getCurrentItem();
+                        int totalItem = photoList.size() -1;
+                        if(currentItem<totalItem){
+                            currentItem++;
+                            viewPagerSlider.setCurrentItem(currentItem);
+                        }else{
+                            viewPagerSlider.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        }, 500, 3000);
     }
 
 
@@ -261,26 +303,27 @@ public class HomeFragment extends Fragment {
      * set data cho slider
      * */
     private void setSlider() {
-        int images[] = {R.drawable.demo1, R.drawable.demo2, R.drawable.demo3};
-        for (int image : images) {
-            flipper(image);
-        }
+        photoList = getListPhoto();
+
+        photoAdapter = new PhotoAdapter(getContext(), photoList);
+
+        viewPagerSlider.setAdapter(photoAdapter);
+
+        circleIndicator.setViewPager(viewPagerSlider);
+        photoAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
     }
 
-    /*
-     * Đây là slide ảnh
-     * */
-    public void flipper(int image) {
-        ImageView imageView = new ImageView(view.getContext());
-        imageView.setBackgroundResource(image);
+    private List<Photo> getListPhoto() {
+        List<Photo> photos = new ArrayList<>();
 
-        viewFlipper_Demo.addView(imageView);
-        viewFlipper_Demo.setFlipInterval(5000);
-        viewFlipper_Demo.setAutoStart(true);
-        viewFlipper_Demo.setInAnimation(view.getContext(), android.R.anim.slide_out_right);
-        viewFlipper_Demo.setInAnimation(view.getContext(), android.R.anim.slide_in_left);
+        photos.add(new Photo(R.drawable.demo1));
+        photos.add(new Photo(R.drawable.demo2));
+        photos.add(new Photo(R.drawable.demo3));
+        photos.add(new Photo(R.drawable.demo4));
+        photos.add(new Photo(R.drawable.demo5));
+
+        return photos;
     }
-
 
     private void getJSonYouTube(String url) {
         if (playListYouTube == null) {
@@ -344,8 +387,7 @@ public class HomeFragment extends Fragment {
     /*
      * Ánh xạ thông thương
      * */
-    private void AnhXa() {
-        viewFlipper_Demo = view.findViewById(R.id.viewFlipper_Demo);
+    private void initView() {
         recyclerViewDuyNguyenTV = view.findViewById(R.id.recyclerviewTV);
         buttonCall = (Button) view.findViewById(R.id.button_Call);
         textViewXemThemTV = (TextView) view.findViewById(R.id.textView_XemThemTV);
@@ -353,7 +395,18 @@ public class HomeFragment extends Fragment {
         imageViewHistoryCut = (ImageView) view.findViewById(R.id.imageView_Avatar);
         bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottomNavView);
         imageViewNotification = (ImageView) view.findViewById(R.id.imageView_Notification);
+        viewPagerSlider = (ViewPager) view.findViewById(R.id.viewPager_Slider);
+        circleIndicator = (CircleIndicator) view.findViewById(R.id.circleIndicator);
 
         isAdmin = DataLocalManager.getPrefIsAdmin();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(timer != null){
+            timer.cancel();
+            timer = null;
+        }
     }
 }

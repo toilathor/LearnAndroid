@@ -39,7 +39,7 @@ public class SelectTypeLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_type_login);
 
-        AnhXa();
+        initView();
 
         setButtonFB();
 
@@ -118,7 +118,7 @@ public class SelectTypeLoginActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         loginButtonFB = (LoginButton) findViewById(R.id.login_button);
         buttonLoginWithPhoneNumber = (Button) findViewById(R.id.button_LoginWithPhoneNumber);
     }

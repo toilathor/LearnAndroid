@@ -17,7 +17,7 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
-        AnhXa();
+        initView();
 
         listenNotification();
     }
@@ -31,7 +31,7 @@ public class NotificationActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
     }
 }

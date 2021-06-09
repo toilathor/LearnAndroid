@@ -51,7 +51,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_phone_number_login);
 
-        AnhXa();
+        initView();
 
         SetCountryCodePicker();
 
@@ -194,7 +194,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         countryCodePicker = (CountryCodePicker) findViewById(R.id.countryCodePicker);
         imageViewCheck = (ImageView) findViewById(R.id.imageView_Check) ;
         editTextPhone = (EditText) findViewById(R.id.editText_Phone);

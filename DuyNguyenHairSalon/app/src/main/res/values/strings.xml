@@ -3,6 +3,7 @@
     <string name="facebook_app_id">139075711548110</string>
     <string name="fb_login_protocol_scheme">fb139075711548110</string>
     <string name="api_map_key">AIzaSyC5OO_rliGtqP8EPL4Io8SaFrBi6tOlk6o</string>
+    <string name="token_ghn">82a0da54-c84b-11eb-bb70-b6be8148d819</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="dat_lich_cat_toc">Đặt lịch cắt tóc</string>
@@ -33,4 +34,8 @@
     <string name="thiet_lap_ma_pin">Thiết lập mã PIN</string>
     <string name="xac_nhan">Xác nhận</string>
     <string name="huy">Hủy</string>
+    <string name="gio_hang">Giỏ hàng</string>
+    <string name="yes">Có</string>
+    <string name="free_ship">  Miễn phí ship với đơn hàng từ 500k</string>
+    <string name="charge_ship">  Phí vận chuyển đ30.000</string>
 </resources>

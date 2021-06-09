@@ -56,7 +56,7 @@ public class UnsuccessfulFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_unsuccessful, container, false);
 
-        AnhXa();
+        initView();
 
         /*
          * https://viblo.asia/p/giai-quyet-rac-roi-khi-su-sung-cleartext-tren-android-pie-maGK7DLeZj2
@@ -134,7 +134,7 @@ public class UnsuccessfulFragment extends Fragment {
         recyclerViewUnsuccessful.setAdapter(taskAdapter);
     }
 
-    private void AnhXa() {
+    private void initView() {
         recyclerViewUnsuccessful = (RecyclerView) view.findViewById(R.id.recycleView_TaskUnsuccessful);
 
         activity = (AdminBookingActivity) getActivity();

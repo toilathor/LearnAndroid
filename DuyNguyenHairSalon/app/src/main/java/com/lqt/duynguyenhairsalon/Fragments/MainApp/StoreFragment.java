@@ -1,5 +1,6 @@
 package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -8,25 +9,54 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.CartActivity;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.ProductListActivity;
+import com.lqt.duynguyenhairsalon.Model.Adapters.PhotoAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ProductAdapter;
+import com.lqt.duynguyenhairsalon.Model.Adapters.SpeciesProductAdapter;
+import com.lqt.duynguyenhairsalon.Model.Config;
+import com.lqt.duynguyenhairsalon.Model.Photo;
 import com.lqt.duynguyenhairsalon.Model.ProductDuyNguyenHairSalon;
+import com.lqt.duynguyenhairsalon.Model.SpeciesProduct;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class StoreFragment extends Fragment {
+import me.relex.circleindicator.CircleIndicator;
 
-    //View 
+public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    //View
     private View view;
     private RecyclerView recyclerViewHotProduct;
     private RecyclerView recyclerViewNewProduct;
@@ -35,30 +65,47 @@ public class StoreFragment extends Fragment {
     private TextView textViewOtherHotProduct;
     private TextView textViewOtherNewProduct;
     private TextView textViewOtherTopProduct;
+    private TextView textViewAmountInCart;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ViewFlipper viewFlipper;
+    private ViewPager viewPagerSlider;
+    private FrameLayout frameLayoutCart;
+    private CircleIndicator circleIndicator;
 
 
     //List
     private List<ProductDuyNguyenHairSalon> hotProductList;
     private List<ProductDuyNguyenHairSalon> newProductList;
     private List<ProductDuyNguyenHairSalon> topProductList;
+    private List<SpeciesProduct> speciesProductList;
+    private List<Photo> photoList;
 
     //Adapter
     private ProductAdapter hotProductAdapter;
     private ProductAdapter newProductAdapter;
     private ProductAdapter topProductAdapter;
+    private SpeciesProductAdapter speciesProductAdapter;
+    private PhotoAdapter photoAdapter;
 
     //Param
+    private String urlSpeciesProduct = Config.LOCALHOST + "GetSpeciesProduct.php";
+    private static final String TAG = "error";
+    private Timer timer;
+    private String urlAmountCart = Config.LOCALHOST + "GetCart.php?User_Name=";
+    private String UserName;
+    private int AmountInCart = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_store, container, false);
 
-        AnhXa();
+        initView();
 
-        Slider();
+        SetSlider();
+
+        autoSlideImage();
+
+        SetSpeciesProduct();
 
         HotProduct();
 
@@ -66,7 +113,76 @@ public class StoreFragment extends Fragment {
 
         TopProduct();
 
+        ListenFragment();
+
+        SetSwipeFragment();
         return view;
+    }
+
+    private void SetSwipeFragment() {
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.orange));
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void ListenFragment() {
+        frameLayoutCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CartActivity.class));
+            }
+        });
+    }
+
+    private void SetSpeciesProduct() {
+        speciesProductList = new ArrayList<>();
+        speciesProductAdapter = new SpeciesProductAdapter(getContext());
+        speciesProductAdapter.setData(speciesProductList, new SpeciesProductAdapter.IClickSpeciesProductListener() {
+            @Override
+            public void onClickSpeciesProduct(String keyWord, SpeciesProduct speciesProduct) {
+                Intent intent = new Intent(getContext(), ProductListActivity.class);
+
+                intent.putExtra("KEYWORD", keyWord);
+                intent.putExtra("SPECIESPRODUCT", speciesProduct);
+
+                startActivity(intent);
+            }
+        });
+        GetDataSP();
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
+
+        recyclerViewSpeciesProduct.setLayoutManager(layoutManager);
+
+        recyclerViewSpeciesProduct.setAdapter(speciesProductAdapter);
+    }
+
+    private void GetDataSP() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlSpeciesProduct, null
+                , new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject species = response.getJSONObject(i);
+                        speciesProductList.add(new SpeciesProduct(species.getInt("ID_SpeciesProduct")
+                                , species.getString("Name_SpeciesProduct")
+                                , species.getString("Image_SpeciesProduct")));
+                        speciesProductAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        requestQueue.add(arrayRequest);
     }
 
     private void TopProduct() {
@@ -79,8 +195,12 @@ public class StoreFragment extends Fragment {
                     , "Sản phẩm này tên rất dài nhé tất cả mọi người"
                     , 199000
                     , 1000
-                    , 1));
-
+                    , ""
+                    , ""
+                    , ""
+                    , ""
+                    , 1
+                    , "Etiaxil"));
         }
 
         topProductAdapter = new ProductAdapter(getContext());
@@ -98,7 +218,12 @@ public class StoreFragment extends Fragment {
                     , "Sản phẩm này tên rất dài nhé tất cả mọi người"
                     , 199000
                     , 1000
-                    , 1));
+                    , ""
+                    , ""
+                    , ""
+                    , ""
+                    , 1
+                    , "Etiaxil"));
 
         }
 
@@ -106,6 +231,66 @@ public class StoreFragment extends Fragment {
         hotProductAdapter.setData(hotProductList);
 
         recyclerViewHotProduct.setAdapter(hotProductAdapter);
+    }
+
+    private void SetAmountInCart() {
+        AmountInCart = 0;
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlAmountCart + UserName
+                , null
+                , new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response.length() == 0){
+                    textViewAmountInCart.setText("" + AmountInCart);
+                }else {
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject product = response.getJSONObject(i);
+                            AmountInCart += product.getInt("Amount_Product");
+                            textViewAmountInCart.setText("" + AmountInCart);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+        requestQueue.add(arrayRequest);
+    }
+
+    private void autoSlideImage() {
+        if (photoList == null || photoList.isEmpty() || viewPagerSlider == null) {
+            return;
+        }
+
+        if (timer == null) {
+            timer = new Timer();
+        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = viewPagerSlider.getCurrentItem();
+                        int totalItem = photoList.size() - 1;
+                        if (currentItem < totalItem) {
+                            currentItem++;
+                            viewPagerSlider.setCurrentItem(currentItem);
+                        } else {
+                            viewPagerSlider.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        }, 500, 3000);
     }
 
     private void NewProduct() {
@@ -118,7 +303,12 @@ public class StoreFragment extends Fragment {
                     , "Sản phẩm này tên rất dài nhé tất cả mọi người"
                     , 199000
                     , 1000
-                    , 1));
+                    , ""
+                    , ""
+                    , ""
+                    , ""
+                    , 1
+                    , "Etiaxil"));
 
         }
 
@@ -128,29 +318,36 @@ public class StoreFragment extends Fragment {
         recyclerViewNewProduct.setAdapter(newProductAdapter);
     }
 
-    private void Slider() {
-        int images[] = {R.drawable.banner_shop_1, R.drawable.banner_shop_2};
-        for (int image : images) {
-            flipper(image);
+    private void SetSlider() {
+        photoList = getListPhoto();
+
+        photoAdapter = new PhotoAdapter(getContext(), photoList);
+
+        viewPagerSlider.setAdapter(photoAdapter);
+
+        circleIndicator.setViewPager(viewPagerSlider);
+        photoAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
+    }
+
+    private List<Photo> getListPhoto() {
+        List<Photo> photos = new ArrayList<>();
+
+        photos.add(new Photo(R.drawable.banner_shop_1));
+        photos.add(new Photo(R.drawable.banner_shop_2));
+
+        return photos;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
         }
     }
 
-    /*
-     * Đây là slide ảnh
-     * */
-    public void flipper(int image) {
-        ImageView imageView = new ImageView(view.getContext());
-        imageView.setBackgroundResource(image);
-
-        viewFlipper.addView(imageView);
-        viewFlipper.setFlipInterval(5000);
-        viewFlipper.setAutoStart(true);
-        viewFlipper.setInAnimation(view.getContext(), android.R.anim.slide_out_right);
-        viewFlipper.setInAnimation(view.getContext(), android.R.anim.slide_in_left);
-    }
-
-
-    private void AnhXa() {
+    private void initView() {
         recyclerViewHotProduct = (RecyclerView) view.findViewById(R.id.recyclerView_HotProduct);
         recyclerViewNewProduct = (RecyclerView) view.findViewById(R.id.recyclerView_NewProduct);
         recyclerViewTopProduct = (RecyclerView) view.findViewById(R.id.recyclerView_TopProduct);
@@ -158,7 +355,33 @@ public class StoreFragment extends Fragment {
         textViewOtherHotProduct = (TextView) view.findViewById(R.id.textView_OtherHotProduct);
         textViewOtherNewProduct = (TextView) view.findViewById(R.id.textView_OtherNewProduct);
         textViewOtherTopProduct = (TextView) view.findViewById(R.id.textView_OtherTopProduct);
+        textViewAmountInCart = (TextView) view.findViewById(R.id.textView_AmountInCart);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
+        viewPagerSlider = (ViewPager) view.findViewById(R.id.viewPager_Store);
+        circleIndicator = (CircleIndicator) view.findViewById(R.id.circleIndicator);
+        frameLayoutCart = (FrameLayout) view.findViewById(R.id.frameLayout);
+
+        char[] chars = new char[15];
+        DataLocalManager.getPrefUserName().getChars(1, 12, chars, 0);
+        UserName = String.valueOf(chars);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SetAmountInCart();
+    }
+
+    @Override
+    public void onRefresh() {
+        //Nếu muốn load lại thì làm việc ở đây
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        },3000);
     }
 }

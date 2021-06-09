@@ -34,7 +34,7 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        AnhXa();
+        initView();
 
         getDataFavorite();
 
@@ -79,7 +79,7 @@ public class FavoritesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void AnhXa() {
+    private void initView() {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_Favorites);
 
     }

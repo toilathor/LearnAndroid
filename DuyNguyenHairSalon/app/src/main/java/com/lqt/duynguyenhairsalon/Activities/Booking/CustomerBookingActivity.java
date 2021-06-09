@@ -90,7 +90,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
 
         CreateIDTask();
 
-        AnhXa();
+        initView();
 
         ListDay();
 
@@ -521,7 +521,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
     /*
      * ánh xạ các view
      * */
-    private void AnhXa() {
+    private void initView() {
         spinnerDay = (Spinner) findViewById(R.id.spinner_SelectDay);
         imageViewHome = (ImageView) findViewById(R.id.imageView_Home);
         button_SelectService = (Button) findViewById(R.id.button_SelectService);

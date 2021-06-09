@@ -43,7 +43,7 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_with_phone_number);
 
-        AnhXa();
+        initView();
 
         SetLogin();
 
@@ -140,7 +140,7 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         editTextPhoneNumber = (EditText) findViewById(R.id.editText_Phone);
         editTextPassword = (EditText) findViewById(R.id.editText_Password);
         buttonLogin = (Button) findViewById(R.id.button_Login);

@@ -63,7 +63,7 @@ public class ServiceCurlingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_service_curling, container, false);
-        AnhXa();
+        initView();
 
         SetViewService();
         SetDataService(Url);
@@ -116,7 +116,7 @@ public class ServiceCurlingFragment extends Fragment {
         recyclerViewServiceCut.setAdapter(adapter);
     }
 
-    private void AnhXa() {
+    private void initView() {
         activity = (SelectServiceActivity) getActivity();
 
         recyclerViewServiceCut = (RecyclerView) view.findViewById(R.id.recyclerView_Service);

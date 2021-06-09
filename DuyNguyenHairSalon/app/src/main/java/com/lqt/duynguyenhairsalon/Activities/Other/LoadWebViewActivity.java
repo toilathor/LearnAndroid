@@ -25,7 +25,7 @@ public class LoadWebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_web_view);
 
-        AnhXa();
+        initView();
 
         init();
 
@@ -68,7 +68,7 @@ public class LoadWebViewActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
     }
 
-    private void AnhXa() {
+    private void initView() {
         webView = (WebView) findViewById(R.id.webView);
         imageView = (ImageView) findViewById(R.id.imageViewBack);
     }

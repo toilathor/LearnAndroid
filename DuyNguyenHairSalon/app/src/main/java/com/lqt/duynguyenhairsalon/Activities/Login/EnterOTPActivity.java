@@ -51,7 +51,7 @@ public class EnterOTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_o_t_p);
 
-        AnhXa();
+        initView();
 
         SetChangeEditTextCode();
 
@@ -287,7 +287,7 @@ public class EnterOTPActivity extends AppCompatActivity {
         }
     }
 
-    private void AnhXa() {
+    private void initView() {
         phoneNumber = getIntent().getStringExtra("PhoneNumber");
         verificationId = getIntent().getStringExtra("VerificationId");
         editTextCode1 = (EditText) findViewById(R.id.editText_Code1);

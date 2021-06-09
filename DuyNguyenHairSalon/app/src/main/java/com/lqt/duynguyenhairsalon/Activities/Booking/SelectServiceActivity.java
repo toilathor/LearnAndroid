@@ -39,7 +39,7 @@ public class SelectServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_service);
 
-        AnhXa();
+        initView();
 
         SelectServiceListen();
 
@@ -103,7 +103,7 @@ public class SelectServiceActivity extends AppCompatActivity {
         });
     }
 
-    private void AnhXa() {
+    private void initView() {
         tabLayoutSelectSevice = (TabLayout) findViewById(R.id.tabLayout_SelectService);
         viewPager2SelectService = (ViewPager2) findViewById(R.id.viewPager2_SelectService);
         imageViewHome = (ImageView) findViewById(R.id.imageView_Home);

@@ -57,7 +57,7 @@ public class SuccessfulFragment extends Fragment {
         // Inflate the layout for this fragment
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_successful, container, false);
 
-        AnhXa();
+        initView();
 
         LoadListTask();
 
@@ -129,7 +129,7 @@ public class SuccessfulFragment extends Fragment {
         recyclerViewSuccessful.setAdapter(taskAdapter);
     }
 
-    private void AnhXa() {
+    private void initView() {
         recyclerViewSuccessful = (RecyclerView) view.findViewById(R.id.recycleView_TaskSuccessful);
 
         activity = (AdminBookingActivity) getActivity();

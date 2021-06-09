@@ -1,6 +1,7 @@
 package com.lqt.duynguyenhairsalon.Model.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lqt.duynguyenhairsalon.Activities.Shopping.DetailProductActivity;
 import com.lqt.duynguyenhairsalon.Model.ProductDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -45,7 +48,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
         holder.imageViewProduct.setImageResource(R.drawable.sp_demo);
         holder.textViewNameProduct.setText("" + product.getName_Product());
-        holder.textViewPriceProduct.setText("đ " + product.getPrice_Produce()/1000 + ".000");
+        holder.textViewPriceProduct.setText("đ " + product.getPrice_Product()/1000 + ".000");
+        holder.cardViewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailProductActivity.class);
+
+                intent.putExtra("ID_Product", product.getID_Product());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,12 +72,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
         private ImageView imageViewProduct;
         private TextView textViewNameProduct, textViewPriceProduct;
+        private CardView cardViewProduct;
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProduct = (ImageView) itemView.findViewById(R.id.imageView_Product);
             textViewNameProduct = (TextView) itemView.findViewById(R.id.textView_NameProduct);
             textViewPriceProduct = (TextView) itemView.findViewById(R.id.textView_PriceProduct);
+            cardViewProduct = (CardView) itemView.findViewById(R.id.cardView_Product);
         }
     }
 }

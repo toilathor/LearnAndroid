@@ -21,10 +21,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        AnhXa();
+        initView();
     }
 
-    private void AnhXa() {
+    private void initView() {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.fragment_Map);
         mapFragment.getMapAsync(this);
     }
