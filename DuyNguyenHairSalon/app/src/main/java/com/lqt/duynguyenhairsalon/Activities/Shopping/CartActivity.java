@@ -32,8 +32,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ProductInCartAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
+import com.lqt.duynguyenhairsalon.Model.DeliveryAddress.District;
+import com.lqt.duynguyenhairsalon.Model.DeliveryAddress.Province;
+import com.lqt.duynguyenhairsalon.Model.DeliveryAddress.Ward;
 import com.lqt.duynguyenhairsalon.Model.ProductDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
@@ -50,6 +54,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter.IDeliveryAddress.DISTRICT;
+import static com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter.IDeliveryAddress.PROVINCE;
+import static com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter.IDeliveryAddress.WARD;
+
 public class CartActivity extends AppCompatActivity {
 
 
@@ -61,6 +69,13 @@ public class CartActivity extends AppCompatActivity {
     private CheckBox checkBoxFastShip;
     private Button buttonOrder;
     private ImageView imageViewRowBack;
+    private TextView textViewName;
+    private TextView textViewPhoneNumber;
+    private TextView textViewProvince;
+    private TextView textViewDistrict;
+    private TextView textViewWard;
+    private Button buttonConfirm;
+    private ImageView imageViewClose;
     private Dialog dialogRequest;
     private Dialog dialogAddress;
     private Dialog dialogChooseADW;
@@ -71,14 +86,15 @@ public class CartActivity extends AppCompatActivity {
 
     //Adapter
     private ProductInCartAdapter productInCartAdapter;
+    private ListADWAdapter adwAdapter;
 
     //Param
-    private static final String PROVINCE = "province";
-    private static final String DISTRICT = "district";
-    private static final String WARD = "ward";
     private static final String TAG = "error";
     private String url = Config.LOCALHOST + "GetCart.php?User_Name=";
     private String UserName;
+    private String idDistrict = "";
+    private String idProvince = "";
+    private List listADW;
     private String urlChangeProductToCart = Config.LOCALHOST + "ChangeAmountInCart.php";
     private String urlADW = "https://online-gateway.ghn.vn/shiip/public-api/master-data/";
 
@@ -110,6 +126,9 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     * Dialog chọn Province/District/Ward
+     * */
     private void ShowDialogChooseAddress() {
         dialogAddress = new Dialog(this);
 
@@ -136,13 +155,31 @@ public class CartActivity extends AppCompatActivity {
         //chạm ra ngoài không bị close
         dialogAddress.setCanceledOnTouchOutside(false);
 
-        TextView textViewName = (TextView) dialogAddress.findViewById(R.id.textView_Name);
-        TextView textViewPhoneNumber = (TextView) dialogAddress.findViewById(R.id.textView_PhoneNumber);
-        TextView textViewProvince = (TextView) dialogAddress.findViewById(R.id.textView_Province);
-        TextView textViewDistrict = (TextView) dialogAddress.findViewById(R.id.textView_District);
-        TextView textViewWard = (TextView) dialogAddress.findViewById(R.id.textView_Ward);
-        Button buttonConfirm = (Button) dialogAddress.findViewById(R.id.button_Confirm);
-        ImageView imageViewClose = (ImageView) dialogAddress.findViewById(R.id.imageView_Close);
+        textViewName = (TextView) dialogAddress.findViewById(R.id.textView_Name);
+        textViewPhoneNumber = (TextView) dialogAddress.findViewById(R.id.textView_PhoneNumber);
+        textViewProvince = (TextView) dialogAddress.findViewById(R.id.textView_Province);
+        textViewDistrict = (TextView) dialogAddress.findViewById(R.id.textView_District);
+        textViewWard = (TextView) dialogAddress.findViewById(R.id.textView_Ward);
+        buttonConfirm = (Button) dialogAddress.findViewById(R.id.button_Confirm);
+        imageViewClose = (ImageView) dialogAddress.findViewById(R.id.imageView_Close);
+
+        if (DataLocalManager.getPrefProvinceId().isEmpty()) {
+            idProvince = "";
+        } else {
+            textViewProvince.setText(DataLocalManager.getPrefProvinceName());
+            idProvince = DataLocalManager.getPrefProvinceId();
+        }
+
+        if (DataLocalManager.getPrefDistrictId().isEmpty()) {
+            idDistrict = "";
+        } else {
+            textViewDistrict.setText(DataLocalManager.getPrefDistrictName());
+            idDistrict = DataLocalManager.getPrefDistrictId();
+        }
+
+        if (!DataLocalManager.getPrefWardId().isEmpty()) {
+            textViewWard.setText(DataLocalManager.getPrefWardName());
+        }
 
         imageViewClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,9 +195,34 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+        textViewDistrict.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (idProvince.isEmpty()) {
+                    Toast.makeText(CartActivity.this, "Vui lòng chọn Tỉnh/Thành trước!", Toast.LENGTH_SHORT).show();
+                } else {
+                    ShowDialogChooseADW(DISTRICT);
+                }
+            }
+        });
+
+        textViewWard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (idDistrict.isEmpty()) {
+                    Toast.makeText(CartActivity.this, "Vui lòng chọn Quận/Huyện trước!", Toast.LENGTH_SHORT).show();
+                } else {
+                    ShowDialogChooseADW(WARD);
+                }
+            }
+        });
+
         dialogAddress.show();
     }
 
+    /*
+     * Đây là dialog chung hiện thị list các Province/District/Ward
+     */
     private void ShowDialogChooseADW(String leverAddress) {
         dialogChooseADW = new Dialog(this);
 
@@ -186,29 +248,86 @@ public class CartActivity extends AppCompatActivity {
         //Chạm ra ngoài
         dialogChooseADW.setCanceledOnTouchOutside(false);
 
-        ListView listViewADW = (ListView) dialogChooseADW.findViewById(R.id.listView_ADW);
+        RecyclerView recyclerViewADW = (RecyclerView) dialogChooseADW.findViewById(R.id.recyclerView_ADW);
+        recyclerViewADW.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
-        List<String> listADW = new ArrayList<>();
-        SetListADW(listADW, leverAddress);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listADW);
-        listViewADW.setAdapter(arrayAdapter);
+        if (leverAddress.equals(PROVINCE)) {
+            listADW = new ArrayList<Province>();
+            SetListADW(listADW, leverAddress);
+            adwAdapter = new ListADWAdapter(this, PROVINCE, new ListADWAdapter.IDeliveryAddress() {
+                @Override
+                public void onItemClickListener(Object o) {
+                    if (!idProvince.isEmpty()) {
+                        textViewWard.setText("Xã/Phường");
+                        textViewDistrict.setText("Quận/Huyện");
+                        DataLocalManager.setPrefDistrictName("");
+                        DataLocalManager.setPrefWardName("");
+
+                        idDistrict = "";
+                        DataLocalManager.setPrefDistrictId("");
+                        DataLocalManager.setPrefWardId("");
+                    }
+
+                    Province province = (Province) o;
+                    idProvince = String.valueOf(province.getIdProvince());
+                    DataLocalManager.setPrefProvinceName(province.getNameProvince());
+                    DataLocalManager.setPrefProvinceId("" + province.getIdProvince());
+                    textViewProvince.setText(province.getNameProvince());
+                    textViewProvince.setTextColor(getResources().getColor(R.color.black));
+                    dialogChooseADW.dismiss();
+                }
+            });
+        } else if (leverAddress.equals(DISTRICT)) {
+            listADW = new ArrayList<District>();
+            SetListADW(listADW, leverAddress);
+            adwAdapter = new ListADWAdapter(this, DISTRICT, new ListADWAdapter.IDeliveryAddress() {
+                @Override
+                public void onItemClickListener(Object o) {
+                    if (!idProvince.isEmpty()) {
+                        textViewWard.setText("Xã/Phường");
+                        DataLocalManager.setPrefWardName("");
+                        DataLocalManager.setPrefWardId("");
+                    }
+
+                    District district = (District) o;
+                    idDistrict = "" + district.getIdDistrict();
+                    textViewDistrict.setText(district.getNameDistrict());
+                    DataLocalManager.setPrefDistrictName(district.getNameDistrict());
+                    DataLocalManager.setPrefDistrictId("" + district.getIdDistrict());
+                    textViewDistrict.setTextColor(getResources().getColor(R.color.black));
+                    dialogChooseADW.dismiss();
+                }
+            });
+        } else {
+            listADW = new ArrayList<Ward>();
+            SetListADW(listADW, leverAddress);
+            adwAdapter = new ListADWAdapter(this, WARD, new ListADWAdapter.IDeliveryAddress() {
+                @Override
+                public void onItemClickListener(Object o) {
+                    Ward ward = (Ward) o;
+                    textViewWard.setText(ward.getNameWard());
+                    DataLocalManager.setPrefWardName(ward.getNameWard());
+                    DataLocalManager.setPrefWardId("" + ward.getIdWard());
+                    textViewWard.setTextColor(getResources().getColor(R.color.black));
+                    dialogChooseADW.dismiss();
+                }
+            });
+        }
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Collections.sort(listADW, new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        return o1.compareTo(o2);
-                    }
-                });
-
-                dialogChooseADW.show();
+                adwAdapter.setData(listADW);
+                recyclerViewADW.setAdapter(adwAdapter);
             }
-        }, 500);
+        }, 1000);
+        dialogChooseADW.show();
     }
 
+    /*
+     * Đây là dialog confirm người dùng xóa Product
+     */
     private void RequestDelete(ProductDuyNguyenHairSalon product) {
         dialogRequest = new Dialog(this);
 
@@ -255,14 +374,26 @@ public class CartActivity extends AppCompatActivity {
         dialogRequest.show();
     }
 
-    private void SetListADW(List<String> listADW, String leverAddress) {
+    /*
+     * Set dữ liệu cho list Province/District/Ward
+     * */
+    private void SetListADW(List listADW, String leverAddress) {
+        String url;
+
         if (listADW == null) {
             return;
         }
 
+        if (leverAddress.equals(PROVINCE)) {
+            url = urlADW + PROVINCE;
+        } else if (leverAddress.equals(DISTRICT)) {
+            url = urlADW + DISTRICT + idProvince;
+        } else {
+            url = urlADW + WARD + idDistrict;
+        }
         RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlADW + leverAddress, null
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -270,7 +401,13 @@ public class CartActivity extends AppCompatActivity {
                     JSONArray array = response.getJSONArray("data");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject data = array.getJSONObject(i);
-                        listADW.add(data.getString("ProvinceName"));
+                        if (leverAddress.equals(PROVINCE)) {
+                            listADW.add(new Province(data.getInt("ProvinceID"), data.getString("ProvinceName")));
+                        } else if (leverAddress.equals(DISTRICT)) {
+                            listADW.add(new District(data.getInt("DistrictID"), data.getString("DistrictName")));
+                        } else {
+                            listADW.add(new Ward(data.getInt("WardCode"), data.getString("WardName")));
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -293,6 +430,9 @@ public class CartActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
+    /*
+     * Hiển thị list Product
+     * */
     private void SetProductList() {
         getDataProduct();
 
@@ -325,6 +465,9 @@ public class CartActivity extends AppCompatActivity {
         recyclerViewProduct.setAdapter(productInCartAdapter);
     }
 
+    /*
+     * Set sự thay đổi của list
+     * */
     private void ProductChange(ProductDuyNguyenHairSalon product, String change) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlChangeProductToCart
@@ -362,7 +505,6 @@ public class CartActivity extends AppCompatActivity {
 
                 param.put("Change", change);
                 param.put("User_Name", DataLocalManager.getPrefUserName());
-
                 param.put("ID_Product", "" + product.getID_Product());
 
                 return param;
@@ -371,6 +513,9 @@ public class CartActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /*
+     * set dữ liệu list product
+     * */
     private void getDataProduct() {
         productList = new ArrayList<>();
 
@@ -410,6 +555,9 @@ public class CartActivity extends AppCompatActivity {
         requestQueue.add(arrayRequest);
     }
 
+    /*
+     * Load giá
+     * */
     private void LoadAllPrice() {
         int sumProduct = 0;
         for (int i = 0; i < productList.size(); i++) {

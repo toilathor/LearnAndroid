@@ -12,6 +12,12 @@ public class DataLocalManager {
     private static final String PREF_USER_NAME = "PREF_USER_NAME";
     private static final String PREF_IS_LOGGED = "PREF_IS_LOGGED";
     private static final String PREF_IS_ADMIN = "PREF_IS_ADMIN";
+    private static final String PREF_PROVINCE_NAME = "PREF_PROVINCE_NAME";
+    private static final String PREF_DISTRICT_NAME = "PREF_DISTRICT_NAME";
+    private static final String PREF_WARD_NAME = "PREF_WARD_NAME";
+    private static final String PREF_PROVINCE_ID = "PREF_PROVINCE_ID";
+    private static final String PREF_DISTRICT_ID = "PREF_DISTRICT_ID";
+    private static final String PREF_WARD_ID = "PREF_WARD_ID";
 
 
     /*
@@ -68,5 +74,53 @@ public class DataLocalManager {
 
     public static boolean getPrefIsAdmin() {
         return DataLocalManager.getInstance().mySharedPreferences.getBooleanValue(PREF_IS_ADMIN);
+    }
+
+    public static void setPrefProvinceName(String province){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_PROVINCE_NAME, province);
+    }
+
+    public static String getPrefProvinceName(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_PROVINCE_NAME);
+    }
+
+    public static void setPrefDistrictName(String district){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_DISTRICT_NAME, district);
+    }
+
+    public static String getPrefDistrictName(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_DISTRICT_NAME);
+    }
+
+    public static void setPrefWardName(String ward){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_WARD_NAME, ward);
+    }
+
+    public static String getPrefWardName(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_WARD_NAME);
+    }
+
+    public static void setPrefProvinceId(String province){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_PROVINCE_ID, province);
+    }
+
+    public static String getPrefProvinceId(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_PROVINCE_ID);
+    }
+
+    public static void setPrefDistrictId(String district){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_DISTRICT_ID, district);
+    }
+
+    public static String getPrefDistrictId(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_DISTRICT_ID);
+    }
+
+    public static void setPrefWardId(String ward){
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_WARD_ID, ward);
+    }
+
+    public static String getPrefWardId(){
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_WARD_ID);
     }
 }
