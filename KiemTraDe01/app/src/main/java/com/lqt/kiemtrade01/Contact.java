@@ -1,6 +1,6 @@
 package com.lqt.kiemtrade01;
 
-public class Contact {
+public class Contact implements Comparable<Contact>{
     private int Id;
     private String Name;
     private String PhoneNumber;
@@ -34,5 +34,10 @@ public class Contact {
     }
     public void setStatus(boolean status) {
         Status = status;
+    }
+
+    @Override
+    public int compareTo(Contact o) {
+        return this.getName().compareTo(o.getName());
     }
 }
