@@ -1,10 +1,11 @@
-package com.lqt.lequangtho_181202289;
+package com.lqt.lequangtho_14122000;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton buttonAddContact;
     private RecyclerView recyclerViewContact;
     private EditText editTextFilter;
-    private Tho_DataBase dataBase;
-    private LeQuangTho_Adapter contactAdapter;
-    private List<Contact_LeQuangTho> contactList;
-    private final static String NAME_DATABASE = "LeQuangTho_Sqlite.sqlite";
-    private final static String NAME_TABLE = "Contact_Tho";
+    private Tho_Sqlite dataBase;
+    private Tho_Adapter contactAdapter;
+    private List<Contact_181202289> contactList;
+    private final static String NAME_DATABASE = "Tho_Sqlite.sqlite";
+    private final static String NAME_TABLE = "Contact_181202289";
     private Dialog dialog;
 
     @Override
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SetDatabase() {
-        dataBase = new Tho_DataBase(this, NAME_DATABASE, null, 1);
+        dataBase = new Tho_Sqlite(this, NAME_DATABASE, null, 1);
 
         dataBase.Query("Create Table IF NOT EXISTS " + NAME_TABLE +
                 "(Id INTEGER PRIMARY KEY," +
@@ -64,15 +65,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SetRecyclerView() {
-        contactAdapter = new LeQuangTho_Adapter(this);
+        contactAdapter = new Tho_Adapter(this, new Tho_Adapter.IClickContactRecyclerView() {
+            @Override
+            public void OnContextMenuDeleteContact(int id) {
+                ConfirmDelete(id);
+            }
+        });
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerViewContact.setLayoutManager(layoutManager);
         AutoAdd();
         LoadListContact();
-        //contactList.add(new Contact(1, "Lê Quang Thọ", "0973271208", false));
         contactAdapter.setData(contactList);
         recyclerViewContact.setAdapter(contactAdapter);
+    }
+
+    private void ConfirmDelete(int id) {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_delete);
+
+        Button buttonYes = dialog.findViewById(R.id.button_Yes);
+        Button buttonNo = dialog.findViewById(R.id.button_No);
+
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataBase.Query(String.format("DELETE FROM %s WHERE id = %d;", NAME_TABLE, id));
+                LoadListContact();
+                Toast.makeText(MainActivity.this, "Đã xóa", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void LoadListContact() {
@@ -85,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
             String phone = cursor.getString(2);
-            contactList.add(new Contact_LeQuangTho(id, name, phone));
+            contactList.add(new Contact_181202289(id, name, phone));
         }
         //sort nề
         Collections.sort(contactList);
@@ -96,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         buttonAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddContactActivity.class));
+                //startActivity(new Intent(MainActivity.this, AddContactActivity.class));
             }
         });
     }
