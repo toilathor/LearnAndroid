@@ -55,7 +55,7 @@ public class ServiceDyeingFragment extends Fragment {
     private List<ServicesDuyNguyenHairSalon> servicesList;
 
     //param
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_SERVICEDYEINGFRAGMENT";
     private SelectServiceActivity activity;
     private final String ID_Species = "3";
     private String Url = Config.LOCALHOST + "GetService.php";

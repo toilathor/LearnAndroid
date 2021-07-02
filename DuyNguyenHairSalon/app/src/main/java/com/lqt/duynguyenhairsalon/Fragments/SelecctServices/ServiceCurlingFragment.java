@@ -57,7 +57,7 @@ public class ServiceCurlingFragment extends Fragment {
     private SelectServiceActivity activity;
     private final String ID_Species = "2";
     private String Url = Config.LOCALHOST + "GetService.php";
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_SERVICECURLINGFRAGMENT";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -55,7 +55,7 @@ public class ServiceCutMassageFragment extends Fragment {
     private List<ServicesDuyNguyenHairSalon> servicesList;
 
     //param
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_SERVICECUTMASSAGEFRAGMENT";
     private SelectServiceActivity activity;
     private final String ID_Species = "1";
     private String Url = Config.LOCALHOST + "GetService.php";

@@ -40,7 +40,7 @@ public class ResetEnterOTPActivity extends AppCompatActivity {
     //Param
     private String phoneNumber;
     private String verificationId;
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_RESETENTEROTPACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.lqt.duynguyenhairsalon.Activities.Home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -8,12 +9,30 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lqt.duynguyenhairsalon.CheckInternet.NetworkChangeListener;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ViewPagerAdapter;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
+import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     //Param
-
+    private static final String TAG = "ERROR_MAINACTIVITY";
+    private String UserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +50,43 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
 
+        SetViewPage();
+
+        CheckIduser();
+    }
+
+    private void CheckIduser() {
+        if (!DataLocalManager.getPrefIdUser().isEmpty()){
+            return;
+        }
+
+        String urlSetIdUser = Config.LOCALHOST + "GetIDUser.php?UserName=" + UserName;
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlSetIdUser, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i<response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        DataLocalManager.setPrefIdUser(jsonObject.getString("ID_User"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        requestQueue.add(arrayRequest);
+    }
+
+    private void SetViewPage() {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -94,7 +151,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Số fragment load trước
         viewPager.setOffscreenPageLimit(3);
+
+        char[] chars = new char[15];
+        DataLocalManager.getPrefUserName().getChars(1, 12, chars, 0);
+        UserName = String.valueOf(chars);
     }
-
-
 }

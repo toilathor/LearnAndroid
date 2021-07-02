@@ -175,7 +175,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/background_view_disible"
                 android:padding="10dp"
-                android:text="Nhập địa chỉ giao hàng"
+                android:hint="Nhập địa chỉ giao hàng"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

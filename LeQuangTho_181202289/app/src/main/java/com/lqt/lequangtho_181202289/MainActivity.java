@@ -68,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerViewContact.setLayoutManager(layoutManager);
-        AutoAdd();
         LoadListContact();
-        //contactList.add(new Contact(1, "Lê Quang Thọ", "0973271208", false));
         contactAdapter.setData(contactList);
         recyclerViewContact.setAdapter(contactAdapter);
     }

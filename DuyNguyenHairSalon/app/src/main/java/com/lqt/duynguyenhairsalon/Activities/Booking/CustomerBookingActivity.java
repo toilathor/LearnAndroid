@@ -1,10 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Booking;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +14,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,11 +29,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutCustomerAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.SelectTimeAdapter;
 import com.lqt.duynguyenhairsalon.Model.BookingTime;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
-import com.lqt.duynguyenhairsalon.Model.Adapters.DayCutCustomerAdapter;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
@@ -53,7 +53,7 @@ import java.util.Map;
 public class CustomerBookingActivity extends AppCompatActivity {
 
     //Params
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_CUSTOMERBOOKINGACTIVITY";
     private final int REQUEST_CODE = 123;
     private boolean isEmptyService = false;
     private Calendar calendar;
@@ -102,13 +102,13 @@ public class CustomerBookingActivity extends AppCompatActivity {
     private void CreateIDTask() {
         //Tạo ID trong mỗi lần chuẩn bị đặt lịch
         calendar = Calendar.getInstance();
-        ID_Task = "" + calendar.get(Calendar.YEAR) % 2000
+        ID_Task = "T" + calendar.get(Calendar.YEAR) % 2000
                 + (calendar.get(Calendar.MONTH) + 1)
                 + calendar.get(Calendar.DATE)
-                + calendar.get(Calendar.HOUR)
+                + calendar.get(Calendar.HOUR_OF_DAY)
                 + calendar.get(Calendar.MINUTE)
                 + calendar.get(Calendar.SECOND)
-                + calendar.get(Calendar.AM_PM);
+                + calendar.get(Calendar.MILLISECOND);
     }
 
     public void ListTime() {
@@ -149,7 +149,6 @@ public class CustomerBookingActivity extends AppCompatActivity {
     }
 
     private void SetDay0() {
-
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
 
@@ -418,7 +417,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
 
                 param.put("Is_Consulting", "" + (switchYeuCauTuVan.isChecked() ? 1 : 0));
 
-                param.put("UserName", DataLocalManager.getPrefUserName());
+                param.put("ID_User", DataLocalManager.getPrefIdUser());
 
                 return param;
             }

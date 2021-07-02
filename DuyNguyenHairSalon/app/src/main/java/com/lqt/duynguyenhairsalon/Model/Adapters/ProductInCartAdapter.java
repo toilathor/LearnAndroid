@@ -27,6 +27,7 @@ public class ProductInCartAdapter extends RecyclerView.Adapter<ProductInCartAdap
         String UP = "up";
         String DOWN = "down";
         String DELETE = "delete";
+        String OPTION_CHANGE = "change";
 
         void onClickUpProduct(ProductDuyNguyenHairSalon product);
 

@@ -1,5 +1,6 @@
 package com.lqt.duynguyenhairsalon.Fragments.AdminBoooking;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,9 +47,9 @@ public class UnsuccessfulFragment extends Fragment {
 
     //Param
     private AdminBookingActivity activity;
-    private String day;
+    private String day = "0";
 
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_UNSUCCESSFULFRAGMENT";
     private String Url = Config.LOCALHOST + "GetTaskAdmin.php?DayTask=";
 
     @Override
@@ -115,6 +116,7 @@ public class UnsuccessfulFragment extends Fragment {
             }
         }
                 , new Response.ErrorListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, error.toString());

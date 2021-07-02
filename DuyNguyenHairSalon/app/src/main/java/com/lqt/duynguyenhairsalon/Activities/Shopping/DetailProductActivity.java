@@ -1,10 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Shopping;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +11,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,7 +30,6 @@ import com.lqt.duynguyenhairsalon.Model.Adapters.PhotoAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ProductTabAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.Photo;
-import com.lqt.duynguyenhairsalon.Model.ProductDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 
@@ -39,7 +37,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,11 +70,11 @@ public class DetailProductActivity extends AppCompatActivity {
     private String Using_Product;
     private String Image_Product;
     private String urlProduct = Config.LOCALHOST + "GetProductWithID.php?ID_Product=";
-    private String urlAmountCart = Config.LOCALHOST + "GetCart.php?User_Name=";
-    private static final String TAG = "error";
-    private Timer timer;
+    private String urlAmountCart = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
+    private static final String TAG = "ERROR_PRODUCTACTIVITY";
     private String urlAddProductToCart = Config.LOCALHOST + "InsertDesCart.php";
-    private String UserName;
+    private Timer timer;
+
     private int AmountInCart = 0;
 
     //List
@@ -107,14 +104,14 @@ public class DetailProductActivity extends AppCompatActivity {
         AmountInCart = 0;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlAmountCart + UserName
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlAmountCart
                 , null
                 , new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                if (response.length() == 0){
+                if (response.length() == 0) {
                     textViewAmountInCart.setText("" + AmountInCart);
-                }else {
+                } else {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject product = response.getJSONObject(i);
@@ -169,9 +166,7 @@ public class DetailProductActivity extends AppCompatActivity {
                     public void run() {
                         startActivity(new Intent(DetailProductActivity.this, CartActivity.class));
                     }
-                },1000);
-
-
+                }, 1000);
             }
         });
     }
@@ -325,7 +320,7 @@ public class DetailProductActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
 
-                param.put("User_Name", DataLocalManager.getPrefUserName());
+                param.put("ID_User", DataLocalManager.getPrefIdUser());
 
                 param.put("ID_Product", "" + ID_Product);
                 return param;
@@ -364,9 +359,6 @@ public class DetailProductActivity extends AppCompatActivity {
         frameLayoutCart = (FrameLayout) findViewById(R.id.frameLayout_Cart);
         imageView_RowBack = (ImageView) findViewById(R.id.imageView_RowBack);
 
-        char[] chars = new char[15];
-        DataLocalManager.getPrefUserName().getChars(1, 12, chars, 0);
-        UserName = String.valueOf(chars);
         ID_Product = getIntent().getIntExtra("ID_Product", 1);
     }
 }

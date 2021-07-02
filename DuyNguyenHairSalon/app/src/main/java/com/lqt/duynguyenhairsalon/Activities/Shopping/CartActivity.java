@@ -5,16 +5,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +47,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +58,9 @@ import java.util.Map;
 import static com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter.IDeliveryAddress.DISTRICT;
 import static com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter.IDeliveryAddress.PROVINCE;
 import static com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter.IDeliveryAddress.WARD;
+import static com.lqt.duynguyenhairsalon.Model.Adapters.ProductInCartAdapter.IClickChangeProductListener.OPTION_CHANGE;
 
 public class CartActivity extends AppCompatActivity {
-
 
     //View
     private RecyclerView recyclerViewProduct;
@@ -80,6 +81,7 @@ public class CartActivity extends AppCompatActivity {
     private Dialog dialogAddress;
     private Dialog dialogChooseADW;
     private TextView textViewDeliveryAddress;
+    private EditText editTextSpecificDeliveryAddress;
 
     //List
     private List<ProductDuyNguyenHairSalon> productList;
@@ -89,12 +91,16 @@ public class CartActivity extends AppCompatActivity {
     private ListADWAdapter adwAdapter;
 
     //Param
-    private static final String TAG = "error";
-    private String url = Config.LOCALHOST + "GetCart.php?User_Name=";
-    private String UserName;
+    private static final String TAG = "ERROR_CARTACTIVITY";
+    private String url = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
     private String idDistrict = "";
     private String idProvince = "";
     private List listADW;
+    private Calendar calendar;
+    private String specificDeliveryAddress;
+    private int sumPrice;
+    private String UrlBill = Config.LOCALHOST + "CreateBill.php";
+    private String urlMove = Config.LOCALHOST + "InsertDescriptionBill.php";
     private String urlChangeProductToCart = Config.LOCALHOST + "ChangeAmountInCart.php";
     private String urlADW = "https://online-gateway.ghn.vn/shiip/public-api/master-data/";
 
@@ -107,10 +113,25 @@ public class CartActivity extends AppCompatActivity {
 
         SetProductList();
 
-        ListenActivity();
+        SetListenActivity();
+
+        CheckButtonOrder();
     }
 
-    private void ListenActivity() {
+    /*
+    * Hàm này kiểm tra xem button order có được phép nhấn hay không
+    * */
+    private void CheckButtonOrder() {
+        if (productList.isEmpty() || textViewDeliveryAddress.getText().toString().isEmpty()){
+            buttonOrder.setEnabled(false);
+            buttonOrder.setBackgroundResource(R.drawable.background_view_disible);
+        }else{
+            buttonOrder.setBackgroundResource(R.color.orange);
+            buttonOrder.setEnabled(true);
+        }
+    }
+
+    private void SetListenActivity() {
         imageViewRowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +145,131 @@ public class CartActivity extends AppCompatActivity {
                 ShowDialogChooseAddress();
             }
         });
+
+        buttonOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String idBill = CreateIDBill();
+
+                InsertBill(idBill);
+                MoveProduct(idBill);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getDataProduct();
+                        productInCartAdapter.notifyDataSetChanged();
+                        Toast.makeText(CartActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    private void MoveProduct(String idBill) {
+        for (int i = 0; i < productList.size(); i++) {
+            Move(productList.get(i), idBill);
+        }
+    }
+
+    private void Move(ProductDuyNguyenHairSalon product, String idBill) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlMove, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("successful")) {
+                    Log.e(TAG, "Done");
+                } else {
+                    Log.e(TAG, response);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("Amount", "" + product.getAmount_Product());
+                params.put("ID_Bill", idBill);
+                params.put("ID_Product", "" + product.getID_Product());
+                params.put("ID_User", DataLocalManager.getPrefIdUser());
+
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    /*
+     * Đây là hàm insert bill
+     * */
+    private void InsertBill(String idBill) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String address = DataLocalManager.getPrefWardName() +
+                ", " + DataLocalManager.getPrefDistrictName() +
+                ", " + DataLocalManager.getPrefProvinceName();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlBill, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("successful")) {
+                    Log.e(TAG, "Insert Bill Successful");
+                } else {
+                    Toast.makeText(CartActivity.this, "Vui lòng thử lại sau!😢", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, response.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String address = DataLocalManager.getPrefWardName() +
+                        ", " + DataLocalManager.getPrefDistrictName() +
+                        ", " + DataLocalManager.getPrefProvinceName();
+
+                params.put("ID_Bill", idBill);
+                params.put("Date_Bill", dateFormat.format(Calendar.getInstance().getTime()));
+                params.put("Sum_Money_Bill", "" + (sumPrice < 500000 ? (sumPrice + 30000) : sumPrice));
+                params.put("Shipping_Fee", sumPrice < 500000 ? "30000" : "0");
+                params.put("Delivery_Address", address);
+                params.put("Specific_Delivery_Address", "" + specificDeliveryAddress);
+                params.put("Fast_Delivery", checkBoxFastShip.isChecked() ? "1" : "0");
+                params.put("Is_Successful", "0");
+                params.put("ID_User", DataLocalManager.getPrefIdUser());
+                return params;
+            }
+        };
+        //Log.e("ID_Bill", dateFormat.format(Calendar.getInstance().getTime()));
+        requestQueue.add(stringRequest);
+    }
+
+    /*
+     * Đây là hàm tạo Id Bill
+     * */
+    private String CreateIDBill() {
+        calendar = Calendar.getInstance();
+        return "B" + calendar.get(Calendar.YEAR) % 2000 +
+                (calendar.get(Calendar.MONTH) + 1) +
+                calendar.get(Calendar.DATE) +
+                calendar.get(Calendar.HOUR_OF_DAY) +
+                calendar.get(Calendar.MINUTE) +
+                calendar.get(Calendar.SECOND) +
+                calendar.get(Calendar.MILLISECOND);
     }
 
     /*
@@ -160,6 +306,7 @@ public class CartActivity extends AppCompatActivity {
         textViewProvince = (TextView) dialogAddress.findViewById(R.id.textView_Province);
         textViewDistrict = (TextView) dialogAddress.findViewById(R.id.textView_District);
         textViewWard = (TextView) dialogAddress.findViewById(R.id.textView_Ward);
+        editTextSpecificDeliveryAddress = (EditText) dialogAddress.findViewById(R.id.editText_SpecificDeliveryAddress);
         buttonConfirm = (Button) dialogAddress.findViewById(R.id.button_Confirm);
         imageViewClose = (ImageView) dialogAddress.findViewById(R.id.imageView_Close);
 
@@ -185,6 +332,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialogAddress.dismiss();
+                CheckButtonOrder();
             }
         });
 
@@ -214,6 +362,18 @@ public class CartActivity extends AppCompatActivity {
                 } else {
                     ShowDialogChooseADW(WARD);
                 }
+            }
+        });
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textViewDeliveryAddress.setText(DataLocalManager.getPrefWardName() +
+                        ", " + DataLocalManager.getPrefDistrictName() +
+                        ", " + DataLocalManager.getPrefProvinceName());
+                specificDeliveryAddress = editTextSpecificDeliveryAddress.getText().toString();
+                CheckButtonOrder();
+                dialogAddress.dismiss();
             }
         });
 
@@ -326,55 +486,6 @@ public class CartActivity extends AppCompatActivity {
     }
 
     /*
-     * Đây là dialog confirm người dùng xóa Product
-     */
-    private void RequestDelete(ProductDuyNguyenHairSalon product) {
-        dialogRequest = new Dialog(this);
-
-        //không có title
-        dialogRequest.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //SetLayout
-        dialogRequest.setContentView(R.layout.diaglog_request_successful);
-
-        Window window = dialogRequest.getWindow();
-        if (window == null) {
-            return;
-        }
-
-        //Xét LayoutParams
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        //Vị trí hiển thị
-        window.setGravity(Gravity.CENTER);
-
-        //Bắt sự kiện nhấn ra ngoài vùng
-        dialogRequest.setCanceledOnTouchOutside(false);
-
-        //Ánh xạ các thứ ở dưới này
-        Button buttonCancel = (Button) dialogRequest.findViewById(R.id.buttonCancel);
-        Button buttonConfirm = (Button) dialogRequest.findViewById(R.id.button_Confirm);
-
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogRequest.dismiss();
-            }
-        });
-
-        buttonConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProductChange(product, ProductInCartAdapter.IClickChangeProductListener.DELETE);
-                dialogRequest.dismiss();
-            }
-        });
-
-        //show
-        dialogRequest.show();
-    }
-
-    /*
      * Set dữ liệu cho list Province/District/Ward
      * */
     private void SetListADW(List listADW, String leverAddress) {
@@ -431,6 +542,57 @@ public class CartActivity extends AppCompatActivity {
     }
 
     /*
+     * Đây là dialog confirm người dùng xóa Product
+     */
+    private void RequestDelete(ProductDuyNguyenHairSalon product) {
+        dialogRequest = new Dialog(this);
+
+        //không có title
+        dialogRequest.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //SetLayout
+        dialogRequest.setContentView(R.layout.diaglog_request_successful);
+
+        Window window = dialogRequest.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        //Xét LayoutParams
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        //Vị trí hiển thị
+        window.setGravity(Gravity.CENTER);
+
+        //Bắt sự kiện nhấn ra ngoài vùng
+        dialogRequest.setCanceledOnTouchOutside(false);
+
+        //Ánh xạ các thứ ở dưới này
+        Button buttonCancel = (Button) dialogRequest.findViewById(R.id.buttonCancel);
+        Button buttonConfirm = (Button) dialogRequest.findViewById(R.id.button_Confirm);
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogRequest.dismiss();
+                CheckButtonOrder();
+            }
+        });
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductChange(product, ProductInCartAdapter.IClickChangeProductListener.DELETE, OPTION_CHANGE);
+                dialogRequest.dismiss();
+                CheckButtonOrder();
+            }
+        });
+
+        //show
+        dialogRequest.show();
+    }
+
+    /*
      * Hiển thị list Product
      * */
     private void SetProductList() {
@@ -441,7 +603,7 @@ public class CartActivity extends AppCompatActivity {
         productInCartAdapter.setData(productList, new ProductInCartAdapter.IClickChangeProductListener() {
             @Override
             public void onClickUpProduct(ProductDuyNguyenHairSalon product) {
-                ProductChange(product, UP);
+                ProductChange(product, UP, OPTION_CHANGE);
             }
 
             @Override
@@ -449,7 +611,7 @@ public class CartActivity extends AppCompatActivity {
                 if (product.getAmount_Product() == 1) {
                     RequestDelete(product);
                 } else {
-                    ProductChange(product, DOWN);
+                    ProductChange(product, DOWN, OPTION_CHANGE);
                 }
             }
 
@@ -468,7 +630,7 @@ public class CartActivity extends AppCompatActivity {
     /*
      * Set sự thay đổi của list
      * */
-    private void ProductChange(ProductDuyNguyenHairSalon product, String change) {
+    private void ProductChange(ProductDuyNguyenHairSalon product, String change, String option) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlChangeProductToCart
                 , new Response.Listener<String>() {
@@ -484,9 +646,11 @@ public class CartActivity extends AppCompatActivity {
                     } else {
                         productList.remove(product);
                         productInCartAdapter.notifyDataSetChanged();
-                        Toast.makeText(CartActivity.this, "Đã xóa!", Toast.LENGTH_SHORT).show();
+                        if (option.equals(OPTION_CHANGE)) {
+                            Toast.makeText(CartActivity.this, "Đã xóa!", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
+                    CheckButtonOrder();
                     LoadAllPrice();
                 } else {
                     Log.e(TAG, response);
@@ -504,7 +668,7 @@ public class CartActivity extends AppCompatActivity {
                 Map<String, String> param = new HashMap<>();
 
                 param.put("Change", change);
-                param.put("User_Name", DataLocalManager.getPrefUserName());
+                param.put("ID_User", DataLocalManager.getPrefIdUser());
                 param.put("ID_Product", "" + product.getID_Product());
 
                 return param;
@@ -517,11 +681,15 @@ public class CartActivity extends AppCompatActivity {
      * set dữ liệu list product
      * */
     private void getDataProduct() {
-        productList = new ArrayList<>();
+        if (productList == null) {
+            productList = new ArrayList<>();
+        }else {
+            productList.clear();
+        }
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url + UserName
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url
                 , null
                 , new Response.Listener<JSONArray>() {
             @Override
@@ -553,26 +721,31 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(arrayRequest);
+        CheckButtonOrder();
     }
 
     /*
      * Load giá
      * */
     private void LoadAllPrice() {
-        int sumProduct = 0;
+        sumPrice = 0;
         for (int i = 0; i < productList.size(); i++) {
-            sumProduct += (productList.get(i).getAmount_Product() * productList.get(i).getPrice_Product());
+            sumPrice += (productList.get(i).getAmount_Product() * productList.get(i).getPrice_Product());
         }
 
-        if (sumProduct >= 500000) {
+        if (sumPrice >= 500000) {
             textViewPriceDelivery.setText(R.string.free_ship);
-            textViewSum.setText(sumProduct / 1000 + ".000đ");
+            textViewSum.setText(sumPrice / 1000 + ".000đ");
         } else {
-            textViewPriceDelivery.setText(R.string.charge_ship);
-            textViewSum.setText((sumProduct + 30000) / 1000 + ".000đ");
+            if (sumPrice > 0) {
+                textViewPriceDelivery.setText(R.string.charge_ship);
+                textViewSum.setText((sumPrice + 30000) / 1000 + ".000đ");
+            }else{
+                textViewSum.setText((sumPrice) / 1000 + ".000đ");
+            }
         }
 
-        textViewSumProduct.setText(sumProduct / 1000 + ".000đ");
+        textViewSumProduct.setText(sumPrice / 1000 + ".000đ");
 
     }
 
@@ -585,9 +758,5 @@ public class CartActivity extends AppCompatActivity {
         buttonOrder = (Button) findViewById(R.id.button_Order);
         imageViewRowBack = (ImageView) findViewById(R.id.imageView_RowBack);
         textViewDeliveryAddress = (TextView) findViewById(R.id.textView_DeliveryAddress);
-
-        char[] chars = new char[15];
-        DataLocalManager.getPrefUserName().getChars(1, 12, chars, 0);
-        UserName = String.valueOf(chars);
     }
 }

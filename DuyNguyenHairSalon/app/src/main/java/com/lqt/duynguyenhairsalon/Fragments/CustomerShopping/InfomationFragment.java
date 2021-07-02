@@ -34,7 +34,7 @@ public class InfomationFragment extends Fragment {
     //Param
     private DetailProductActivity activity;
     private String url = Config.LOCALHOST + "GetProducer.php?ID_Producer=";
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_INFORMATIONFRAGMENT";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -134,7 +134,7 @@ public class AdminBookingActivity extends AppCompatActivity {
         calendar.add(Calendar.DAY_OF_WEEK, 1);
     }
 
-    //Set DayCut để lấy ra từ fragment TODO
+    //Set DayCut để lấy ra từ fragment
     public String getDayCut() {
         dayCut = "" + dayCutCustomerAdapter.getmPosition();
         return dayCut;

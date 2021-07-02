@@ -66,7 +66,7 @@ public class DescriptionTaskActivity extends AppCompatActivity {
     //Param
     private boolean isSuccessful;
     private String data;
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_DESCRIPTIONTASKACTIVITY";
     private String Url = Config.LOCALHOST + "UpdateConfirmTask.php?ID_Task=";
     private String idTask;
     private Dialog dialog;

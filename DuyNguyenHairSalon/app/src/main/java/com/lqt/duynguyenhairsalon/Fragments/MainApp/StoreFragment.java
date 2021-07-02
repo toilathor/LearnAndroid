@@ -1,8 +1,15 @@
 package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -10,18 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,10 +40,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -88,10 +81,9 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     //Param
     private String urlSpeciesProduct = Config.LOCALHOST + "GetSpeciesProduct.php";
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_STOREFRAGMENT";
     private Timer timer;
-    private String urlAmountCart = Config.LOCALHOST + "GetCart.php?User_Name=";
-    private String UserName;
+    private String urlAmountCart = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
     private int AmountInCart = 0;
 
     @Override
@@ -237,14 +229,14 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         AmountInCart = 0;
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlAmountCart + UserName
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlAmountCart
                 , null
                 , new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                if (response.length() == 0){
+                if (response.length() == 0) {
                     textViewAmountInCart.setText("" + AmountInCart);
-                }else {
+                } else {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject product = response.getJSONObject(i);
@@ -360,10 +352,6 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         viewPagerSlider = (ViewPager) view.findViewById(R.id.viewPager_Store);
         circleIndicator = (CircleIndicator) view.findViewById(R.id.circleIndicator);
         frameLayoutCart = (FrameLayout) view.findViewById(R.id.frameLayout);
-
-        char[] chars = new char[15];
-        DataLocalManager.getPrefUserName().getChars(1, 12, chars, 0);
-        UserName = String.valueOf(chars);
     }
 
     @Override
@@ -375,13 +363,12 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() {
         //Nếu muốn load lại thì làm việc ở đây
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
             }
-        },3000);
+        }, 3000);
     }
 }

@@ -46,9 +46,9 @@ public class SuccessfulFragment extends Fragment {
 
     //Param
     private AdminBookingActivity activity;
-    private String day;
+    private String day = "0";
 
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_SUCCESSFULFRAGMENT";
     private String Url = Config.LOCALHOST + "GetTaskAdmin.php?DayTask=";
 
     @Override

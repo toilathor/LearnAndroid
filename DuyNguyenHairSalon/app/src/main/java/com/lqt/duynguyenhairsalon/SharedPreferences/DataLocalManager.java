@@ -10,6 +10,7 @@ import android.content.Context;
 public class DataLocalManager {
     private static final String PREF_FISRT_INSTALL = "PREF_FISRT_INSTALL";
     private static final String PREF_USER_NAME = "PREF_USER_NAME";
+    private static final String PREF_ID_USER = "PREF_ID_USER";
     private static final String PREF_IS_LOGGED = "PREF_IS_LOGGED";
     private static final String PREF_IS_ADMIN = "PREF_IS_ADMIN";
     private static final String PREF_PROVINCE_NAME = "PREF_PROVINCE_NAME";
@@ -58,6 +59,14 @@ public class DataLocalManager {
 
     public static String getPrefUserName() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_USER_NAME);
+    }
+
+    public static void setPrefIdUser(String userName) {
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_ID_USER, userName);
+    }
+
+    public static String getPrefIdUser() {
+        return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_ID_USER);
     }
 
     public static void setPrefIsLogged(boolean isLogged) {

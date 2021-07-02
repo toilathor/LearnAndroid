@@ -33,7 +33,7 @@ import java.util.List;
 public class ProductListActivity extends AppCompatActivity {
 
     //Param
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_PRODUCTLISTACTIVITY";
     private String KEY_WORD = "";
     private String urlSpecies = Config.LOCALHOST + "GetProductForSpecies.php?ID_SpeciesProduct=";
 

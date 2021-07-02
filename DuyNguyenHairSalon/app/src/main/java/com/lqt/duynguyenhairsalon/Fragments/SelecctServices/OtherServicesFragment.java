@@ -55,7 +55,7 @@ public class OtherServicesFragment extends Fragment {
 
     //param
     private SelectServiceActivity activity;
-    private static final String TAG = "error";
+    private static final String TAG = "ERROR_OTHERSERVICEFRAGMENT";
     private final String ID_Species = "4";
     private String Url = Config.LOCALHOST + "GetService.php";
 
