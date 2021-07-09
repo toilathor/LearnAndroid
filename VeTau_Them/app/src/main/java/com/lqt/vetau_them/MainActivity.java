@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InsertExample() {
-        InsertDataBase("Hà Nội", "Hải Phòng", 100000, false);
+        InsertDataBase("", "Hải Phòng", 100000, false);
         InsertDataBase("Hà Nội", "Hải Phòng", 100000, false);
         InsertDataBase("Hà Nội", "Hải Phòng", 100000, false);
         InsertDataBase("Hà Nội", "Hải Phòng", 100000, false);

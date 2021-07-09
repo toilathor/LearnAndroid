@@ -58,6 +58,7 @@ public class AddContactActivity extends AppCompatActivity {
     }
     private boolean checkId(int id) {
         dataBase = new LeQuangTho_DataBase(this, NAME_DATABASE, null, 1);
+
         Cursor cursor = dataBase.GetData(String.format("select * from %s where Id = %d", NAME_TABLE, id));
         return !cursor.moveToNext();
     }
