@@ -44,7 +44,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
     private ImageView imageViewBack;
 
     //Param
-    private static final String TAG = "ERROR_PHONENUMBERLOGINACTIVITY";
+    private static final String TAG = EnterPhoneNumberLoginActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

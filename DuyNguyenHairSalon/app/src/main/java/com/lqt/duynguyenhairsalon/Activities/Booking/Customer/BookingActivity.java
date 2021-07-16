@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities.Booking;
+package com.lqt.duynguyenhairsalon.Activities.Booking.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,10 +50,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomerBookingActivity extends AppCompatActivity {
+public class BookingActivity extends AppCompatActivity {
 
     //Params
-    private static final String TAG = "ERROR_CUSTOMERBOOKINGACTIVITY";
+    private static final String TAG = BookingActivity.class.getName();
     private final int REQUEST_CODE = 123;
     private boolean isEmptyService = false;
     private Calendar calendar;
@@ -252,7 +252,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
         button_SelectService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerBookingActivity.this, SelectServiceActivity.class);
+                Intent intent = new Intent(BookingActivity.this, SelectServiceActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -263,7 +263,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
                 if (servicesList.size() > 0 && timeAdapter.getPositionSelceted() >= 0) {
                     InsertTask(urlTask);
                 } else {
-                    Toast.makeText(CustomerBookingActivity.this, "Bạn phải chọn dịch vụ và thời gian chứ!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookingActivity.this, "Bạn phải chọn dịch vụ và thời gian chứ!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -343,7 +343,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
                 if (response.equals("successful")) {
                     isSuccess++;
                     if (isSuccess == servicesList.size() + 1) {
-                        Toast.makeText(CustomerBookingActivity.this, "Thành công!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookingActivity.this, "Thành công!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 } else {
@@ -460,7 +460,7 @@ public class CustomerBookingActivity extends AppCompatActivity {
 
         dayCutCustomerAdapter = new DayCutCustomerAdapter(this, R.layout.item_day_cut, dayCutList);
 
-        dayCutCustomerAdapter.setActivity(CustomerBookingActivity.this);
+        dayCutCustomerAdapter.setActivity(BookingActivity.this);
 
         spinnerDay.setAdapter(dayCutCustomerAdapter);
     }

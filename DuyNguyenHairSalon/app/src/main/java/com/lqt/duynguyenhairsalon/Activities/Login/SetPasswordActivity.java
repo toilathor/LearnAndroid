@@ -39,7 +39,7 @@ public class SetPasswordActivity extends AppCompatActivity {
     private Button buttonConfirmPassword;
 
     //Param
-    private static final String TAG = "ERROR_SETPASSWORDACTIVITY";
+    private static final String TAG = SetPasswordActivity.class.getName();
     private String url = Config.LOCALHOST + "CreateAccount.php";
 
     @Override

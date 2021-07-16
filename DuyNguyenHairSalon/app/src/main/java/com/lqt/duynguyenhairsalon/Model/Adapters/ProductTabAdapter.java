@@ -6,9 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.lqt.duynguyenhairsalon.Fragments.CustomerShopping.DescriptionFragment;
-import com.lqt.duynguyenhairsalon.Fragments.CustomerShopping.InfomationFragment;
-import com.lqt.duynguyenhairsalon.Fragments.CustomerShopping.UsingFragment;
+import com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer.DescriptionFragment;
+import com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer.InfomationFragment;
+import com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer.UsingFragment;
 
 public class ProductTabAdapter extends FragmentStateAdapter {
     public ProductTabAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {

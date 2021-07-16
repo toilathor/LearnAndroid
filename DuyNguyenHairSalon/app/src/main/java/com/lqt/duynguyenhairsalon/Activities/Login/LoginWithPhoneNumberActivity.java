@@ -36,7 +36,7 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
     //Param
     private String phoneNumber = "";
     private String password = "";
-    private static final String TAG = "ERROR_LOGINWITHPHONENUMBERACTIVITY";
+    private static final String TAG = LoginWithPhoneNumberActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

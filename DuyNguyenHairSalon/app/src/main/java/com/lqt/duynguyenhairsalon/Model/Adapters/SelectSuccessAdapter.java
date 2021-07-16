@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.lqt.duynguyenhairsalon.Fragments.AdminBoooking.SuccessfulFragment;
-import com.lqt.duynguyenhairsalon.Fragments.AdminBoooking.UnsuccessfulFragment;
+import com.lqt.duynguyenhairsalon.Fragments.Booking.Admin.SuccessfulFragment;
+import com.lqt.duynguyenhairsalon.Fragments.Booking.Admin.UnsuccessfulFragment;
 
 public class SelectSuccessAdapter extends FragmentStateAdapter {
     public SelectSuccessAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {

@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments.AdminBoooking;
+package com.lqt.duynguyenhairsalon.Fragments.Booking.Admin;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Admin.BookingActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.TaskAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
@@ -46,10 +45,10 @@ public class UnsuccessfulFragment extends Fragment {
     private List<mTask> mTaskList;
 
     //Param
-    private AdminBookingActivity activity;
+    private BookingActivity activity;
     private String day = "0";
 
-    private static final String TAG = "ERROR_UNSUCCESSFULFRAGMENT";
+    private static final String TAG = UnsuccessfulFragment.class.getName();
     private String Url = Config.LOCALHOST + "GetTaskAdmin.php?DayTask=";
 
     @Override
@@ -139,7 +138,7 @@ public class UnsuccessfulFragment extends Fragment {
     private void initView() {
         recyclerViewUnsuccessful = (RecyclerView) view.findViewById(R.id.recycleView_TaskUnsuccessful);
 
-        activity = (AdminBookingActivity) getActivity();
+        activity = (BookingActivity) getActivity();
 
         day = "" + activity.getDayCut();
     }

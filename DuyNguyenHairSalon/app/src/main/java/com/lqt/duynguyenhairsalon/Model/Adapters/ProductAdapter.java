@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lqt.duynguyenhairsalon.Activities.Shopping.DetailProductActivity;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.DetailProductActivity;
 import com.lqt.duynguyenhairsalon.Model.ProductDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 

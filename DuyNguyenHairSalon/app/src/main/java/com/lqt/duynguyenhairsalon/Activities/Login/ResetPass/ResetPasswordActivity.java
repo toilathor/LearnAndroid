@@ -39,7 +39,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private Button buttonConfirmPassword;
 
     //Param
-    private static final String TAG = "ERROR_RESETPASSWORDACTIVITY";
+    private static final String TAG = ResetPasswordActivity.class.getName();
     private String url = Config.LOCALHOST + "UpdatePassAccount.php";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

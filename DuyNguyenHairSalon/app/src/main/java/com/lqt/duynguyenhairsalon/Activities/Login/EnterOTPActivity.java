@@ -44,7 +44,7 @@ public class EnterOTPActivity extends AppCompatActivity {
     //Param
     private String phoneNumber;
     private String verificationId;
-    private static final String TAG = "ERROR_ENTEROTPACTIVITY";
+    private static final String TAG = EnterOTPActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

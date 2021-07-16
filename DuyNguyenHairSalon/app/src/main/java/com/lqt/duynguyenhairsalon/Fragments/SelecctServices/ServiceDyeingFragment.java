@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.Booking.SelectServiceActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Customer.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ServiceAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
@@ -55,7 +55,7 @@ public class ServiceDyeingFragment extends Fragment {
     private List<ServicesDuyNguyenHairSalon> servicesList;
 
     //param
-    private static final String TAG = "ERROR_SERVICEDYEINGFRAGMENT";
+    private static final String TAG = ServiceDyeingFragment.class.getName();
     private SelectServiceActivity activity;
     private final String ID_Species = "3";
     private String Url = Config.LOCALHOST + "GetService.php";

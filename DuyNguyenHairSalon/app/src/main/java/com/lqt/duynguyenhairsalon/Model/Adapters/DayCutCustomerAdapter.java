@@ -7,13 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.Booking.CustomerBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Admin.BookingActivity;
 import com.lqt.duynguyenhairsalon.Model.DayCut;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -45,12 +43,12 @@ public class DayCutCustomerAdapter extends ArrayAdapter {
             dateSelected = dayCut.getDateCut();
             mPosition = position;
 
-            if (activity.getClass() == CustomerBookingActivity.class){
-                CustomerBookingActivity customerBookingActivity = (CustomerBookingActivity) activity;
+            if (activity.getClass() == com.lqt.duynguyenhairsalon.Activities.Booking.Customer.BookingActivity.class){
+                com.lqt.duynguyenhairsalon.Activities.Booking.Customer.BookingActivity customerBookingActivity = (com.lqt.duynguyenhairsalon.Activities.Booking.Customer.BookingActivity) activity;
                 customerBookingActivity.ListTime();
             }else {
                 //TODO
-                AdminBookingActivity adminBookingActivity = (AdminBookingActivity) activity;
+                BookingActivity adminBookingActivity = (BookingActivity) activity;
                 adminBookingActivity.SetTabLayout();
             }
         }

@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.Shopping.CartActivity;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.CartActivity;
 import com.lqt.duynguyenhairsalon.Activities.Shopping.ProductListActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.PhotoAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ProductAdapter;
@@ -81,7 +81,7 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     //Param
     private String urlSpeciesProduct = Config.LOCALHOST + "GetSpeciesProduct.php";
-    private static final String TAG = "ERROR_STOREFRAGMENT";
+    private static final String TAG = StoreFragment.class.getName();
     private Timer timer;
     private String urlAmountCart = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
     private int AmountInCart = 0;
@@ -108,6 +108,7 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         ListenFragment();
 
         SetSwipeFragment();
+
         return view;
     }
 

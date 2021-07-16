@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments;
+package com.lqt.duynguyenhairsalon.Fragments.Favorite;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments.CustomerShopping;
+package com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer;
 
 import android.os.Bundle;
 
@@ -9,31 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.lqt.duynguyenhairsalon.Activities.Shopping.DetailProductActivity;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.DetailProductActivity;
 import com.lqt.duynguyenhairsalon.R;
-public class UsingFragment extends Fragment {
+
+public class DescriptionFragment extends Fragment {
     //View
     private View view;
-    private TextView textViewUsing;
+    private TextView textViewDescription;
     private DetailProductActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_using, container, false);
+        view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_description, container, false);
 
         initView();
 
         SetData();
-
         return view;
     }
+
     private void SetData() {
-        textViewUsing.setText(""+activity.getUsing_Product());
+        textViewDescription.setText(""+activity.getDescription_Product());
     }
 
     private void initView() {
-        textViewUsing = (TextView) view.findViewById(R.id.textView_Using);
+        textViewDescription = (TextView) view.findViewById(R.id.textView_Description);
         activity = (DetailProductActivity) getActivity();
     }
 }

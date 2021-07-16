@@ -1,7 +1,6 @@
-package com.lqt.duynguyenhairsalon.Activities.Booking;
+package com.lqt.duynguyenhairsalon.Activities.Booking.Admin;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +63,7 @@ public class DescriptionTaskActivity extends AppCompatActivity {
     //Param
     private boolean isSuccessful;
     private String data;
-    private static final String TAG = "ERROR_DESCRIPTIONTASKACTIVITY";
+    private static final String TAG = DescriptionTaskActivity.class.getName();
     private String Url = Config.LOCALHOST + "UpdateConfirmTask.php?ID_Task=";
     private String idTask;
     private Dialog dialog;

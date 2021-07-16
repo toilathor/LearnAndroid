@@ -1,12 +1,10 @@
-package com.lqt.duynguyenhairsalon.Activities.Shopping;
+package com.lqt.duynguyenhairsalon.Activities.Shopping.Customer;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -91,7 +89,7 @@ public class CartActivity extends AppCompatActivity {
     private ListADWAdapter adwAdapter;
 
     //Param
-    private static final String TAG = "ERROR_CARTACTIVITY";
+    private static final String TAG = CartActivity.class.getName();
     private String url = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
     private String idDistrict = "";
     private String idProvince = "";
@@ -152,11 +150,12 @@ public class CartActivity extends AppCompatActivity {
                 String idBill = CreateIDBill();
 
                 InsertBill(idBill);
-                MoveProduct(idBill);
+
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        MoveProduct(idBill);
                         getDataProduct();
                         productInCartAdapter.notifyDataSetChanged();
                         Toast.makeText(CartActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
@@ -181,6 +180,7 @@ public class CartActivity extends AppCompatActivity {
                 if (response.equals("successful")) {
                     Log.e(TAG, "Done");
                 } else {
+                    //Todo
                     Log.e(TAG, response);
                 }
             }
@@ -224,7 +224,7 @@ public class CartActivity extends AppCompatActivity {
                     Log.e(TAG, "Insert Bill Successful");
                 } else {
                     Toast.makeText(CartActivity.this, "Vui lòng thử lại sau!😢", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, response.toString());
+                    Log.e(TAG, response);
                 }
             }
         }, new Response.ErrorListener() {

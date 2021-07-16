@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities.Shopping;
+package com.lqt.duynguyenhairsalon.Activities.Shopping.Customer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,7 +71,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private String Image_Product;
     private String urlProduct = Config.LOCALHOST + "GetProductWithID.php?ID_Product=";
     private String urlAmountCart = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
-    private static final String TAG = "ERROR_PRODUCTACTIVITY";
+    private static final String TAG = DetailProductActivity.class.getName();
     private String urlAddProductToCart = Config.LOCALHOST + "InsertDesCart.php";
     private Timer timer;
 

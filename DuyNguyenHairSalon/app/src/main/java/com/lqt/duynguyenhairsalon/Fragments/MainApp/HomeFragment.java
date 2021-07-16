@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,8 +33,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
-import com.lqt.duynguyenhairsalon.Activities.Booking.CustomerBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Admin.BookingActivity;
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
 import com.lqt.duynguyenhairsalon.Activities.Home.NotificationActivity;
 import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
@@ -191,10 +189,10 @@ public class HomeFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.menu_booking:
                         if (isAdmin) {
-                            Intent intent = new Intent(getContext(), AdminBookingActivity.class);
+                            Intent intent = new Intent(getContext(), BookingActivity.class);
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent(getContext(), CustomerBookingActivity.class);
+                            Intent intent = new Intent(getContext(), com.lqt.duynguyenhairsalon.Activities.Booking.Customer.BookingActivity.class);
                             startActivity(intent);
                         }
                         break;

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     //Param
-    private static final String TAG = "ERROR_MAINACTIVITY";
+    private static final String TAG = MainActivity.class.getName();
     private String UserName;
 
     @Override

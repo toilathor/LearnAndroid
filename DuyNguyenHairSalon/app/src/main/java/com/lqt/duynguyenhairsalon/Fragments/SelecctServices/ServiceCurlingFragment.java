@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.Booking.SelectServiceActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Customer.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ServiceAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
@@ -57,7 +57,7 @@ public class ServiceCurlingFragment extends Fragment {
     private SelectServiceActivity activity;
     private final String ID_Species = "2";
     private String Url = Config.LOCALHOST + "GetService.php";
-    private static final String TAG = "ERROR_SERVICECURLINGFRAGMENT";
+    private static final String TAG = ServiceCurlingFragment.class.getName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

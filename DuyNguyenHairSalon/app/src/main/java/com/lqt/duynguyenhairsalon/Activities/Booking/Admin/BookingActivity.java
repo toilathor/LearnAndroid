@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Activities.Booking;
+package com.lqt.duynguyenhairsalon.Activities.Booking.Admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AdminBookingActivity extends AppCompatActivity {
+public class BookingActivity extends AppCompatActivity {
 
     //Param
     private Calendar calendar;
@@ -123,7 +123,7 @@ public class AdminBookingActivity extends AppCompatActivity {
                     + "-" + calendar.get(Calendar.DATE)));
         }
         dayCutCustomerAdapter = new DayCutCustomerAdapter(this, R.layout.item_day_cut, dayCutList);
-        dayCutCustomerAdapter.setActivity(AdminBookingActivity.this);
+        dayCutCustomerAdapter.setActivity(BookingActivity.this);
         spinnerDay.setAdapter(dayCutCustomerAdapter);
     }
 

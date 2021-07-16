@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments.AdminBoooking;
+package com.lqt.duynguyenhairsalon.Fragments.Booking.Admin;
 
 import android.os.Bundle;
 
@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.Booking.AdminBookingActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Admin.BookingActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.TaskAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
@@ -45,10 +45,10 @@ public class SuccessfulFragment extends Fragment {
     private List<mTask> mTaskList;
 
     //Param
-    private AdminBookingActivity activity;
+    private BookingActivity activity;
     private String day = "0";
 
-    private static final String TAG = "ERROR_SUCCESSFULFRAGMENT";
+    private static final String TAG = SuccessfulFragment.class.getName();
     private String Url = Config.LOCALHOST + "GetTaskAdmin.php?DayTask=";
 
     @Override
@@ -132,7 +132,7 @@ public class SuccessfulFragment extends Fragment {
     private void initView() {
         recyclerViewSuccessful = (RecyclerView) view.findViewById(R.id.recycleView_TaskSuccessful);
 
-        activity = (AdminBookingActivity) getActivity();
+        activity = (BookingActivity) getActivity();
 
         day = "" + activity.getDayCut();
     }

@@ -1,4 +1,4 @@
-package com.lqt.duynguyenhairsalon.Fragments.CustomerShopping;
+package com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.lqt.duynguyenhairsalon.Activities.Shopping.DetailProductActivity;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.DetailProductActivity;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -34,7 +34,7 @@ public class InfomationFragment extends Fragment {
     //Param
     private DetailProductActivity activity;
     private String url = Config.LOCALHOST + "GetProducer.php?ID_Producer=";
-    private static final String TAG = "ERROR_INFORMATIONFRAGMENT";
+    private static final String TAG = InfomationFragment.class.getName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

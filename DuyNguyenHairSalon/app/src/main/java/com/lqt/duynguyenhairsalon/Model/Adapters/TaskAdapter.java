@@ -2,8 +2,6 @@ package com.lqt.duynguyenhairsalon.Model.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.lqt.duynguyenhairsalon.Activities.Booking.DescriptionTaskActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Admin.DescriptionTaskActivity;
 import com.lqt.duynguyenhairsalon.Model.mTask;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.R.color;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lqt.duynguyenhairsalon.Activities.Booking.SelectServiceActivity;
+import com.lqt.duynguyenhairsalon.Activities.Booking.Customer.SelectServiceActivity;
 import com.lqt.duynguyenhairsalon.Model.ServicesDuyNguyenHairSalon;
 import com.lqt.duynguyenhairsalon.R;
 
