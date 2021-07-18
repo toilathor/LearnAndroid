@@ -1,35 +1,36 @@
-package com.lqt.lequangtho_181202289;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.lqt.phamvantien_181202290;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+
 //Bai 2 Ảnh 2
 public class MainActivity extends AppCompatActivity {
 
-    private SQLite_181202289 database;
-    private static final String NAME_DATABASE = "Sqlite_181202289";
-    private static final String NAME_TABLE = "Taxi_LeQuangTho";
+    private DataBase database;
+    private static final String NAME_DATABASE = " Sqlite_181202290";
+    private static final String NAME_TABLE = "Taxi_PhamVanTien";
     private static final String COLUMN_NAME_1 = "id";
     private static final String COLUMN_NAME_2 = "soxe";
     private static final String COLUMN_NAME_3 = "quangduong";
     private static final String COLUMN_NAME_4 = "dongia";
     private static final String COLUMN_NAME_5 = "khuyenmai";
 
-    private ListView listViewTaxi;
+    private ListView listView;
     private FloatingActionButton buttonAdd;
-    private List<Taxi_LeQuangTho> listTaxi;
-    private Adapter_181202289 adapter;
+    private List<Taxi_PhamVanTien> listData;
+    private Adapter_181202290 adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //Bài 2 ảnh 3
     private void SetDataBase() {
-        database = new SQLite_181202289(this, NAME_DATABASE, null, 1);
+        database = new DataBase(this, NAME_DATABASE, null, 1);
         database.Query(String.format("CREATE TABLE IF NOT EXISTS %s (" +
                         " %s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         " %s NVARCHAR(30)," +
@@ -67,13 +68,13 @@ public class MainActivity extends AppCompatActivity {
         InsertDataBase("29T-129.84", 212.21, 100000, 5);
         InsertDataBase("30T-153.41", 124.22, 21000, 10);
         //Dữ liệu bản ghi yêu cầu
-        InsertDataBase("67", 124.124, 300000, 0);
+        InsertDataBase("Mã Đề", 124.124, 300000, 0);
         InsertDataBase("22T-184.12", 124.1, 23000, 20);
         InsertDataBase("89T-112.84", 15.124, 100000, 0);
     }
 
     private void InsertDataBase(String soxe, double quangduong, int dongia, int khuyenmai) {
-        String sql = String.format("INSERT INTO %s VALUES (null,'%s','%f','%d','%d')"
+        String sql = String.format(Locale.US, "INSERT INTO %s VALUES (null,'%s','%f','%d','%d')"
                 , NAME_TABLE
                 , soxe
                 , quangduong
@@ -84,15 +85,15 @@ public class MainActivity extends AppCompatActivity {
     }
     //Bài 3 ảnh 2
     private void SetListView() {
-        listTaxi = new ArrayList<>();
-        adapter = new Adapter_181202289(this, R.layout.item_taxi, listTaxi);
+        listData = new ArrayList<>();
+        adapter = new Adapter_181202290(this, R.layout.item_list, listData);
 
-        listViewTaxi.setAdapter(adapter);
+        listView.setAdapter(adapter);
         LoadData();
     }
 
     private void LoadData() {
-        listTaxi.clear();
+        listData.clear();
         Cursor cursor = database.GetData("SELECT * FROM " + NAME_TABLE);
 
         while (cursor.moveToNext()) {
@@ -102,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
             int dongia = cursor.getInt(3);
             int khuyenmai = cursor.getInt(4) ;
 
-            listTaxi.add(new Taxi_LeQuangTho(id, soxe, quangduong, dongia, khuyenmai));
+            listData.add(new Taxi_PhamVanTien(id, soxe, quangduong, dongia, khuyenmai));
         }
 
         //Sort ở đây
-        Collections.sort(listTaxi);
+        Collections.sort(listData);
         adapter.notifyDataSetChanged();
     }
     //Bài 4 Ảnh 2
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        listViewTaxi = (ListView) findViewById(R.id.listView_Taxi);
+        listView = (ListView) findViewById(R.id.listView);
         buttonAdd = (FloatingActionButton) findViewById(R.id.button_Add);
     }
 }
