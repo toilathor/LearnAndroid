@@ -1,27 +1,21 @@
 package com.lqt.duynguyenhairsalon.Activities.Home;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.android.volley.AuthFailureError;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.lqt.duynguyenhairsalon.CheckInternet.NetworkChangeListener;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ViewPagerAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
@@ -30,9 +24,6 @@ import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void CheckIduser() {
-        if (!DataLocalManager.getPrefIdUser().isEmpty()){
+        if (!DataLocalManager.getPrefIdUser().isEmpty()) {
             return;
         }
 
@@ -67,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, urlSetIdUser, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for (int i = 0; i<response.length(); i++){
+                for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         DataLocalManager.setPrefIdUser(jsonObject.getString("ID_User"));
@@ -143,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView);
-        viewPager = (ViewPager) findViewById(R.id.ViewPager);
+        bottomNavigationView = findViewById(R.id.bottomNavView);
+        viewPager = findViewById(R.id.ViewPager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);

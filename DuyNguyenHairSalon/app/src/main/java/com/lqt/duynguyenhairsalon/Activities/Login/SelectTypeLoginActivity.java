@@ -1,12 +1,12 @@
 package com.lqt.duynguyenhairsalon.Activities.Login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -119,7 +119,7 @@ public class SelectTypeLoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        loginButtonFB = (LoginButton) findViewById(R.id.login_button);
-        buttonLoginWithPhoneNumber = (Button) findViewById(R.id.button_LoginWithPhoneNumber);
+        loginButtonFB = findViewById(R.id.login_button);
+        buttonLoginWithPhoneNumber = findViewById(R.id.button_LoginWithPhoneNumber);
     }
 }

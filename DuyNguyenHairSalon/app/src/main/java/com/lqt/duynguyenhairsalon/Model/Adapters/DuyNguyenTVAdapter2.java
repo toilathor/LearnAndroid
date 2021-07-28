@@ -80,9 +80,9 @@ public class DuyNguyenTVAdapter2 extends RecyclerView.Adapter<DuyNguyenTVAdapter
 
         public DuyNguyenTVPlayListViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewThum = (ImageView) itemView.findViewById(R.id.imageView_Thumnail);
-            textViewTitle = (TextView) itemView.findViewById(R.id.textView_Title);
-            constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.constraintLayout);
+            imageViewThum = itemView.findViewById(R.id.imageView_Thumnail);
+            textViewTitle = itemView.findViewById(R.id.textView_Title);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }
 }

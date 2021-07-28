@@ -1,16 +1,16 @@
 package com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.DetailProductActivity;
 import com.lqt.duynguyenhairsalon.R;
+
 public class UsingFragment extends Fragment {
     //View
     private View view;
@@ -28,12 +28,13 @@ public class UsingFragment extends Fragment {
 
         return view;
     }
+
     private void SetData() {
-        textViewUsing.setText(""+activity.getUsing_Product());
+        textViewUsing.setText("" + activity.getUsing_Product());
     }
 
     private void initView() {
-        textViewUsing = (TextView) view.findViewById(R.id.textView_Using);
+        textViewUsing = view.findViewById(R.id.textView_Using);
         activity = (DetailProductActivity) getActivity();
     }
 }

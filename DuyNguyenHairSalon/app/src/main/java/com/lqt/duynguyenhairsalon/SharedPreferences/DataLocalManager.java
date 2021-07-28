@@ -85,51 +85,51 @@ public class DataLocalManager {
         return DataLocalManager.getInstance().mySharedPreferences.getBooleanValue(PREF_IS_ADMIN);
     }
 
-    public static void setPrefProvinceName(String province){
+    public static void setPrefProvinceName(String province) {
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_PROVINCE_NAME, province);
     }
 
-    public static String getPrefProvinceName(){
+    public static String getPrefProvinceName() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_PROVINCE_NAME);
     }
 
-    public static void setPrefDistrictName(String district){
+    public static void setPrefDistrictName(String district) {
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_DISTRICT_NAME, district);
     }
 
-    public static String getPrefDistrictName(){
+    public static String getPrefDistrictName() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_DISTRICT_NAME);
     }
 
-    public static void setPrefWardName(String ward){
+    public static void setPrefWardName(String ward) {
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_WARD_NAME, ward);
     }
 
-    public static String getPrefWardName(){
+    public static String getPrefWardName() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_WARD_NAME);
     }
 
-    public static void setPrefProvinceId(String province){
+    public static void setPrefProvinceId(String province) {
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_PROVINCE_ID, province);
     }
 
-    public static String getPrefProvinceId(){
+    public static String getPrefProvinceId() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_PROVINCE_ID);
     }
 
-    public static void setPrefDistrictId(String district){
+    public static void setPrefDistrictId(String district) {
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_DISTRICT_ID, district);
     }
 
-    public static String getPrefDistrictId(){
+    public static String getPrefDistrictId() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_DISTRICT_ID);
     }
 
-    public static void setPrefWardId(String ward){
+    public static void setPrefWardId(String ward) {
         DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_WARD_ID, ward);
     }
 
-    public static String getPrefWardId(){
+    public static String getPrefWardId() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_WARD_ID);
     }
 }

@@ -1,13 +1,12 @@
 package com.lqt.duynguyenhairsalon.Fragments.Shopping.Customer;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.DetailProductActivity;
 import com.lqt.duynguyenhairsalon.R;
@@ -30,11 +29,11 @@ public class DescriptionFragment extends Fragment {
     }
 
     private void SetData() {
-        textViewDescription.setText(""+activity.getDescription_Product());
+        textViewDescription.setText("" + activity.getDescription_Product());
     }
 
     private void initView() {
-        textViewDescription = (TextView) view.findViewById(R.id.textView_Description);
+        textViewDescription = view.findViewById(R.id.textView_Description);
         activity = (DetailProductActivity) getActivity();
     }
 }

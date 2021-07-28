@@ -23,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
-import com.lqt.duynguyenhairsalon.Activities.Login.SetPasswordActivity;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
@@ -41,6 +40,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     //Param
     private static final String TAG = ResetPasswordActivity.class.getName();
     private String url = Config.LOCALHOST + "UpdatePassAccount.php";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +147,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 if (response.equals("successful")) {
                     DataLocalManager.setPrefIsLogged(true);
                     DataLocalManager.setPrefUserName("" + editTextPhone.getText());
-                    if (editTextPhone.getText().toString().equals("+84973271208")){
+                    if (editTextPhone.getText().toString().equals("+84973271208")) {
                         DataLocalManager.setPrefIsAdmin(true);
                     }
                     Toast.makeText(ResetPasswordActivity.this, "Đổi mã PIN thành công!", Toast.LENGTH_SHORT).show();
@@ -181,11 +181,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
-        editTextPhone = (EditText) findViewById(R.id.editText_Phone);
-        editTextPassword = (EditText) findViewById(R.id.editText_Password);
-        editTextConfirmPassword = (EditText) findViewById(R.id.editText_ConfirmPassword);
-        buttonConfirmPassword = (Button) findViewById(R.id.button_ConfirmPassword);
+        imageViewBack = findViewById(R.id.imageView_Back);
+        editTextPhone = findViewById(R.id.editText_Phone);
+        editTextPassword = findViewById(R.id.editText_Password);
+        editTextConfirmPassword = findViewById(R.id.editText_ConfirmPassword);
+        buttonConfirmPassword = findViewById(R.id.button_ConfirmPassword);
 
         editTextPassword.setHint("Nhập mã PIN mới...");
         editTextConfirmPassword.setHint("Nhập lại mã PIN mới...");

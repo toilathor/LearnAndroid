@@ -2,14 +2,13 @@ package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.lqt.duynguyenhairsalon.Model.Adapters.FavoritesAdapter;
 import com.lqt.duynguyenhairsalon.Model.ItemFavorites;
@@ -80,7 +79,6 @@ public class FavoritesFragment extends Fragment {
     }
 
     private void initView() {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_Favorites);
-
+        recyclerView = view.findViewById(R.id.recyclerView_Favorites);
     }
 }

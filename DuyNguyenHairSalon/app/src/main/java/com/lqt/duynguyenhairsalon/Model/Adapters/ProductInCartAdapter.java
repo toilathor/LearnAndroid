@@ -105,13 +105,13 @@ public class ProductInCartAdapter extends RecyclerView.Adapter<ProductInCartAdap
 
         public ProductInCartHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewDemoProduct = (ImageView) itemView.findViewById(R.id.imageView_DemoProduct);
-            textViewNameProduct = (TextView) itemView.findViewById(R.id.textView_NameProduct);
-            textViewPriceProduct = (TextView) itemView.findViewById(R.id.textView_PriceProduct);
-            imageButtonDown = (ImageButton) itemView.findViewById(R.id.imageButton_Down);
-            imageButtonUp = (ImageButton) itemView.findViewById(R.id.imageButton_Up);
-            textViewAmountProduct = (TextView) itemView.findViewById(R.id.textView_AmountProduct);
-            imageViewRemove = (ImageView) itemView.findViewById(R.id.imageView_RemoveProduct);
+            imageViewDemoProduct = itemView.findViewById(R.id.imageView_DemoProduct);
+            textViewNameProduct = itemView.findViewById(R.id.textView_NameProduct);
+            textViewPriceProduct = itemView.findViewById(R.id.textView_PriceProduct);
+            imageButtonDown = itemView.findViewById(R.id.imageButton_Down);
+            imageButtonUp = itemView.findViewById(R.id.imageButton_Up);
+            textViewAmountProduct = itemView.findViewById(R.id.textView_AmountProduct);
+            imageViewRemove = itemView.findViewById(R.id.imageView_RemoveProduct);
         }
     }
 }

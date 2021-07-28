@@ -56,9 +56,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             return;
         }
 
-        if (isSuccessful == true){
+        if (isSuccessful == true) {
             holder.constraintLayout.setBackgroundResource(color.hoan_thanh);
-        }else {
+        } else {
             holder.constraintLayout.setBackgroundResource(color.chua_hoan_thanh);
         }
         holder.textViewName.setText("" + task.getUser().getName_User());
@@ -93,9 +93,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewName = (TextView) itemView.findViewById(R.id.textView_Name);
-            textViewPhone = (TextView) itemView.findViewById(R.id.textView_Phone);
-            constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.constraintLayout);
+            textViewName = itemView.findViewById(R.id.textView_Name);
+            textViewPhone = itemView.findViewById(R.id.textView_Phone);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }
 }

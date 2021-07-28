@@ -1,7 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Other;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -11,6 +9,8 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
 import com.lqt.duynguyenhairsalon.Activities.Login.SelectTypeLoginActivity;

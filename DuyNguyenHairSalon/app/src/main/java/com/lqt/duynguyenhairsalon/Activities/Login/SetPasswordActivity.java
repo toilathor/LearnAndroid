@@ -1,10 +1,6 @@
 package com.lqt.duynguyenhairsalon.Activities.Login;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -148,7 +147,7 @@ public class SetPasswordActivity extends AppCompatActivity {
                 if (response.equals("successful")) {
                     DataLocalManager.setPrefIsLogged(true);
                     DataLocalManager.setPrefUserName("" + editTextPhone.getText());
-                    if (editTextPhone.getText().toString().equals("+84973271208")){
+                    if (editTextPhone.getText().toString().equals("+84973271208")) {
                         DataLocalManager.setPrefIsAdmin(true);
                     }
                     Toast.makeText(SetPasswordActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
@@ -182,10 +181,10 @@ public class SetPasswordActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
-        editTextPhone = (EditText) findViewById(R.id.editText_Phone);
-        editTextPassword = (EditText) findViewById(R.id.editText_Password);
-        editTextConfirmPassword = (EditText) findViewById(R.id.editText_ConfirmPassword);
-        buttonConfirmPassword = (Button) findViewById(R.id.button_ConfirmPassword);
+        imageViewBack = findViewById(R.id.imageView_Back);
+        editTextPhone = findViewById(R.id.editText_Phone);
+        editTextPassword = findViewById(R.id.editText_Password);
+        editTextConfirmPassword = findViewById(R.id.editText_ConfirmPassword);
+        buttonConfirmPassword = findViewById(R.id.button_ConfirmPassword);
     }
 }

@@ -1,8 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,10 +32,10 @@ import org.json.JSONArray;
 import java.util.concurrent.TimeUnit;
 
 public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
-/*
-* Country Code Phone sẽ có các bản cập nhật. chú í cập nhật giả sử như việc format
-* số diện thoại khi Việt Nam đổi dầu số 03 và 08.
-* */
+    /*
+     * Country Code Phone sẽ có các bản cập nhật. chú í cập nhật giả sử như việc format
+     * số diện thoại khi Việt Nam đổi dầu số 03 và 08.
+     * */
     //View
     private CountryCodePicker countryCodePicker;
     private ImageView imageViewCheck;
@@ -83,9 +83,9 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
                 , new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                if (response.length() == 0){
+                if (response.length() == 0) {
                     GoToEnterOTP();
-                }else{
+                } else {
                     try {
                         String pass = response.getJSONObject(0).getString("Password");
                         GoToLogin(pass);
@@ -104,7 +104,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void GoToLogin(String pass){
+    private void GoToLogin(String pass) {
         Intent intent = new Intent(EnterPhoneNumberLoginActivity.this, LoginWithPhoneNumberActivity.class);
         intent.putExtra("PhoneNumber", countryCodePicker.getFullNumberWithPlus());
         intent.putExtra("Password", pass);
@@ -117,7 +117,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
                         , 60
                         , TimeUnit.SECONDS
                         , EnterPhoneNumberLoginActivity.this
-                        ,new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+                        , new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -126,7 +126,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Log.e(TAG,e.getMessage());
+                                Log.e(TAG, e.getMessage());
                             }
 
                             @Override
@@ -146,11 +146,11 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
         countryCodePicker.setPhoneNumberValidityChangeListener(new CountryCodePicker.PhoneNumberValidityChangeListener() {
             @Override
             public void onValidityChanged(boolean isValidNumber) {
-                if(isValidNumber == false){
+                if (isValidNumber == false) {
                     imageViewCheck.setImageResource(R.drawable.ic_remove);
                     buttonNext.setEnabled(false);
                     buttonNext.setBackgroundResource(R.drawable.background_view_disible);
-                }else{
+                } else {
                     imageViewCheck.setImageResource(R.drawable.check);
                     buttonNext.setEnabled(true);
                     buttonNext.setBackgroundResource(R.drawable.background_topup);
@@ -166,7 +166,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count != 0) imageViewCheck.setVisibility(View.VISIBLE);
+                if (count != 0) imageViewCheck.setVisibility(View.VISIBLE);
                 else imageViewCheck.setVisibility(View.GONE);
             }
 
@@ -184,7 +184,7 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    if (buttonNext.isEnabled()){
+                    if (buttonNext.isEnabled()) {
                         SetNext();
                     }
                     return true;
@@ -195,11 +195,11 @@ public class EnterPhoneNumberLoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        countryCodePicker = (CountryCodePicker) findViewById(R.id.countryCodePicker);
-        imageViewCheck = (ImageView) findViewById(R.id.imageView_Check) ;
-        editTextPhone = (EditText) findViewById(R.id.editText_Phone);
-        buttonNext = (Button) findViewById(R.id.button_Next);
-        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
+        countryCodePicker = findViewById(R.id.countryCodePicker);
+        imageViewCheck = findViewById(R.id.imageView_Check);
+        editTextPhone = findViewById(R.id.editText_Phone);
+        buttonNext = findViewById(R.id.button_Next);
+        imageViewBack = findViewById(R.id.imageView_Back);
 
         editTextPhone.requestFocus();
     }

@@ -42,13 +42,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     @Override
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
         ProductDuyNguyenHairSalon product = productList.get(position);
-        if(product == null){
+        if (product == null) {
             return;
         }
 
         holder.imageViewProduct.setImageResource(R.drawable.sp_demo);
         holder.textViewNameProduct.setText("" + product.getName_Product());
-        holder.textViewPriceProduct.setText("đ " + product.getPrice_Product()/1000 + ".000");
+        holder.textViewPriceProduct.setText("đ " + product.getPrice_Product() / 1000 + ".000");
         holder.cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,10 +76,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewProduct = (ImageView) itemView.findViewById(R.id.imageView_Product);
-            textViewNameProduct = (TextView) itemView.findViewById(R.id.textView_NameProduct);
-            textViewPriceProduct = (TextView) itemView.findViewById(R.id.textView_PriceProduct);
-            cardViewProduct = (CardView) itemView.findViewById(R.id.cardView_Product);
+            imageViewProduct = itemView.findViewById(R.id.imageView_Product);
+            textViewNameProduct = itemView.findViewById(R.id.textView_NameProduct);
+            textViewPriceProduct = itemView.findViewById(R.id.textView_PriceProduct);
+            cardViewProduct = itemView.findViewById(R.id.cardView_Product);
         }
     }
 }

@@ -1,8 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -65,7 +65,7 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
                         , 60
                         , TimeUnit.SECONDS
                         , LoginWithPhoneNumberActivity.this
-                        ,new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+                        , new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -74,7 +74,7 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Log.e(TAG,e.getMessage());
+                                Log.e(TAG, e.getMessage());
                             }
 
                             @Override
@@ -141,12 +141,11 @@ public class LoginWithPhoneNumberActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        editTextPhoneNumber = (EditText) findViewById(R.id.editText_Phone);
-        editTextPassword = (EditText) findViewById(R.id.editText_Password);
-        buttonLogin = (Button) findViewById(R.id.button_Login);
-        textViewForgetPassword = (TextView) findViewById(R.id.textView_ForgetPassword);
-        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
-
+        editTextPhoneNumber = findViewById(R.id.editText_Phone);
+        editTextPassword = findViewById(R.id.editText_Password);
+        buttonLogin = findViewById(R.id.button_Login);
+        textViewForgetPassword = findViewById(R.id.textView_ForgetPassword);
+        imageViewBack = findViewById(R.id.imageView_Back);
 
         phoneNumber = getIntent().getStringExtra("PhoneNumber");
         password = getIntent().getStringExtra("Password");

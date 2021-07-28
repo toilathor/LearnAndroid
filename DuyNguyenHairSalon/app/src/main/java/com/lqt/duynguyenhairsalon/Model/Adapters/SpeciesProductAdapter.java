@@ -25,6 +25,7 @@ public class SpeciesProductAdapter extends RecyclerView.Adapter<SpeciesProductAd
 
     public interface IClickSpeciesProductListener {
         String KEY_SPECIES = "SPECEIS";
+
         void onClickSpeciesProduct(String keyWord, SpeciesProduct speciesProduct);
     }
 
@@ -76,9 +77,9 @@ public class SpeciesProductAdapter extends RecyclerView.Adapter<SpeciesProductAd
 
         public SpeciesProductHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewSpeciesProduct = (ImageView) itemView.findViewById(R.id.imageView_Species);
-            textViewSpeciesProduct = (TextView) itemView.findViewById(R.id.textView_NameSpecies);
-            linearLayout_SpeciesProduct = (LinearLayout) itemView.findViewById(R.id.linearLayout_Species);
+            imageViewSpeciesProduct = itemView.findViewById(R.id.imageView_Species);
+            textViewSpeciesProduct = itemView.findViewById(R.id.textView_NameSpecies);
+            linearLayout_SpeciesProduct = itemView.findViewById(R.id.linearLayout_Species);
         }
     }
 }

@@ -49,14 +49,14 @@ public class ListADWAdapter extends RecyclerView.Adapter<ListADWAdapter.ADWHolde
                     return o1.getNameProvince().compareTo(o2.getNameProvince());
                 }
             });
-        }else if (leverAddress.equals(IDeliveryAddress.DISTRICT)) {
+        } else if (leverAddress.equals(IDeliveryAddress.DISTRICT)) {
             Collections.sort(listADW, new Comparator<District>() {
                 @Override
                 public int compare(District o1, District o2) {
                     return o1.getNameDistrict().compareTo(o2.getNameDistrict());
                 }
             });
-        }else{
+        } else {
             Collections.sort(listADW, new Comparator<Ward>() {
                 @Override
                 public int compare(Ward o1, Ward o2) {

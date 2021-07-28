@@ -1,7 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Other;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lqt.duynguyenhairsalon.R;
 
@@ -69,7 +69,7 @@ public class LoadWebViewActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        webView = (WebView) findViewById(R.id.webView);
-        imageView = (ImageView) findViewById(R.id.imageViewBack);
+        webView = findViewById(R.id.webView);
+        imageView = findViewById(R.id.imageViewBack);
     }
 }

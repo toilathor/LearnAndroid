@@ -55,10 +55,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
         /*
 
-        * Nếu đang ở chọn dịch vụ khác thì nó sẽ cho chọn nhiều dịch vụ cùng loại
-        * còn ở các tab khác chỉ được chọn 1 dịch vụ trong loại đó
-        *
-        * */
+         * Nếu đang ở chọn dịch vụ khác thì nó sẽ cho chọn nhiều dịch vụ cùng loại
+         * còn ở các tab khác chỉ được chọn 1 dịch vụ trong loại đó
+         *
+         * */
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,11 +113,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
         public ServiceHolder(@NonNull View itemView) {
             super(itemView);
-            checkBoxService = (CheckBox) itemView.findViewById(R.id.checkBox_Service);
-            textViewNameService = (TextView) itemView.findViewById(R.id.textView_NameService);
-            textViewDescriptionService = (TextView) itemView.findViewById(R.id.textView_DescriptionService);
-            textViewPriceService = (TextView) itemView.findViewById(R.id.textView_PriceService);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
+            checkBoxService = itemView.findViewById(R.id.checkBox_Service);
+            textViewNameService = itemView.findViewById(R.id.textView_NameService);
+            textViewDescriptionService = itemView.findViewById(R.id.textView_DescriptionService);
+            textViewPriceService = itemView.findViewById(R.id.textView_PriceService);
+            linearLayout = itemView.findViewById(R.id.linearLayout);
         }
     }
 }

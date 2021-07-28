@@ -1,15 +1,14 @@
 package com.lqt.duynguyenhairsalon.Fragments.SelecctServices;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -122,7 +121,6 @@ public class OtherServicesFragment extends Fragment {
 
     private void initView() {
         activity = (SelectServiceActivity) getActivity();
-
-        recyclerViewServiceCut = (RecyclerView) view.findViewById(R.id.recyclerView_Service);
+        recyclerViewServiceCut = view.findViewById(R.id.recyclerView_Service);
     }
 }

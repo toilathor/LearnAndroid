@@ -347,17 +347,17 @@ public class DetailProductActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        textViewNameProduct = (TextView) findViewById(R.id.textView_NameProduct);
-        textViewPriceProduct = (TextView) findViewById(R.id.textView_PriceProduct);
-        textViewAmountInCart = (TextView) findViewById(R.id.textView_AmountInCart);
-        tabLayoutDetailProduct = (TabLayout) findViewById(R.id.tabLayout_DetailProduct);
-        viewPagerDetailProduct = (ViewPager2) findViewById(R.id.viewPager_DetailProduct);
-        buttonAddCart = (Button) findViewById(R.id.button_AddCart);
-        buttonBuyNow = (Button) findViewById(R.id.button_BuyNow);
-        viewPagerSlider = (ViewPager) findViewById(R.id.viewPager_ImageDetailProduct);
-        circleIndicator = (CircleIndicator) findViewById(R.id.circleIndicator);
-        frameLayoutCart = (FrameLayout) findViewById(R.id.frameLayout_Cart);
-        imageView_RowBack = (ImageView) findViewById(R.id.imageView_RowBack);
+        textViewNameProduct = findViewById(R.id.textView_NameProduct);
+        textViewPriceProduct = findViewById(R.id.textView_PriceProduct);
+        textViewAmountInCart = findViewById(R.id.textView_AmountInCart);
+        tabLayoutDetailProduct = findViewById(R.id.tabLayout_DetailProduct);
+        viewPagerDetailProduct = findViewById(R.id.viewPager_DetailProduct);
+        buttonAddCart = findViewById(R.id.button_AddCart);
+        buttonBuyNow = findViewById(R.id.button_BuyNow);
+        viewPagerSlider = findViewById(R.id.viewPager_ImageDetailProduct);
+        circleIndicator = findViewById(R.id.circleIndicator);
+        frameLayoutCart = findViewById(R.id.frameLayout_Cart);
+        imageView_RowBack = findViewById(R.id.imageView_RowBack);
 
         ID_Product = getIntent().getIntExtra("ID_Product", 1);
     }

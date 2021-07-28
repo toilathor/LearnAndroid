@@ -4,10 +4,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-
 /*
-* Kiểm tra kết nối
-* */
+ * Kiểm tra kết nối
+ * */
 public class Common {
     public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context

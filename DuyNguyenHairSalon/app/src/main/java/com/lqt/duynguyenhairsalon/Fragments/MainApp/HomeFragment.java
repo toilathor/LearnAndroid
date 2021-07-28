@@ -118,11 +118,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void autoSlideImage() {
-        if(photoList == null || photoList.isEmpty() || viewPagerSlider == null){
+        if (photoList == null || photoList.isEmpty() || viewPagerSlider == null) {
             return;
         }
 
-        if(timer == null){
+        if (timer == null) {
             timer = new Timer();
         }
         timer.schedule(new TimerTask() {
@@ -132,11 +132,11 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void run() {
                         int currentItem = viewPagerSlider.getCurrentItem();
-                        int totalItem = photoList.size() -1;
-                        if(currentItem<totalItem){
+                        int totalItem = photoList.size() - 1;
+                        if (currentItem < totalItem) {
                             currentItem++;
                             viewPagerSlider.setCurrentItem(currentItem);
-                        }else{
+                        } else {
                             viewPagerSlider.setCurrentItem(0);
                         }
                     }
@@ -387,14 +387,14 @@ public class HomeFragment extends Fragment {
      * */
     private void initView() {
         recyclerViewDuyNguyenTV = view.findViewById(R.id.recyclerviewTV);
-        buttonCall = (Button) view.findViewById(R.id.button_Call);
-        textViewXemThemTV = (TextView) view.findViewById(R.id.textView_XemThemTV);
-        textViewSignupRank = (TextView) view.findViewById(R.id.textView_Signup_Rank);
-        imageViewHistoryCut = (ImageView) view.findViewById(R.id.imageView_Avatar);
-        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottomNavView);
-        imageViewNotification = (ImageView) view.findViewById(R.id.imageView_Notification);
-        viewPagerSlider = (ViewPager) view.findViewById(R.id.viewPager_Slider);
-        circleIndicator = (CircleIndicator) view.findViewById(R.id.circleIndicator);
+        buttonCall = view.findViewById(R.id.button_Call);
+        textViewXemThemTV = view.findViewById(R.id.textView_XemThemTV);
+        textViewSignupRank = view.findViewById(R.id.textView_Signup_Rank);
+        imageViewHistoryCut = view.findViewById(R.id.imageView_Avatar);
+        bottomNavigationView = view.findViewById(R.id.bottomNavView);
+        imageViewNotification = view.findViewById(R.id.imageView_Notification);
+        viewPagerSlider = view.findViewById(R.id.viewPager_Slider);
+        circleIndicator = view.findViewById(R.id.circleIndicator);
 
         isAdmin = DataLocalManager.getPrefIsAdmin();
     }
@@ -402,7 +402,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(timer != null){
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }

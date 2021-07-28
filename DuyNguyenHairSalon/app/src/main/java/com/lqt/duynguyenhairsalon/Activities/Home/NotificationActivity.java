@@ -1,10 +1,10 @@
 package com.lqt.duynguyenhairsalon.Activities.Home;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lqt.duynguyenhairsalon.R;
 
@@ -32,6 +32,6 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        imageViewBack = findViewById(R.id.imageViewBack);
     }
 }

@@ -25,7 +25,7 @@ public class AdminServiceAdapter extends RecyclerView.Adapter<AdminServiceAdapte
         this.context = context;
     }
 
-    public void setData(List<ServicesDuyNguyenHairSalon> serviceList){
+    public void setData(List<ServicesDuyNguyenHairSalon> serviceList) {
         this.serviceList = serviceList;
         notifyDataSetChanged();
     }
@@ -42,12 +42,12 @@ public class AdminServiceAdapter extends RecyclerView.Adapter<AdminServiceAdapte
     public void onBindViewHolder(@NonNull AdminServiceHolder holder, int position) {
         ServicesDuyNguyenHairSalon service = serviceList.get(position);
 
-        if (service == null){
+        if (service == null) {
             return;
         }
 
-        holder.textViewNameService.setText(""+ service.getNameService());
-        holder.textViewPriceService.setText(""+ service.getPriceService()/1000 +"K");
+        holder.textViewNameService.setText("" + service.getNameService());
+        holder.textViewPriceService.setText("" + service.getPriceService() / 1000 + "K");
         holder.checkBoxService.setVisibility(View.GONE);
         holder.textViewDescriptionService.setVisibility(View.GONE);
 
@@ -55,23 +55,23 @@ public class AdminServiceAdapter extends RecyclerView.Adapter<AdminServiceAdapte
 
     @Override
     public int getItemCount() {
-        if(serviceList != null){
+        if (serviceList != null) {
             return serviceList.size();
         }
         return 0;
     }
 
-    public class AdminServiceHolder extends RecyclerView.ViewHolder{
+    public class AdminServiceHolder extends RecyclerView.ViewHolder {
 
         TextView textViewNameService, textViewPriceService, textViewDescriptionService;
         CheckBox checkBoxService;
 
         public AdminServiceHolder(@NonNull View itemView) {
             super(itemView);
-            textViewNameService = (TextView) itemView.findViewById(R.id.textView_NameService);
-            textViewPriceService = (TextView) itemView.findViewById(R.id.textView_PriceService);
-            textViewDescriptionService = (TextView) itemView.findViewById(R.id.textView_DescriptionService);
-            checkBoxService = (CheckBox) itemView.findViewById(R.id.checkBox_Service);
+            textViewNameService = itemView.findViewById(R.id.textView_NameService);
+            textViewPriceService = itemView.findViewById(R.id.textView_PriceService);
+            textViewDescriptionService = itemView.findViewById(R.id.textView_DescriptionService);
+            checkBoxService = itemView.findViewById(R.id.checkBox_Service);
         }
     }
 }

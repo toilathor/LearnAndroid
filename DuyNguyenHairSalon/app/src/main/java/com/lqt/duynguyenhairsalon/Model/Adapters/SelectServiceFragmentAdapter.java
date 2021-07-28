@@ -20,7 +20,7 @@ public class SelectServiceFragmentAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return new ServiceCutMassageFragment();
             case 1:

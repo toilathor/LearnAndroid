@@ -30,11 +30,11 @@ public class PhotoAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_photo, container, false);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView_Slider);
+        ImageView imageView = view.findViewById(R.id.imageView_Slider);
 
         Photo photo = photoList.get(position);
 
-        if (photo != null){
+        if (photo != null) {
             Glide.with(context).load(photo.getResourceId()).into(imageView);
         }
 
@@ -45,7 +45,7 @@ public class PhotoAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        if (photoList != null){
+        if (photoList != null) {
             return photoList.size();
         }
         return 0;

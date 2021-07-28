@@ -2,7 +2,6 @@ package com.lqt.duynguyenhairsalon.Activities.Booking.Admin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -56,12 +55,7 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void AdminBookingListen() {
-        imageViewHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        imageViewHome.setOnClickListener(v -> finish());
     }
 
     public void SetTabLayout() {
@@ -110,7 +104,7 @@ public class BookingActivity extends AppCompatActivity {
             upToDate(i);
             String dayOfWeek = "";
             if (i == 0) dayOfWeek += "Hôm nay, ";
-            if (calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                 dayOfWeek += "Chủ Nhật";
             } else {
                 dayOfWeek += "Thứ " + calendar.get(Calendar.DAY_OF_WEEK);
@@ -143,15 +137,15 @@ public class BookingActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_CODE){
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_CODE) {
             SetTabLayout();
         }
     }
 
     private void initView() {
-        spinnerDay = (Spinner) findViewById(R.id.spinner_SelectDay);
-        tabLayoutSelectSuccess = (TabLayout) findViewById(R.id.tabLayout_SelectSuccess);
-        viewPager2SelectSuccess = (ViewPager2) findViewById(R.id.viewPager2_SelectSuccess);
-        imageViewHome = (ImageView) findViewById(R.id.imageView_Home);
+        spinnerDay = findViewById(R.id.spinner_SelectDay);
+        tabLayoutSelectSuccess = findViewById(R.id.tabLayout_SelectSuccess);
+        viewPager2SelectSuccess = findViewById(R.id.viewPager2_SelectSuccess);
+        imageViewHome = findViewById(R.id.imageView_Home);
     }
 }

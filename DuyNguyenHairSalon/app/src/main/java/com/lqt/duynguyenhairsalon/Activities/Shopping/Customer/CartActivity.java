@@ -117,13 +117,13 @@ public class CartActivity extends AppCompatActivity {
     }
 
     /*
-    * Hàm này kiểm tra xem button order có được phép nhấn hay không
-    * */
+     * Hàm này kiểm tra xem button order có được phép nhấn hay không
+     * */
     private void CheckButtonOrder() {
-        if (productList.isEmpty() || textViewDeliveryAddress.getText().toString().isEmpty()){
+        if (productList.isEmpty() || textViewDeliveryAddress.getText().toString().isEmpty()) {
             buttonOrder.setEnabled(false);
             buttonOrder.setBackgroundResource(R.drawable.background_view_disible);
-        }else{
+        } else {
             buttonOrder.setBackgroundResource(R.color.orange);
             buttonOrder.setEnabled(true);
         }
@@ -683,7 +683,7 @@ public class CartActivity extends AppCompatActivity {
     private void getDataProduct() {
         if (productList == null) {
             productList = new ArrayList<>();
-        }else {
+        } else {
             productList.clear();
         }
 
@@ -740,7 +740,7 @@ public class CartActivity extends AppCompatActivity {
             if (sumPrice > 0) {
                 textViewPriceDelivery.setText(R.string.charge_ship);
                 textViewSum.setText((sumPrice + 30000) / 1000 + ".000đ");
-            }else{
+            } else {
                 textViewSum.setText((sumPrice) / 1000 + ".000đ");
             }
         }
@@ -750,13 +750,13 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        recyclerViewProduct = (RecyclerView) findViewById(R.id.recyclerView_ProductInCart);
-        textViewPriceDelivery = (TextView) findViewById(R.id.textView_PriceDelivery);
-        textViewSumProduct = (TextView) findViewById(R.id.textView_SumProduct);
-        textViewSum = (TextView) findViewById(R.id.textView_Sum);
-        checkBoxFastShip = (CheckBox) findViewById(R.id.checkBox_FastShip);
-        buttonOrder = (Button) findViewById(R.id.button_Order);
-        imageViewRowBack = (ImageView) findViewById(R.id.imageView_RowBack);
-        textViewDeliveryAddress = (TextView) findViewById(R.id.textView_DeliveryAddress);
+        recyclerViewProduct = findViewById(R.id.recyclerView_ProductInCart);
+        textViewPriceDelivery = findViewById(R.id.textView_PriceDelivery);
+        textViewSumProduct = findViewById(R.id.textView_SumProduct);
+        textViewSum = findViewById(R.id.textView_Sum);
+        checkBoxFastShip = findViewById(R.id.checkBox_FastShip);
+        buttonOrder = findViewById(R.id.button_Order);
+        imageViewRowBack = findViewById(R.id.imageView_RowBack);
+        textViewDeliveryAddress = findViewById(R.id.textView_DeliveryAddress);
     }
 }

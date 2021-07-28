@@ -60,8 +60,8 @@ public class InfomationFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 try {
                     JSONObject producer = response.getJSONObject(0);
-                    textViewProducer.setText("Thương hiệu: "+ producer.getString("Name_Brand"));
-                    textViewBrand.setText("Xuất xứ: "+ producer.getString("Origin"));
+                    textViewProducer.setText("Thương hiệu: " + producer.getString("Name_Brand"));
+                    textViewBrand.setText("Xuất xứ: " + producer.getString("Origin"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -69,16 +69,16 @@ public class InfomationFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG,error.toString());
+                Log.e(TAG, error.toString());
             }
         });
-         requestQueue.add(arrayRequest);
+        requestQueue.add(arrayRequest);
     }
 
     private void initView() {
-        textViewProducer = (TextView) view.findViewById(R.id.textView_Producer);
-        textViewBrand = (TextView) view.findViewById(R.id.textView_Brand);
-        textViewInfomation = (TextView) view.findViewById(R.id.textView_Infomation);
+        textViewProducer = view.findViewById(R.id.textView_Producer);
+        textViewBrand = view.findViewById(R.id.textView_Brand);
+        textViewInfomation = view.findViewById(R.id.textView_Infomation);
 
         activity = (DetailProductActivity) getActivity();
     }

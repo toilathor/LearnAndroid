@@ -1,7 +1,6 @@
 package com.lqt.duynguyenhairsalon.Model.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +101,7 @@ public class SelectTimeAdapter extends RecyclerView.Adapter<SelectTimeAdapter.Se
 
         public SelectTimeViewHolde(@NonNull View itemView) {
             super(itemView);
-            buttonTime = (Button) itemView.findViewById(R.id.button_Time);
+            buttonTime = itemView.findViewById(R.id.button_Time);
         }
     }
 }

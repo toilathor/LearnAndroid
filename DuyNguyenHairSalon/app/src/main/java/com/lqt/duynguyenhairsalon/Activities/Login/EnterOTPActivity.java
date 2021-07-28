@@ -1,19 +1,12 @@
 package com.lqt.duynguyenhairsalon.Activities.Login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,8 +71,8 @@ public class EnterOTPActivity extends AppCompatActivity {
                         .verifyPhoneNumber(phoneNumber
                                 , 60
                                 , TimeUnit.SECONDS
-                                ,EnterOTPActivity.this
-                                ,new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+                                , EnterOTPActivity.this
+                                , new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
                                     @Override
                                     public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -85,7 +81,7 @@ public class EnterOTPActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                                        Log.e(TAG,e.getMessage());
+                                        Log.e(TAG, e.getMessage());
                                     }
 
                                     @Override
@@ -230,7 +226,7 @@ public class EnterOTPActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    if (buttonConfirm.isEnabled()){
+                    if (buttonConfirm.isEnabled()) {
                         GoToSetPassword();
                     }
                     return true;
@@ -249,19 +245,19 @@ public class EnterOTPActivity extends AppCompatActivity {
                     + editTextCode5.getText().toString().trim()
                     + editTextCode6.getText().toString().trim();
 
-            if(verificationId!=null){
-                PhoneAuthCredential authCredential = PhoneAuthProvider.getCredential(verificationId,verifi);
+            if (verificationId != null) {
+                PhoneAuthCredential authCredential = PhoneAuthProvider.getCredential(verificationId, verifi);
 
                 FirebaseAuth.getInstance().signInWithCredential(authCredential)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Intent intent = new Intent(EnterOTPActivity.this, SetPasswordActivity.class);
                                     intent.putExtra("PhoneNumber", phoneNumber);
                                     startActivity(intent);
                                     finish();
-                                }else{
+                                } else {
                                     Toast.makeText(EnterOTPActivity.this, "Mã xác thực không đúng", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -290,21 +286,21 @@ public class EnterOTPActivity extends AppCompatActivity {
     private void initView() {
         phoneNumber = getIntent().getStringExtra("PhoneNumber");
         verificationId = getIntent().getStringExtra("VerificationId");
-        editTextCode1 = (EditText) findViewById(R.id.editText_Code1);
-        editTextCode2 = (EditText) findViewById(R.id.editText_Code2);
-        editTextCode3 = (EditText) findViewById(R.id.editText_Code3);
-        editTextCode4 = (EditText) findViewById(R.id.editText_Code4);
-        editTextCode5 = (EditText) findViewById(R.id.editText_Code5);
-        editTextCode6 = (EditText) findViewById(R.id.editText_Code6);
-        buttonConfirm = (Button) findViewById(R.id.button_Confirm);
-        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
-        textViewReSend = (TextView) findViewById(R.id.textView_ReSend);
+        editTextCode1 = findViewById(R.id.editText_Code1);
+        editTextCode2 = findViewById(R.id.editText_Code2);
+        editTextCode3 = findViewById(R.id.editText_Code3);
+        editTextCode4 = findViewById(R.id.editText_Code4);
+        editTextCode5 = findViewById(R.id.editText_Code5);
+        editTextCode6 = findViewById(R.id.editText_Code6);
+        buttonConfirm = findViewById(R.id.button_Confirm);
+        imageViewBack = findViewById(R.id.imageView_Back);
+        textViewReSend = findViewById(R.id.textView_ReSend);
 
         final int[] i = {60};
-        new CountDownTimer(60000,1000) {
+        new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                textViewReSend.setText(getString(R.string.gui_lai) +"("+(i[0]--)+")");
+                textViewReSend.setText(getString(R.string.gui_lai) + "(" + (i[0]--) + ")");
             }
 
             @Override

@@ -1,14 +1,14 @@
 package com.lqt.duynguyenhairsalon.Activities.Other;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -164,7 +164,7 @@ public class DuyNguyenTVActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_PlayList);
+        imageViewBack = findViewById(R.id.imageViewBack);
+        recyclerView = findViewById(R.id.recyclerView_PlayList);
     }
 }

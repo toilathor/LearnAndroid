@@ -1,8 +1,8 @@
 package com.lqt.duynguyenhairsalon.Activities.Other;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,8 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.lqt.duynguyenhairsalon.R;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private GoogleMap mMap;
 
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

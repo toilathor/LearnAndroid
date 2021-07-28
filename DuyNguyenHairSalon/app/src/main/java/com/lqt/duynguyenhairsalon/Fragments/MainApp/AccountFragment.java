@@ -1,13 +1,7 @@
 package com.lqt.duynguyenhairsalon.Fragments.MainApp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lqt.duynguyenhairsalon.Activities.Login.CustomerDetailActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
 import com.lqt.duynguyenhairsalon.Activities.HistoryCutActivity;
+import com.lqt.duynguyenhairsalon.Activities.Login.CustomerDetailActivity;
+import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
 import com.lqt.duynguyenhairsalon.Activities.Other.IntroActivity;
 import com.lqt.duynguyenhairsalon.Activities.Other.LocationActivity;
-import com.lqt.duynguyenhairsalon.Activities.MemberActivity;
 import com.lqt.duynguyenhairsalon.Activities.RewardsActivity;
 import com.lqt.duynguyenhairsalon.R;
 import com.lqt.duynguyenhairsalon.SharedPreferences.DataLocalManager;
@@ -94,20 +92,20 @@ public class AccountFragment extends Fragment {
                 getActivity().finish();
                 getActivity().startActivity(new Intent(getContext(), IntroActivity.class));
                 getActivity().finishAffinity();
-        }
-    });
-}
+            }
+        });
+    }
 
     private void initView() {
-        constraintLayoutEditAccount = (ConstraintLayout) view.findViewById(R.id.constraintLayout_EditAccount);
-        cardViewMember = (CardView) view.findViewById(R.id.cardView_Member);
-        cardViewRewards = (CardView) view.findViewById(R.id.cardView_Rewards);
-        cardViewHistory = (CardView) view.findViewById(R.id.cardView_History);
-        cardViewLocation = (CardView) view.findViewById(R.id.cardView_Location);
+        constraintLayoutEditAccount = view.findViewById(R.id.constraintLayout_EditAccount);
+        cardViewMember = view.findViewById(R.id.cardView_Member);
+        cardViewRewards = view.findViewById(R.id.cardView_Rewards);
+        cardViewHistory = view.findViewById(R.id.cardView_History);
+        cardViewLocation = view.findViewById(R.id.cardView_Location);
 
-        cardViewLogin_Logout = (CardView) view.findViewById(R.id.cardView_Login_Logout);
-        linearLayoutLogin_Logout = (LinearLayout) view.findViewById(R.id.linearLayout_Login_Logout);
-        textViewLogin_Logout = (TextView) view.findViewById(R.id.textView_Login_Logout);
-        imageViewLogin_Logout = (ImageView) view.findViewById(R.id.imageView_Login_Logout);
+        cardViewLogin_Logout = view.findViewById(R.id.cardView_Login_Logout);
+        linearLayoutLogin_Logout = view.findViewById(R.id.linearLayout_Login_Logout);
+        textViewLogin_Logout = view.findViewById(R.id.textView_Login_Logout);
+        imageViewLogin_Logout = view.findViewById(R.id.imageView_Login_Logout);
     }
 }

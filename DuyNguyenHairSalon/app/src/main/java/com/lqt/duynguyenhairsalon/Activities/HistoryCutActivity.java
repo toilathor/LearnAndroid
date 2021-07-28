@@ -1,12 +1,12 @@
 package com.lqt.duynguyenhairsalon.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.lqt.duynguyenhairsalon.Activities.Login.CustomerDetailActivity;
 import com.lqt.duynguyenhairsalon.R;
@@ -44,7 +44,7 @@ public class HistoryCutActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        textViewShowDetail = (TextView) findViewById(R.id.textView_ShowDetail);
+        imageViewBack = findViewById(R.id.imageViewBack);
+        textViewShowDetail = findViewById(R.id.textView_ShowDetail);
     }
 }

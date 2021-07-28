@@ -521,20 +521,20 @@ public class BookingActivity extends AppCompatActivity {
      * ánh xạ các view
      * */
     private void initView() {
-        spinnerDay = (Spinner) findViewById(R.id.spinner_SelectDay);
-        imageViewHome = (ImageView) findViewById(R.id.imageView_Home);
-        button_SelectService = (Button) findViewById(R.id.button_SelectService);
-        button_Success = (Button) findViewById(R.id.button_SuccessBook);
-        flowLayoutServices = (FlowLayout) findViewById(R.id.flowLayout_SelectedService);
-        recyclerViewSelectTime = (RecyclerView) findViewById(R.id.recyclerView_SelectTime);
-        switchChupAnhSauKhiCat = (Switch) findViewById(R.id.swich_ChupAnhSauKhiCat);
-        switchYeuCauTuVan = (Switch) findViewById(R.id.swich_YeuCauTuVan);
+        spinnerDay = findViewById(R.id.spinner_SelectDay);
+        imageViewHome = findViewById(R.id.imageView_Home);
+        button_SelectService = findViewById(R.id.button_SelectService);
+        button_Success = findViewById(R.id.button_SuccessBook);
+        flowLayoutServices = findViewById(R.id.flowLayout_SelectedService);
+        recyclerViewSelectTime = findViewById(R.id.recyclerView_SelectTime);
+        switchChupAnhSauKhiCat = findViewById(R.id.swich_ChupAnhSauKhiCat);
+        switchYeuCauTuVan = findViewById(R.id.swich_YeuCauTuVan);
 
-        checkBox1 = (CheckBox) findViewById(R.id.checkBox_1);
-        checkBox2 = (CheckBox) findViewById(R.id.checkBox_2);
-        checkBox3 = (CheckBox) findViewById(R.id.checkBox_3);
-        checkBox4 = (CheckBox) findViewById(R.id.checkBox_4);
-        checkBox5 = (CheckBox) findViewById(R.id.checkBox_5);
-        checkBox6 = (CheckBox) findViewById(R.id.checkBox_6);
+        checkBox1 = findViewById(R.id.checkBox_1);
+        checkBox2 = findViewById(R.id.checkBox_2);
+        checkBox3 = findViewById(R.id.checkBox_3);
+        checkBox4 = findViewById(R.id.checkBox_4);
+        checkBox5 = findViewById(R.id.checkBox_5);
+        checkBox6 = findViewById(R.id.checkBox_6);
     }
 }

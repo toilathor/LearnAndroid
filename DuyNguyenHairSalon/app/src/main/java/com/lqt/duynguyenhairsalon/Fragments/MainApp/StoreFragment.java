@@ -341,18 +341,18 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void initView() {
-        recyclerViewHotProduct = (RecyclerView) view.findViewById(R.id.recyclerView_HotProduct);
-        recyclerViewNewProduct = (RecyclerView) view.findViewById(R.id.recyclerView_NewProduct);
-        recyclerViewTopProduct = (RecyclerView) view.findViewById(R.id.recyclerView_TopProduct);
-        recyclerViewSpeciesProduct = (RecyclerView) view.findViewById(R.id.recyclerView_SpeciesProduct);
-        textViewOtherHotProduct = (TextView) view.findViewById(R.id.textView_OtherHotProduct);
-        textViewOtherNewProduct = (TextView) view.findViewById(R.id.textView_OtherNewProduct);
-        textViewOtherTopProduct = (TextView) view.findViewById(R.id.textView_OtherTopProduct);
-        textViewAmountInCart = (TextView) view.findViewById(R.id.textView_AmountInCart);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        viewPagerSlider = (ViewPager) view.findViewById(R.id.viewPager_Store);
-        circleIndicator = (CircleIndicator) view.findViewById(R.id.circleIndicator);
-        frameLayoutCart = (FrameLayout) view.findViewById(R.id.frameLayout);
+        recyclerViewHotProduct = view.findViewById(R.id.recyclerView_HotProduct);
+        recyclerViewNewProduct = view.findViewById(R.id.recyclerView_NewProduct);
+        recyclerViewTopProduct = view.findViewById(R.id.recyclerView_TopProduct);
+        recyclerViewSpeciesProduct = view.findViewById(R.id.recyclerView_SpeciesProduct);
+        textViewOtherHotProduct = view.findViewById(R.id.textView_OtherHotProduct);
+        textViewOtherNewProduct = view.findViewById(R.id.textView_OtherNewProduct);
+        textViewOtherTopProduct = view.findViewById(R.id.textView_OtherTopProduct);
+        textViewAmountInCart = view.findViewById(R.id.textView_AmountInCart);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        viewPagerSlider = view.findViewById(R.id.viewPager_Store);
+        circleIndicator = view.findViewById(R.id.circleIndicator);
+        frameLayoutCart = view.findViewById(R.id.frameLayout);
     }
 
     @Override

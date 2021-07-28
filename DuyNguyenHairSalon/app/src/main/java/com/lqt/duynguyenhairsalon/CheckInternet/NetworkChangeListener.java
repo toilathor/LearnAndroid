@@ -4,11 +4,6 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +12,8 @@ import android.widget.Button;
 import com.lqt.duynguyenhairsalon.R;
 
 /*
-* Tiến trình chạy ngầm lắng nghe sự kiên thay đổi mạng Internet.
-* */
+ * Tiến trình chạy ngầm lắng nghe sự kiên thay đổi mạng Internet.
+ * */
 public class NetworkChangeListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,7 +23,7 @@ public class NetworkChangeListener extends BroadcastReceiver {
         }
     }
 
-    private void showDiaglog(Context context, Intent intent){
+    private void showDiaglog(Context context, Intent intent) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         View layoutDialog = LayoutInflater.from(context).inflate(R.layout.dialog_check_intenet, null);

@@ -1,15 +1,14 @@
 package com.lqt.duynguyenhairsalon.Fragments.Booking.Admin;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -130,7 +129,7 @@ public class SuccessfulFragment extends Fragment {
     }
 
     private void initView() {
-        recyclerViewSuccessful = (RecyclerView) view.findViewById(R.id.recycleView_TaskSuccessful);
+        recyclerViewSuccessful = view.findViewById(R.id.recycleView_TaskSuccessful);
 
         activity = (BookingActivity) getActivity();
 

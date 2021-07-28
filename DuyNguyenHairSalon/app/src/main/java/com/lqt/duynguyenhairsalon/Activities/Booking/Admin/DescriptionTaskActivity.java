@@ -1,10 +1,5 @@
 package com.lqt.duynguyenhairsalon.Activities.Booking.Admin;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -243,16 +243,16 @@ public class DescriptionTaskActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewBack = (ImageView) findViewById(R.id.imageView_Back);
-        buttonSuccess = (Button) findViewById(R.id.button_Success);
-        textViewName = (TextView) findViewById(R.id.textView_Name);
-        textViewPhone = (TextView) findViewById(R.id.textView_Phone);
-        textViewDate = (TextView) findViewById(R.id.textView_Date);
-        checkBoxYeuCauTuVan = (CheckBox) findViewById(R.id.checkbox_YeuCauTuVan);
-        checkBoxChupAnhSauKhiCat = (CheckBox) findViewById(R.id.checkbox_ChupAnhSauKhiCat);
-        recyclerViewService = (RecyclerView) findViewById(R.id.recyclerView_Service);
-        textViewSum = (TextView) findViewById(R.id.textView_Sum);
-        linearLayoutUtilities = (LinearLayout) findViewById(R.id.LinearLayout_Utilities);
+        imageViewBack = findViewById(R.id.imageView_Back);
+        buttonSuccess = findViewById(R.id.button_Success);
+        textViewName = findViewById(R.id.textView_Name);
+        textViewPhone = findViewById(R.id.textView_Phone);
+        textViewDate = findViewById(R.id.textView_Date);
+        checkBoxYeuCauTuVan = findViewById(R.id.checkbox_YeuCauTuVan);
+        checkBoxChupAnhSauKhiCat = findViewById(R.id.checkbox_ChupAnhSauKhiCat);
+        recyclerViewService = findViewById(R.id.recyclerView_Service);
+        textViewSum = findViewById(R.id.textView_Sum);
+        linearLayoutUtilities = findViewById(R.id.LinearLayout_Utilities);
 
         if (isSuccessful) {
             buttonSuccess.setVisibility(View.GONE);

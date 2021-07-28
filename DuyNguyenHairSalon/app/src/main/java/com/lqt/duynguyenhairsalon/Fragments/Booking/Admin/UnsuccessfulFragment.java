@@ -136,7 +136,7 @@ public class UnsuccessfulFragment extends Fragment {
     }
 
     private void initView() {
-        recyclerViewUnsuccessful = (RecyclerView) view.findViewById(R.id.recycleView_TaskUnsuccessful);
+        recyclerViewUnsuccessful = view.findViewById(R.id.recycleView_TaskUnsuccessful);
 
         activity = (BookingActivity) getActivity();
 

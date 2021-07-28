@@ -1,14 +1,14 @@
 package com.lqt.duynguyenhairsalon.Activities.Shopping;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -123,9 +123,9 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageViewRowView = (ImageView) findViewById(R.id.imageView_RowBack);
-        textViewTitle = (TextView) findViewById(R.id.textView_Title);
-        recyclerViewProduct = (RecyclerView) findViewById(R.id.recyclerView_Product);
+        imageViewRowView = findViewById(R.id.imageView_RowBack);
+        textViewTitle = findViewById(R.id.textView_Title);
+        recyclerViewProduct = findViewById(R.id.recyclerView_Product);
 
         KEY_WORD = getIntent().getStringExtra("KEYWORD");
     }
