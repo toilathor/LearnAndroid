@@ -84,10 +84,7 @@ public class AccountFragment extends Fragment {
                 Toast.makeText(getContext(), "Đăng xuất", Toast.LENGTH_SHORT).show();
 
                 //Reset Shared Preferences
-                DataLocalManager.setPrefIsAdmin(false);
-                DataLocalManager.setPrefIsLogged(false);
-                DataLocalManager.setPrefUserName("");
-                DataLocalManager.setFisrtInstall(false);
+                DataLocalManager.resetSharaPreferences();
 
                 getActivity().finish();
                 getActivity().startActivity(new Intent(getContext(), IntroActivity.class));

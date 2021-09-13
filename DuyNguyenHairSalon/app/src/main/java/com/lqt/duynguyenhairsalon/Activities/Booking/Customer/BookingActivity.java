@@ -512,7 +512,6 @@ public class BookingActivity extends AppCompatActivity {
             }.getType();
             servicesList = gson.fromJson(dataStringExtra, type);
             setFlowLayoutService();
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

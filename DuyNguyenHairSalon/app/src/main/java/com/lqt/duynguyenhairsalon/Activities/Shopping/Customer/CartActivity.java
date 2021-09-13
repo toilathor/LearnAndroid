@@ -1,6 +1,8 @@
 package com.lqt.duynguyenhairsalon.Activities.Shopping.Customer;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.lqt.duynguyenhairsalon.Activities.Home.MainActivity;
+import com.lqt.duynguyenhairsalon.Activities.Other.IntroActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ListADWAdapter;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ProductInCartAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
@@ -89,6 +95,7 @@ public class CartActivity extends AppCompatActivity {
     private ListADWAdapter adwAdapter;
 
     //Param
+    public static String REQUEST_CODE_CART = "REQUEST_CODE_CART";
     private static final String TAG = CartActivity.class.getName();
     private String url = Config.LOCALHOST + "GetCart.php?ID_User=" + DataLocalManager.getPrefIdUser();
     private String idDistrict = "";
@@ -159,7 +166,10 @@ public class CartActivity extends AppCompatActivity {
                         getDataProduct();
                         productInCartAdapter.notifyDataSetChanged();
                         Toast.makeText(CartActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                        intent.putExtra(REQUEST_CODE_CART, REQUEST_CODE_CART);
+                        startActivity(intent);
+                        finishAffinity();
                     }
                 }, 1000);
             }
@@ -410,6 +420,12 @@ public class CartActivity extends AppCompatActivity {
 
         RecyclerView recyclerViewADW = (RecyclerView) dialogChooseADW.findViewById(R.id.recyclerView_ADW);
         recyclerViewADW.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        ProgressDialog progressDialog = new ProgressDialog(CartActivity.this);
+
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progressDialog.show();
+
 
         if (leverAddress.equals(PROVINCE)) {
             listADW = new ArrayList<Province>();
@@ -474,15 +490,23 @@ public class CartActivity extends AppCompatActivity {
             });
         }
 
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                adwAdapter.setData(listADW);
-                recyclerViewADW.setAdapter(adwAdapter);
+                if (listADW.size() != 0) {
+                    adwAdapter.setData(listADW);
+                    recyclerViewADW.setAdapter(adwAdapter);
+                    progressDialog.dismiss();
+                    dialogChooseADW.show();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(CartActivity.this, "Vui lòng thử lại sau!", Toast.LENGTH_SHORT).show();
+                }
             }
-        }, 1000);
-        dialogChooseADW.show();
+        }, 500);
+
     }
 
     /*

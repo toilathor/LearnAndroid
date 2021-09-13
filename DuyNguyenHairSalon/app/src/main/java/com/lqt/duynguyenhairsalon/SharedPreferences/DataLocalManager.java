@@ -2,6 +2,8 @@ package com.lqt.duynguyenhairsalon.SharedPreferences;
 
 import android.content.Context;
 
+import com.google.android.youtube.player.internal.f;
+
 /*
  *
  * Class này quản lí tất cả các Shared Preferences trong Project
@@ -131,5 +133,19 @@ public class DataLocalManager {
 
     public static String getPrefWardId() {
         return DataLocalManager.getInstance().mySharedPreferences.getStringValue(PREF_WARD_ID);
+    }
+
+    public static void resetSharaPreferences(){
+        DataLocalManager.getInstance().mySharedPreferences.putBooleanValue(PREF_FISRT_INSTALL, false);
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_USER_NAME, "");
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_ID_USER, "");
+        DataLocalManager.getInstance().mySharedPreferences.putBooleanValue(PREF_IS_LOGGED, false);
+        DataLocalManager.getInstance().mySharedPreferences.putBooleanValue(PREF_IS_ADMIN, false);
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_PROVINCE_NAME, "");
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_DISTRICT_NAME, "");
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_WARD_NAME, "");
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_PROVINCE_ID, "");
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_DISTRICT_ID, "");
+        DataLocalManager.getInstance().mySharedPreferences.putStringValue(PREF_WARD_ID, "");
     }
 }

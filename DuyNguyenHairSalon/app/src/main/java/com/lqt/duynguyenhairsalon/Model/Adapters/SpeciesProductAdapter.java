@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.Model.SpeciesProduct;
 import com.lqt.duynguyenhairsalon.R;
 
@@ -52,6 +54,7 @@ public class SpeciesProductAdapter extends RecyclerView.Adapter<SpeciesProductAd
             return;
         }
         holder.textViewSpeciesProduct.setText(speciesProductList.get(position).getName_SpeciesProduct());
+        Glide.with(context).load(Config.LOCALHOST_IMG + speciesProductList.get(position).getImage_SpeciesProduct()).into(holder.imageViewSpeciesProduct);
         holder.linearLayout_SpeciesProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

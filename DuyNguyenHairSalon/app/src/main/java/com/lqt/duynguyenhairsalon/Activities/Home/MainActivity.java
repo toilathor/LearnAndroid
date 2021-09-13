@@ -1,10 +1,12 @@
 package com.lqt.duynguyenhairsalon.Activities.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -16,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.lqt.duynguyenhairsalon.Activities.Shopping.Customer.CartActivity;
 import com.lqt.duynguyenhairsalon.Model.Adapters.ViewPagerAdapter;
 import com.lqt.duynguyenhairsalon.Model.Config;
 import com.lqt.duynguyenhairsalon.R;
@@ -43,10 +46,21 @@ public class MainActivity extends AppCompatActivity {
 
         SetViewPage();
 
-        CheckIduser();
+        CheckIdUser();
+
+        /*
+         * Nếu đi từ CartActivity về thì sẽ setCurrentItem của viewPager về page Store
+         * */
+        try {
+            if (getIntent().getCharSequenceExtra(CartActivity.REQUEST_CODE_CART).toString().equals(CartActivity.REQUEST_CODE_CART)) {
+                viewPager.setCurrentItem(2);
+            }
+        } catch (Exception e) {
+
+        }
     }
 
-    private void CheckIduser() {
+    private void CheckIdUser() {
         if (!DataLocalManager.getPrefIdUser().isEmpty()) {
             return;
         }

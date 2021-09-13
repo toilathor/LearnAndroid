@@ -302,7 +302,6 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     , ""
                     , 1
                     , "Etiaxil"));
-
         }
 
         newProductAdapter = new ProductAdapter(getContext());
@@ -357,8 +356,8 @@ public class StoreFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onStart() {
-        super.onStart();
         SetAmountInCart();
+        super.onStart();
     }
 
     @Override
