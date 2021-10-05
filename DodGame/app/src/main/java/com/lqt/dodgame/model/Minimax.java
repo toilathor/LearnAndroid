@@ -53,18 +53,20 @@ public class Minimax {
 		}
 	}
 
-	
+
 	@RequiresApi(api = Build.VERSION_CODES.N)
 	public Node MiniMaxVal(Node node, int hight) {
 		Node chooseNode = null;
 		int val = Integer.MIN_VALUE;
+
 		for (Node node2 : node.getNextNodes()) {
-			if(val <= minVal(node2, hight-1)) {
-				val = minVal(node2, hight-1);
+			int t = minVal(node2, hight-1);
+			if(val <= t) {
+				val = t;
 				chooseNode = node2;
 			}
 		}
-		System.out.println(val);
+
 		return chooseNode;
 	}
 }

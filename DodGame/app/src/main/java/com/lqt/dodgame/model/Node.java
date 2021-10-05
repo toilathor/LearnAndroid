@@ -6,47 +6,51 @@ import java.util.Arrays;
 public class Node {
     private ArrayList<Node> nextNodes;
     private int mapPoint[];
-    private int hight;
-    private int turn;
+    private int depth;
+    private boolean turnWhite;
 
     /*
      * Hàm constructor sẽ tự tạo ra các con cho đến độ sâu yêu cầu
      */
-    public Node(int[] mapPoint, int hight, int turn) {
+    public Node(int[] mapPoint, int hight, boolean turn) {
         super();
         this.mapPoint = mapPoint;
-        this.hight = hight;
-        this.turn = turn;
+        this.depth = hight;
+        this.turnWhite = turn;
 
         //Auto create child node
         nextNodes = new ArrayList<>();
-        if (this.hight != 0 && !this.isNodeEnd()) {
+        if (this.depth != 0 && !this.isNodeEnd()) {
             for (int i = 0; i < 9; i++) {
-                if (this.mapPoint[i] == 1) {
-                    if (this.movePoint(IMiniMax.MOVE2LEFT, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2LEFT, i), this.hight - 1, turn));
+                if(this.isTurnWhite()){
+                    if (this.mapPoint[i] == 1) {
+                        if (this.movePoint(IMiniMax.MOVE2LEFT, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2LEFT, i), this.depth - 1, !turn));
+                        }
+                        if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.depth - 1, !turn));
+                        }
+                        if (this.movePoint(IMiniMax.MOVE2RIGHT, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2RIGHT, i), this.depth - 1, !turn));
+                        }
+                        if (this.movePoint(IMiniMax.MOVE2FINAL, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.depth - 1, !turn));
+                        }
                     }
-                    if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.hight - 1, turn));
-                    }
-                    if (this.movePoint(IMiniMax.MOVE2RIGHT, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2RIGHT, i), this.hight - 1, turn));
-                    }
-                    if (this.movePoint(IMiniMax.MOVE2FINAL, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.hight - 1, turn));
-                    }
-                } else if (this.mapPoint[i] == -1) {
-                    if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.hight - 1, turn));
-                    }
-                    if (this.movePoint(IMiniMax.MOVE2RIGHT, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2RIGHT, i), this.hight - 1, turn));
-                    }
-                    if (this.movePoint(IMiniMax.MOVE2DOWN, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2DOWN, i), this.hight - 1, turn));
-                    }
-                    if (this.movePoint(IMiniMax.MOVE2FINAL, i).length != 0) {
-                        nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.hight - 1, turn));
+                }else{
+                    if (this.mapPoint[i] == -1) {
+                        if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.depth - 1, !turn));
+                        }
+                        if (this.movePoint(IMiniMax.MOVE2RIGHT, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2RIGHT, i), this.depth - 1, !turn));
+                        }
+                        if (this.movePoint(IMiniMax.MOVE2DOWN, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2DOWN, i), this.depth - 1, !turn));
+                        }
+                        if (this.movePoint(IMiniMax.MOVE2FINAL, i).length != 0) {
+                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.depth - 1, !turn));
+                        }
                     }
                 }
             }
@@ -71,26 +75,26 @@ public class Node {
         this.mapPoint = mapPoint;
     }
 
-    public int getHight() {
-        return hight;
+    public int getDepth() {
+        return depth;
     }
 
-    public void setHight(int hight) {
-        this.hight = hight;
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
-    public int getTurn() {
-        return turn;
+    public boolean isTurnWhite() {
+        return turnWhite;
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
+    public void setTurn(boolean turn) {
+        this.turnWhite = turn;
     }
 
     @Override
     public String toString() {
-        return "Node [nextNodes=" + nextNodes + ", mapPoint=" + Arrays.toString(mapPoint) + ", hight=" + hight
-                + ", turn=" + turn + ", getSumPoint()=" + getSumPoint() + "]";
+        return "Node [nextNodes=" + nextNodes + ", mapPoint=" + Arrays.toString(mapPoint) + ", hight=" + depth
+                + ", turn=" + turnWhite + ", getSumPoint()=" + getSumPoint() + "]";
     }
 
     /*
@@ -107,32 +111,24 @@ public class Node {
                 sum += IMiniMax.POINTS_OF_WHITE[i] * this.mapPoint[i];
                 if (i / 3 == 2 && this.mapPoint[i - 3] == -1) {
                     sum -= 40;
-//					System.out.println("-40");
                 }
                 if (i / 3 == 2 && this.mapPoint[i - 6] == -1) {
                     sum -= 30;
-//					System.out.println("-30");
                 }
                 if (i / 3 == 1 && this.mapPoint[i - 3] == -1) {
                     sum -= 40;
-//					System.out.println("-40");
                 }
                 white++;
             } else if (this.mapPoint[i] == -1) {
                 sum += IMiniMax.POINTS_OF_BLACK[i] * this.mapPoint[i];
                 if (i % 3 == 0 && this.mapPoint[i + 1] == 1) {
                     sum += 40;
-
-//					System.out.println("+40" + i);
                 }
                 if (i % 3 == 0 && this.mapPoint[i + 2] == 1) {
                     sum += 30;
-
-//					System.out.println("+30");
                 }
                 if (i % 3 == 1 && this.mapPoint[i + 1] == 1) {
                     sum += 40;
-//					System.out.println("+40");
                 }
                 black++;
             }

@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,32 +18,41 @@ import com.lqt.dodgame.model.IMiniMax;
 import com.lqt.dodgame.model.Minimax;
 import com.lqt.dodgame.model.Node;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     static boolean selectedChessmanMove = false;
     static int selectedFrom = 0;
     static int selectedTo = 0;
     static Minimax minimax = new Minimax();
-    static Node nodePresent = new Node(IMiniMax.MAP_ROOT, 3, 1);
+    static Node nodePresent = new Node(IMiniMax.MAP_ROOT, IMiniMax.DEPTH, true);
     static int idImageViewCell[] = {
             R.id.Image_Cell_0, R.id.Image_Cell_1, R.id.Image_Cell_2,
             R.id.Image_Cell_3, R.id.Image_Cell_4, R.id.Image_Cell_5,
             R.id.Image_Cell_6, R.id.Image_Cell_7, R.id.Image_Cell_8
     };
+
     static ImageView imageViewCell[] = new ImageView[9];
     static int imageChessman[] = {R.drawable.cell_black_inactive, R.drawable.cell_none, R.drawable.cell_white_inactive};
+    ImageButton imageButtonRestart;
+    Button buttonFinalBlack;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         InitView();
 
+        BOTMove();
+
         LoadMap();
     }
 
     //check can move
     private boolean canMove(int from, int to, int mapP[]) {
+        if (from >= 9 || to < 0 || to >= 9 || from < 0) return false;
         if (mapP[to] == 0) {
             if (to - from == 1 || to - from == 3 || from - to == 3) {
                 return true;
@@ -55,110 +66,104 @@ public class MainActivity extends AppCompatActivity {
     public void clickImageCell(View view) {
         int mapPoint[] = nodePresent.getMapPoint();
 
-        //if selected
-        if (selectedChessmanMove) {
-            selectedTo = Integer.valueOf(view.getTag().toString());
-            if (selectedFrom == selectedTo) {
-                //reset all value
-                selectedChessmanMove = false;
-                selectedFrom = -1;
-                selectedTo = -1;
-                LoadMap();
-                return;
-            }
-            if (canMove(selectedFrom, selectedTo, mapPoint)) {
-                //Move
-                PlayerMove(selectedFrom, selectedTo);
-                Toast.makeText(MainActivity.this, "Move to " + selectedTo, Toast.LENGTH_SHORT).show();
-                //BOT move
-                BOTMove();
-
-            } else {
-                //Select again
-                Toast.makeText(MainActivity.this, "You can't select this sell! Try again, please.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            //reset all value select
-            selectedChessmanMove = false;
-            selectedFrom = -1;
-            selectedTo = -1;
-            LoadMap();
-        } else {    //if don't selected
-            selectedFrom = Integer.valueOf(view.getTag().toString());
-            if (mapPoint[selectedFrom] == -1) {
-                if (selectedFrom == 2 || selectedFrom == 5 || selectedFrom == 8) {
-                    mapPoint[selectedFrom] = 0;
-                    nodePresent = new Node(mapPoint, 3, 1);
-                    if (!isEndGame()) {
-                        BOTMove();
-                    } else {
-                        showDialogEndGame();
+        //if not end game
+        if (!isEndGame()) {
+            //if not selected yet
+            if (!selectedChessmanMove) {
+                selectedFrom = Integer.parseInt(view.getTag().toString());
+                if (mapPoint[selectedFrom] == -1) {
+                    //if final
+                    if (selectedFrom == 2 || selectedFrom == 5 || selectedFrom == 8) {
+                        buttonFinalBlack.setVisibility(View.VISIBLE);
+                    }else{
+                        buttonFinalBlack.setVisibility(View.INVISIBLE);
                     }
-
-                    //reset all value
-                    selectedChessmanMove = false;
-                    selectedFrom = -1;
-                    selectedTo = -1;
-                    LoadMap();
+                    imageViewCell[selectedFrom].setImageResource(R.drawable.cell_black_active);
+                    selectedChessmanMove = true;
                     return;
+                } else {
+                    //reset selectedFrom
+                    selectedFrom = -1;
+                    Toast.makeText(MainActivity.this, "You can't select cell here! Try again please.", Toast.LENGTH_SHORT).show();
                 }
-                imageViewCell[selectedFrom].setImageResource(R.drawable.cell_black_active);
-                Log.e(MainActivity.class.toString(), "selected");
-            } else {
-                //Select again
-                Toast.makeText(MainActivity.this, "You can't select this sell! Try again, please.", Toast.LENGTH_SHORT).show();
-                selectedFrom = -1;
-                selectedTo = -1;
                 return;
-            }
+            } else { //if selected
+                selectedTo = Integer.parseInt(view.getTag().toString());
+                //if from = to
+                if (selectedFrom == selectedTo) {
+                    PlayerMove();
+                    return;
+                } else {
+                    //if selected cell zero
+                    if (mapPoint[selectedTo] == 0) {
+                        PlayerMove();
 
-            //reset all value
-            selectedChessmanMove = true;
+                        BOTMove();
+                    }
+                }
+            }
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void BOTMove() {
-        nodePresent = minimax.MiniMaxVal(nodePresent, 3);
         if (isEndGame()) {
             showDialogEndGame();
+        } else {
+            if (minimax.MiniMaxVal(nodePresent, IMiniMax.DEPTH) == null){
+                Log.e(MainActivity.class.toString(), "Null");
+            }else{
+                nodePresent = minimax.MiniMaxVal(nodePresent, 3);
+            }
+            LoadMap();
         }
     }
 
-    private void PlayerMove(int selectedFrom, int selectedTo) {
-        int mapPoint[] = nodePresent.getMapPoint();
-        int t = mapPoint[selectedFrom];
-        mapPoint[selectedFrom] = mapPoint[selectedTo];
-        mapPoint[selectedTo] = t;
+    private void PlayerMove() {
+        if (selectedFrom != selectedTo) {
+            int mapPoint[] = nodePresent.getMapPoint();
+            int t = mapPoint[selectedFrom];
+            mapPoint[selectedFrom] = mapPoint[selectedTo];
+            mapPoint[selectedTo] = t;
 
-        nodePresent = new Node(mapPoint, 3, 1);
+            nodePresent = new Node(mapPoint, IMiniMax.DEPTH, true);
+        }
+
+        Toast.makeText(MainActivity.this, "Move from " + selectedFrom + " to " + selectedTo, Toast.LENGTH_SHORT).show();
+        //reset
+        selectedFrom = -1;
+        selectedTo = -1;
+        selectedChessmanMove = false;
+        LoadMap();
     }
 
     private void showDialogEndGame() {
-        AlertDialog.Builder diaglog = new AlertDialog.Builder(this);
-        diaglog.setMessage("Would you like replay?");
-        diaglog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("Would you like replay?");
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //todo
                 ResetGame();
             }
         });
-        diaglog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //todo
+                ResetGame();
             }
         });
-        diaglog.show();
+        dialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void ResetGame() {
         selectedFrom = -1;
         selectedTo = -1;
         selectedChessmanMove = false;
-        nodePresent = new Node(IMiniMax.MAP_ROOT, 3, 1);
+        nodePresent = new Node(IMiniMax.MAP_ROOT, IMiniMax.DEPTH, true);
+        BOTMove();
         LoadMap();
     }
 
@@ -171,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 9; i++) {
             if (mapPoint[i] == -1) {
                 checkBlack++;
-//                if (canMove(i, i + 1, mapPoint) && canMove(i, i + 3, mapPoint) && canMove(i, i - 3, mapPoint)) {
-//                    blackStranded--;
-//                }
+                if (canMove(i, i + 1, mapPoint) && canMove(i, i + 3, mapPoint) && canMove(i, i - 3, mapPoint)) {
+                    blackStranded--;
+                }
             } else if (mapPoint[i] == 1) {
                 checkWhite++;
             }
@@ -196,11 +201,33 @@ public class MainActivity extends AppCompatActivity {
                 imageViewCell[i].setImageResource(imageChessman[2]);
             }
         }
+        Log.e(MainActivity.class.toString(), ", mapPoint=" + Arrays.toString(mapPoint));
     }
 
+    private void SetListenUI(){
+        imageButtonRestart.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                ResetGame();
+            }
+        });
+
+        buttonFinalBlack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedFrom != -1){
+
+                }
+
+            }
+        });
+    }
     private void InitView() {
         for (int i = 0; i < 9; i++) {
             imageViewCell[i] = findViewById(idImageViewCell[i]);
         }
+        imageButtonRestart = findViewById(R.id.Button_Restart);
+        buttonFinalBlack = findViewById(R.id.Button_FinalBlack);
     }
 }
