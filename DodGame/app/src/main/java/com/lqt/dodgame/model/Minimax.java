@@ -57,8 +57,12 @@ public class Minimax {
 	@RequiresApi(api = Build.VERSION_CODES.N)
 	public Node MiniMaxVal(Node node, int hight) {
 		Node chooseNode = null;
+
 		int val = Integer.MIN_VALUE;
 
+		if (node){
+
+		}
 		for (Node node2 : node.getNextNodes()) {
 			int t = minVal(node2, hight-1);
 			if(val <= t) {

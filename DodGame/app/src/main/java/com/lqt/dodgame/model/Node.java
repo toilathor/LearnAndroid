@@ -22,7 +22,7 @@ public class Node {
         nextNodes = new ArrayList<>();
         if (this.depth != 0 && !this.isNodeEnd()) {
             for (int i = 0; i < 9; i++) {
-                if(this.isTurnWhite()){
+                if (this.isTurnWhite()) {
                     if (this.mapPoint[i] == 1) {
                         if (this.movePoint(IMiniMax.MOVE2LEFT, i).length != 0) {
                             nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2LEFT, i), this.depth - 1, !turn));
@@ -37,7 +37,7 @@ public class Node {
                             nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.depth - 1, !turn));
                         }
                     }
-                }else{
+                } else {
                     if (this.mapPoint[i] == -1) {
                         if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
                             nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.depth - 1, !turn));
@@ -157,10 +157,25 @@ public class Node {
             }
         }
 
-        if (countBlack == 0 || countWhite == 0) {
+        if (countBlack == 0 || countWhite == 0 || isStranded()) {
             return true;
         }
 
+        return false;
+    }
+
+    public boolean isStranded() {
+        for (int i = 0; i < 9; i++) {
+            if (mapPoint[i] == -1 && !turnWhite) {
+                if (!canMove(IMiniMax.MOVE2UP, i, mapPoint) || !canMove(IMiniMax.MOVE2RIGHT, i, mapPoint) || !canMove(IMiniMax.MOVE2DOWN, i, mapPoint)) {
+                    return true;
+                }
+            } else if (mapPoint[i] == 1 && turnWhite) {
+                if (!canMove(IMiniMax.MOVE2LEFT, i, mapPoint) || !canMove(IMiniMax.MOVE2UP, i, mapPoint) || !canMove(IMiniMax.MOVE2RIGHT, i, mapPoint)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

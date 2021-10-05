@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         InitView();
 
+        SetListenUI();
+
         BOTMove();
 
         LoadMap();
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     //if final
                     if (selectedFrom == 2 || selectedFrom == 5 || selectedFrom == 8) {
                         buttonFinalBlack.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         buttonFinalBlack.setVisibility(View.INVISIBLE);
                     }
                     imageViewCell[selectedFrom].setImageResource(R.drawable.cell_black_active);
@@ -110,12 +112,13 @@ public class MainActivity extends AppCompatActivity {
         if (isEndGame()) {
             showDialogEndGame();
         } else {
-            if (minimax.MiniMaxVal(nodePresent, IMiniMax.DEPTH) == null){
+            if (minimax.MiniMaxVal(nodePresent, IMiniMax.DEPTH) == null) {
                 Log.e(MainActivity.class.toString(), "Null");
-            }else{
+            } else {
                 nodePresent = minimax.MiniMaxVal(nodePresent, 3);
+                LoadMap();
             }
-            LoadMap();
+
         }
     }
 
@@ -201,10 +204,18 @@ public class MainActivity extends AppCompatActivity {
                 imageViewCell[i].setImageResource(imageChessman[2]);
             }
         }
+
+        //invisible button out
+        buttonFinalBlack.setVisibility(View.INVISIBLE);
         Log.e(MainActivity.class.toString(), ", mapPoint=" + Arrays.toString(mapPoint));
+
+        if (isEndGame()) {
+            showDialogEndGame();
+        }
+
     }
 
-    private void SetListenUI(){
+    private void SetListenUI() {
         imageButtonRestart.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -214,15 +225,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buttonFinalBlack.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                if(selectedFrom != -1){
-
+                if (selectedFrom != -1) {
+                    int mapPoint[] = nodePresent.getMapPoint();
+                    mapPoint[selectedFrom] = 0;
+                    nodePresent = new Node(mapPoint, IMiniMax.DEPTH, true);
+                    BOTMove();
+                    LoadMap();
+                    selectedFrom = -1;
+                    selectedTo = -1;
+                    selectedChessmanMove = false;
                 }
-
             }
         });
     }
+
     private void InitView() {
         for (int i = 0; i < 9; i++) {
             imageViewCell[i] = findViewById(idImageViewCell[i]);
