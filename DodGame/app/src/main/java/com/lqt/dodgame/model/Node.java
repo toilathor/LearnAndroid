@@ -1,9 +1,12 @@
 package com.lqt.dodgame.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Node {
+
     private ArrayList<Node> nextNodes;
     private int mapPoint[];
     private int depth;
@@ -12,50 +15,43 @@ public class Node {
     /*
      * Hàm constructor sẽ tự tạo ra các con cho đến độ sâu yêu cầu
      */
-    public Node(int[] mapPoint, int hight, boolean turn) {
+    public Node(int[] mapPoint, int depth, boolean turnWhite) {
         super();
         this.mapPoint = mapPoint;
-        this.depth = hight;
-        this.turnWhite = turn;
-
-        //Auto create child node
-        nextNodes = new ArrayList<>();
-        if (this.depth != 0 && !this.isNodeEnd()) {
+        this.depth = depth;
+        this.turnWhite = turnWhite;
+        this.nextNodes = new ArrayList<>();
+        if (depth <= IMiniMax.DEPTH && !this.isNodeEnd2()) {
             for (int i = 0; i < 9; i++) {
-                if (this.isTurnWhite()) {
-                    if (this.mapPoint[i] == 1) {
-                        if (this.movePoint(IMiniMax.MOVE2LEFT, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2LEFT, i), this.depth - 1, !turn));
-                        }
-                        if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.depth - 1, !turn));
-                        }
-                        if (this.movePoint(IMiniMax.MOVE2RIGHT, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2RIGHT, i), this.depth - 1, !turn));
-                        }
-                        if (this.movePoint(IMiniMax.MOVE2FINAL, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.depth - 1, !turn));
+                if (this.mapPoint[i] == 0) continue; // Nếu là ô trống thì bỏ qua.
+                if (this.turnWhite) {
+                    if (this.mapPoint[i] == 1) { // Quân Trắng
+                        for (int direction : IMiniMax.CELL_WHITE_CAN_RUN) {
+                            if (this.canMove(direction, i)) {  // Kiểm tra nước có thể di chuyển
+                                int[] mapPointClone = this.mapPoint.clone();
+                                if (i + direction >= 0) { // Quân trắng không ở hàng trên cùng và đi lên
+                                    mapPointClone[i + direction] = mapPointClone[i];
+                                }
+                                mapPointClone[i] = 0;
+                                this.nextNodes.add(new Node(mapPointClone, this.depth + 1, !this.turnWhite));
+                            }
                         }
                     }
                 } else {
-                    if (this.mapPoint[i] == -1) {
-                        if (this.movePoint(IMiniMax.MOVE2UP, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2UP, i), this.depth - 1, !turn));
-                        }
-                        if (this.movePoint(IMiniMax.MOVE2RIGHT, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2RIGHT, i), this.depth - 1, !turn));
-                        }
-                        if (this.movePoint(IMiniMax.MOVE2DOWN, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2DOWN, i), this.depth - 1, !turn));
-                        }
-                        if (this.movePoint(IMiniMax.MOVE2FINAL, i).length != 0) {
-                            nextNodes.add(new Node(this.movePoint(IMiniMax.MOVE2FINAL, i), this.depth - 1, !turn));
+                    if (this.mapPoint[i] == -1) { // Quân Đen
+                        for (int direction : IMiniMax.CELL_BLACK_CAN_RUN) {
+                            if (this.canMove(direction, i)) {  // Kiểm tra nước có thể di chuyển
+                                int[] mapPointClone = this.mapPoint.clone();
+                                if (!(i % 3 == 2 && direction == 1)) { // Quân Đen không ở hàng ngoài cùng bên Phải và đi sang Phải
+                                    mapPointClone[i + direction] = mapPointClone[i];
+                                }
+                                mapPointClone[i] = 0;
+                                this.nextNodes.add(new Node(mapPointClone, this.depth + 1, !this.turnWhite));
+                            }
                         }
                     }
                 }
             }
-        } else {
-            nextNodes = null;
         }
     }
 
@@ -63,34 +59,11 @@ public class Node {
         return nextNodes;
     }
 
-    public void setNextNodes(ArrayList<Node> nextNodes) {
-        this.nextNodes = nextNodes;
-    }
-
     public int[] getMapPoint() {
         return mapPoint;
     }
 
-    public void setMapPoint(int[] mapPoint) {
-        this.mapPoint = mapPoint;
-    }
-
-    public int getDepth() {
-        return depth;
-    }
-
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
-    public boolean isTurnWhite() {
-        return turnWhite;
-    }
-
-    public void setTurn(boolean turn) {
-        this.turnWhite = turn;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "Node [nextNodes=" + nextNodes + ", mapPoint=" + Arrays.toString(mapPoint) + ", hight=" + depth
@@ -104,41 +77,44 @@ public class Node {
      */
     public int getSumPoint() {
         int sum = 0;
-
-        int black = 0, white = 0;
+        int numberBlack = 2;
+        int numberWhite = 2;
         for (int i = 0; i < 9; i++) {
-            if (this.mapPoint[i] == 1) {
-                sum += IMiniMax.POINTS_OF_WHITE[i] * this.mapPoint[i];
-                if (i / 3 == 2 && this.mapPoint[i - 3] == -1) {
-                    sum -= 40;
+            if (this.mapPoint[i] == -1) {  // Quân Đen
+                numberBlack--;
+                sum += IMiniMax.POINTS_OF_BLACK[i];
+                if (i < 6) {
+                    if (this.mapPoint[i + 3] == 1) {
+                        sum -= 40;
+                    }
+                    if (i < 3 && this.mapPoint[i + 6] == 1) {
+                        sum -= 30;
+                    }
                 }
-                if (i / 3 == 2 && this.mapPoint[i - 6] == -1) {
-                    sum -= 30;
+            } else {
+                if (this.mapPoint[i] == 1) {  // Quân Trắng
+                    numberWhite--;
+                    sum += IMiniMax.POINTS_OF_WHITE[i];
+                    if (i % 3 != 0) {
+                        if (this.mapPoint[i - 1] == -1) {
+                            sum += 40;
+                        }
+                        if (i % 3 == 2 && this.mapPoint[i - 2] == -1) {
+                            sum += 30;
+                        }
+                    }
                 }
-                if (i / 3 == 1 && this.mapPoint[i - 3] == -1) {
-                    sum -= 40;
-                }
-                white++;
-            } else if (this.mapPoint[i] == -1) {
-                sum += IMiniMax.POINTS_OF_BLACK[i] * this.mapPoint[i];
-                if (i % 3 == 0 && this.mapPoint[i + 1] == 1) {
-                    sum += 40;
-                }
-                if (i % 3 == 0 && this.mapPoint[i + 2] == 1) {
-                    sum += 30;
-                }
-                if (i % 3 == 1 && this.mapPoint[i + 1] == 1) {
-                    sum += 40;
-                }
-                black++;
             }
         }
-        sum += (2 - white) * 85 - (2 - black) * 85;
+        sum += (numberWhite - numberBlack) * 85;
+        if (this.isNodeEnd() && !isNodeEnd2()) {
+            if (this.turnWhite) {
+                sum -= 85;
+            } else {
+                sum += 85;
+            }
+        }
         return sum;
-    }
-
-    public boolean isLeaf() {
-        return this.nextNodes == null;
     }
 
     /*
@@ -147,135 +123,35 @@ public class Node {
      * TODO tới lượt nhưng không đi được
      */
     public boolean isNodeEnd() {
-        int countBlack = 0;
-        int countWhite = 0;
-        for (int i : mapPoint) {
-            if (i == 1) {
-                countWhite++;
-            } else if (i == -1) {
-                countBlack++;
+        return this.nextNodes.size() == 0;
+    }
+
+    public boolean isNodeEnd2() {
+        boolean blackEmpty = true;
+        boolean whiteEmpty = true;
+        for (int i : this.mapPoint) {
+            if (i == -1) {
+                blackEmpty = false;
+            } else if (i == 1) {
+                whiteEmpty = false;
             }
         }
-
-        if (countBlack == 0 || countWhite == 0 || isStranded()) {
-            return true;
-        }
-
-        return false;
+        return blackEmpty || whiteEmpty;
     }
 
-    public boolean isStranded() {
-        for (int i = 0; i < 9; i++) {
-            if (mapPoint[i] == -1 && !turnWhite) {
-                if (!canMove(IMiniMax.MOVE2UP, i, mapPoint) || !canMove(IMiniMax.MOVE2RIGHT, i, mapPoint) || !canMove(IMiniMax.MOVE2DOWN, i, mapPoint)) {
-                    return true;
-                }
-            } else if (mapPoint[i] == 1 && turnWhite) {
-                if (!canMove(IMiniMax.MOVE2LEFT, i, mapPoint) || !canMove(IMiniMax.MOVE2UP, i, mapPoint) || !canMove(IMiniMax.MOVE2RIGHT, i, mapPoint)) {
-                    return true;
-                }
-            }
+    private boolean canMove(int direction, int position) {
+        if (position % 3 == 0 && direction == -1) {
+            return false;
         }
-        return false;
-    }
-
-    /*
-     * kiểm tra xem nếu được phép di chuyển thì sẽ di chuyển
-     */
-    public int[] movePoint(int direction, int position) {
-        int mapPointCopy[] = this.mapPoint.clone();
-        int t = mapPointCopy[position];
-        switch (direction) {
-            case IMiniMax.MOVE2LEFT:
-                if (canMove(direction, position, mapPointCopy)) {
-                    mapPointCopy[position] = mapPointCopy[position - 1];
-                    mapPointCopy[position - 1] = t;
-                    return mapPointCopy;
-                }
-                break;
-            case IMiniMax.MOVE2UP:
-                if (canMove(direction, position, mapPointCopy)) {
-                    mapPointCopy[position] = mapPointCopy[position - 3];
-                    mapPointCopy[position - 3] = t;
-                    return mapPointCopy;
-                }
-                break;
-            case IMiniMax.MOVE2RIGHT:
-                if (canMove(direction, position, mapPointCopy)) {
-                    mapPointCopy[position] = mapPointCopy[position + 1];
-                    mapPointCopy[position + 1] = t;
-                    return mapPointCopy;
-                }
-                break;
-            case IMiniMax.MOVE2DOWN:
-                if (canMove(direction, position, mapPointCopy)) {
-                    mapPointCopy[position] = mapPointCopy[position + 3];
-                    mapPointCopy[position + 3] = t;
-                    return mapPointCopy;
-                }
-                break;
-            case IMiniMax.MOVE2FINAL:
-                if (canMove(direction, position, mapPointCopy)) {
-                    mapPointCopy[position] = 0;
-                    return mapPointCopy;
-                }
-                break;
+        if (position % 3 == 2 && direction == 1) {
+            return mapPoint[position] == -1;
         }
-        int arrayNull[] = {};
-        return arrayNull;
-    }
-
-    private boolean canMove(int direction, int position, int mapP[]) {
-        switch (direction) {
-            case IMiniMax.MOVE2LEFT:
-                if (mapP[position] == -1)
-                    return false;
-                if (mapP[position] == 1) {
-                    if (position % 3 == 0)
-                        return false;
-                    else if (position % 3 > 0 && mapP[position - 1] != 0) {
-                        return false;
-                    }
-                }
-                break;
-            case IMiniMax.MOVE2UP:
-                if (position / 3 == 0)
-                    return false;
-                else if (position / 3 > 0 && mapP[position - 3] != 0) {
-                    return false;
-                }
-                break;
-            case IMiniMax.MOVE2RIGHT:
-                if (position % 3 == 2)
-                    return false;
-                else if (position % 3 < 2 && mapP[position + 1] != 0) {
-                    return false;
-                }
-                break;
-            case IMiniMax.MOVE2DOWN:
-                if (mapP[position] == 1)
-                    return false;
-                if (mapP[position] == -1) {
-                    if (position / 3 == 2)
-                        return false;
-                    else if (position / 3 < 2 && mapP[position + 3] != 0) {
-                        return false;
-                    }
-                }
-                break;
-            case IMiniMax.MOVE2FINAL:
-                if (mapP[position] == 1) {
-                    if (position != 0 && position != 1 && position != 2) {
-                        return false;
-                    }
-                }
-                if (mapP[position] == -1) {
-                    if (position != 2 && position != 5 && position != 8) {
-                        return false;
-                    }
-                }
-                break;
+        if (position < 3 && direction == -3) {
+            return mapPoint[position] == 1;
         }
-        return true;
+        if (position > 5 && direction == 3) {
+            return false;
+        }
+        return mapPoint[position + direction] == 0;
     }
 }

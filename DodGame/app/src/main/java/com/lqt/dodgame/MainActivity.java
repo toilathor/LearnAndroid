@@ -22,11 +22,12 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String TAG = MainActivity.class.toString();
     static boolean selectedChessmanMove = false;
     static int selectedFrom = 0;
     static int selectedTo = 0;
     static Minimax minimax = new Minimax();
-    static Node nodePresent = new Node(IMiniMax.MAP_ROOT, IMiniMax.DEPTH, true);
+    static int[] mapPresent = IMiniMax.MAP_ROOT;
     static int idImageViewCell[] = {
             R.id.Image_Cell_0, R.id.Image_Cell_1, R.id.Image_Cell_2,
             R.id.Image_Cell_3, R.id.Image_Cell_4, R.id.Image_Cell_5,
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     ImageButton imageButtonRestart;
     Button buttonFinalBlack;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +60,33 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         }
+        Log.e(TAG, "canMove: ");
         return false;
+//
+//        if (from % 3 == 0 && to == -1) {
+//            return false;
+//        }
+//        if (from % 3 == 2 && to == 1) {
+//            if (mapP[from] == -1) {
+//                buttonFinalBlack.setVisibility(View.VISIBLE);
+//            }
+//            return false;
+//        }
+//        if (from < 3 && to == -3) {
+//            if (mapP[from] == 1) {
+//                buttonFinalBlack.setVisibility(View.VISIBLE);
+//            }
+//            return false;
+//        }
+//        if(from > 5 && to == 3) {
+//            return false;
+//        }
+//        return true;
     }
 
     //on click for image
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void clickImageCell(View view) {
-        int mapPoint[] = nodePresent.getMapPoint();
+        int mapPoint[] = mapPresent.clone();
 
         //if not end game
         if (!isEndGame()) {
@@ -95,41 +115,39 @@ public class MainActivity extends AppCompatActivity {
                 if (selectedFrom == selectedTo) {
                     PlayerMove();
                     return;
-                } else {
+                } else if (selectedTo == selectedFrom + 1 || selectedTo == selectedFrom + 3 || selectedTo == selectedFrom - 3) {
                     //if selected cell zero
                     if (mapPoint[selectedTo] == 0) {
                         PlayerMove();
-
-                        BOTMove();
+                        if (isEndGame()) {
+                            showDialogEndGame();
+                        } else {
+                            BOTMove();
+                        }
                     }
+                    return;
                 }
+                Toast.makeText(MainActivity.this, "You can't select cell here! Try again please.", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void BOTMove() {
-        if (isEndGame()) {
-            showDialogEndGame();
-        } else {
-            if (minimax.MiniMaxVal(nodePresent, IMiniMax.DEPTH) == null) {
-                Log.e(MainActivity.class.toString(), "Null");
-            } else {
-                nodePresent = minimax.MiniMaxVal(nodePresent, 3);
-                LoadMap();
-            }
-
-        }
+        Node nodePresent = new Node(mapPresent.clone(), 0, true);
+        nodePresent = minimax.MiniMaxVal(nodePresent, IMiniMax.DEPTH);
+        mapPresent = nodePresent.getMapPoint();
+        LoadMap();
     }
 
     private void PlayerMove() {
         if (selectedFrom != selectedTo) {
-            int mapPoint[] = nodePresent.getMapPoint();
+            int mapPoint[] = mapPresent.clone();
             int t = mapPoint[selectedFrom];
             mapPoint[selectedFrom] = mapPoint[selectedTo];
             mapPoint[selectedTo] = t;
 
-            nodePresent = new Node(mapPoint, IMiniMax.DEPTH, true);
+            mapPresent = mapPoint.clone();
         }
 
         Toast.makeText(MainActivity.this, "Move from " + selectedFrom + " to " + selectedTo, Toast.LENGTH_SHORT).show();
@@ -143,50 +161,53 @@ public class MainActivity extends AppCompatActivity {
     private void showDialogEndGame() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("Would you like replay?");
+        dialog.setCancelable(false);
         dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ResetGame();
             }
         });
         dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ResetGame();
             }
         });
         dialog.show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void ResetGame() {
         selectedFrom = -1;
         selectedTo = -1;
         selectedChessmanMove = false;
-        nodePresent = new Node(IMiniMax.MAP_ROOT, IMiniMax.DEPTH, true);
+        mapPresent = IMiniMax.MAP_ROOT;
         BOTMove();
         LoadMap();
     }
 
     private boolean isEndGame() {
         // if count chessman black or chessman white == 0 then end game
-        int mapPoint[] = nodePresent.getMapPoint();
+        int mapPoint[] = mapPresent.clone();
         int checkWhite = 0;
         int checkBlack = 0;
         int blackStranded = 2;
+        int whiteStranded = 2;
         for (int i = 0; i < 9; i++) {
+            if (mapPoint[i] == 0) continue;
             if (mapPoint[i] == -1) {
                 checkBlack++;
-                if (canMove(i, i + 1, mapPoint) && canMove(i, i + 3, mapPoint) && canMove(i, i - 3, mapPoint)) {
+                // xet xem 1 trong 2 con có bị kẹt hay không
+                if (!canMove(i, i + 1, mapPoint) && !canMove(i, i + 3, mapPoint) && !canMove(i, i - 3, mapPoint)) {
                     blackStranded--;
                 }
             } else if (mapPoint[i] == 1) {
+                if (!canMove(i, i + 1, mapPoint) && !canMove(i, i - 3, mapPoint) && !canMove(i, i - 1, mapPoint)) {
+                    whiteStranded--;
+                }
                 checkWhite++;
             }
         }
-        if (checkBlack == 0 || checkWhite == 0 || blackStranded == 0) {
+        if (checkBlack == 0 || checkWhite == 0 || blackStranded == 0 || whiteStranded == 0) {
             return true;
         }
         return false;
@@ -194,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void LoadMap() {
         //if cell = -1 then imagechess[0] (black color) same 0 and -1
-        int mapPoint[] = nodePresent.getMapPoint();
+        int mapPoint[] = mapPresent.clone();
         for (int i = 0; i < 9; i++) {
             if (mapPoint[i] == -1) {
                 imageViewCell[i].setImageResource(imageChessman[0]);
@@ -207,17 +228,15 @@ public class MainActivity extends AppCompatActivity {
 
         //invisible button out
         buttonFinalBlack.setVisibility(View.INVISIBLE);
-        Log.e(MainActivity.class.toString(), ", mapPoint=" + Arrays.toString(mapPoint));
+        Log.e(TAG, ", mapPoint=" + Arrays.toString(mapPoint));
 
         if (isEndGame()) {
             showDialogEndGame();
         }
-
     }
 
     private void SetListenUI() {
         imageButtonRestart.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 ResetGame();
@@ -225,13 +244,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buttonFinalBlack.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 if (selectedFrom != -1) {
-                    int mapPoint[] = nodePresent.getMapPoint();
+                    int mapPoint[] = mapPresent.clone();
                     mapPoint[selectedFrom] = 0;
-                    nodePresent = new Node(mapPoint, IMiniMax.DEPTH, true);
+                    mapPresent = mapPoint.clone();
                     BOTMove();
                     LoadMap();
                     selectedFrom = -1;
