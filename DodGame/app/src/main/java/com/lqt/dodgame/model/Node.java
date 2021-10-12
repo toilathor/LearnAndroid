@@ -109,9 +109,9 @@ public class Node {
         sum += (numberWhite - numberBlack) * 85;
         if (this.isNodeEnd() && !isNodeEnd2()) {
             if (this.turnWhite) {
-                sum -= 85;
+                sum -= 100;
             } else {
-                sum += 85;
+                sum += 100;
             }
         }
         return sum;
